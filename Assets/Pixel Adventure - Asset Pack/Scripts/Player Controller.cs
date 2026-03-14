@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
    private void PlayerAnimation()
     {
-        isRuning = rb.velocity.x != 0;
-        anim.SetBool("isRuning", isRuning);
+
+        anim.SetFloat("Xvelocity", rb.velocity.x);
     }
 }
