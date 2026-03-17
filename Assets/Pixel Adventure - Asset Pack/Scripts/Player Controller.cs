@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [Header("Player Movement")] 
    [SerializeField] private float speed;
    [SerializeField] private float jumpForce;
+    private bool isFacingRight = true;
 
     [Header("Collision Check")]
     [SerializeField]private float groundCheckDistance;
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         CheckCollision();
         Inputhandling();
+        HandleFlip();
         PlayerAnimation();
     }
 
@@ -60,7 +63,19 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("IsGrounded", isGrounded);
     }
 
-   
+
+    private void HandleFlip()
+    {
+        if(isFacingRight && rb.velocity.x < 0 || !isFacingRight && rb.velocity.x > 0)
+        {
+            FlipPlayer();
+        }
+    }
+   private void FlipPlayer()
+    {
+       this.transform.Rotate(0, 180, 0);
+        isFacingRight = !isFacingRight;
+    }
 
     private void OnDrawGizmos()
     {
