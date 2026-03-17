@@ -47,27 +47,20 @@ public class PlayerController : MonoBehaviour
        
     }
 
-    private void PlayerMovement(float xinput)
-    {
-        rb.velocity= new Vector2(xinput * speed, rb.velocity.y);
+    private void PlayerMovement(float xinput)=> rb.velocity = new Vector2(xinput * speed, rb.velocity.y);
 
-    }
-    private void PlayerJump()
-    {
-        Debug.Log("Player Jumped");
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-    }
+    private void PlayerJump() => rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
+    private void CheckCollision() => isGrounded = Physics2D.Raycast(this.transform.position, Vector2.down, groundCheckDistance, groundLayer);
     private void PlayerAnimation()
     {
 
         anim.SetFloat("Xvelocity", rb.velocity.x);
+        anim.SetFloat("Yvelocity", rb.velocity.y);
+        anim.SetBool("IsGrounded", isGrounded);
     }
 
-    private void CheckCollision()
-    {
-        isGrounded = Physics2D.Raycast(this.transform.position,Vector2.down,groundCheckDistance,groundLayer);
-    }
+   
 
     private void OnDrawGizmos()
     {
