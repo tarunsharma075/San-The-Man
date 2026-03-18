@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,11 +18,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isFacingRight = true;
     [SerializeField] private bool isAirBorne = false;
     [SerializeField] private bool canDoubleJump = true;
+    private float facingDirection = 1f;
 
     //CheckCollision
     [SerializeField]private float groundCheckDistance;
+    [SerializeField]private float wallCheckDistance;
     [SerializeField] private LayerMask groundLayer;
-    private bool isGrounded;
+    [SerializeField] private bool isGrounded;
+    [SerializeField] private bool isTouchingWall;
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody2D>();
@@ -37,9 +41,19 @@ public class PlayerController : MonoBehaviour
     {
         CheckCollision();
         Inputhandling();
+        HandleWallSlide();
         HandleAirborne();
         HandleFlip();
         PlayerAnimation();
+    }
+
+    private void HandleWallSlide()
+    {
+        if (isTouchingWall&& rb.velocity.y<0)
+        {
+            Debug.Log("Wall Slide");
+            rb.velocity = new Vector2(rb.velocity.x,rb.velocity.y * 0.5f );
+        }
     }
 
     private void Inputhandling()
@@ -83,7 +97,11 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerJump() => rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
-    private void CheckCollision() => isGrounded = Physics2D.Raycast(this.transform.position, Vector2.down, groundCheckDistance, groundLayer);
+    private void CheckCollision()
+    {
+        isGrounded = Physics2D.Raycast(this.transform.position, Vector2.down, groundCheckDistance, groundLayer);
+        isTouchingWall= Physics2D.Raycast(this.transform.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
+    }
 
     private void DoubleJump()=> rb.velocity = new Vector2(rb.velocity.x, doubleJump);
     private void PlayerAnimation()
@@ -112,6 +130,7 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = isGrounded ? Color.green : Color.red;
         Gizmos.DrawRay(this.transform.position, Vector2.down * groundCheckDistance);
+        Gizmos.DrawRay(this.transform.position, Vector2.right * facingDirection * wallCheckDistance);
 
     }
 
