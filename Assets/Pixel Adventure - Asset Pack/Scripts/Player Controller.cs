@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,12 +8,17 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
 
-    [Header("Player Movement")] 
-   [SerializeField] private float speed;
-   [SerializeField] private float jumpForce;
-    private bool isFacingRight = true;
+    //PlayerMovement
+    [SerializeField] private float speed;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float doubleJump;
 
-    [Header("Collision Check")]
+    //PlayerStates
+    [SerializeField] private bool isFacingRight = true;
+    [SerializeField] private bool isAirBorne = false;
+    [SerializeField] private bool canDoubleJump = true;
+
+    //CheckCollision
     [SerializeField]private float groundCheckDistance;
     [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
@@ -34,6 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         CheckCollision();
         Inputhandling();
+        HandleAirborne();
         HandleFlip();
         PlayerAnimation();
     }
@@ -42,12 +46,37 @@ public class PlayerController : MonoBehaviour
     {
         float Xinput = Input.GetAxisRaw("Horizontal");
         PlayerMovement(Xinput);
-        if (Input.GetKeyDown(KeyCode.Space)&& isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("space is pressed");
-            PlayerJump();
+           JumpButton();
+
         }
        
+    }
+
+    private  void  JumpButton()
+    {
+        if (isGrounded)
+        {
+            PlayerJump();
+        }else if (canDoubleJump)
+        {
+            DoubleJump();
+            canDoubleJump = false;
+        }
+    }
+
+    private void HandleAirborne()
+    {
+        if (isGrounded && isAirBorne)
+        {
+            isAirBorne = false;
+            canDoubleJump = true;
+        }
+        else if(!isGrounded && !isAirBorne)
+        {
+            isAirBorne = true;
+        }
     }
 
     private void PlayerMovement(float xinput)=> rb.velocity = new Vector2(xinput * speed, rb.velocity.y);
@@ -55,6 +84,8 @@ public class PlayerController : MonoBehaviour
     private void PlayerJump() => rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
     private void CheckCollision() => isGrounded = Physics2D.Raycast(this.transform.position, Vector2.down, groundCheckDistance, groundLayer);
+
+    private void DoubleJump()=> rb.velocity = new Vector2(rb.velocity.x, doubleJump);
     private void PlayerAnimation()
     {
 
