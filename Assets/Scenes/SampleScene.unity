@@ -696,9 +696,12 @@ MonoBehaviour:
   isAirBorne: 0
   canDoubleJump: 1
   groundCheckDistance: 0.9
+  wallCheckDistance: 0.57
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  isGrounded: 0
+  isWallDetected: 0
 --- !u!1 &1403144576
 GameObject:
   m_ObjectHideFlags: 0

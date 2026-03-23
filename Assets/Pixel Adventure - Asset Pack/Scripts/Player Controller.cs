@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float doubleJump;
+    float Xinput = 0;
+    float Yinput = 0;
 
     //PlayerStates
     [SerializeField] private bool isFacingRight = true;
@@ -25,7 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private float wallCheckDistance;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private bool isGrounded;
-    [SerializeField] private bool isTouchingWall;
+    [SerializeField] private bool isWallDetected;
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody2D>();
@@ -44,21 +46,25 @@ public class PlayerController : MonoBehaviour
         HandleWallSlide();
         HandleAirborne();
         HandleFlip();
+        
         PlayerAnimation();
     }
 
     private void HandleWallSlide()
     {
-        if (isTouchingWall&& rb.velocity.y<0)
-        {
-            Debug.Log("Wall Slide");
-            rb.velocity = new Vector2(rb.velocity.x,rb.velocity.y * 0.5f );
-        }
+        bool canWeSlide = isWallDetected && rb.velocity.y < 0;
+        if (!canWeSlide)
+            return;
+
+        float yModifer= Yinput < 0 ? 0.5f :1 ;
+
+        rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * yModifer);
     }
 
     private void Inputhandling()
     {
-        float Xinput = Input.GetAxisRaw("Horizontal");
+         Xinput = Input.GetAxisRaw("Horizontal");
+        Yinput = Input.GetAxisRaw("Vertical");
         PlayerMovement(Xinput);
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -93,14 +99,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void PlayerMovement(float xinput)=> rb.velocity = new Vector2(xinput * speed, rb.velocity.y);
+    private void PlayerMovement(float xinput)
+    {
+        if (isWallDetected)
+            return; 
+        rb.velocity = new Vector2(xinput * speed, rb.velocity.y);
+    }
 
     private void PlayerJump() => rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
     private void CheckCollision()
     {
         isGrounded = Physics2D.Raycast(this.transform.position, Vector2.down, groundCheckDistance, groundLayer);
-        isTouchingWall= Physics2D.Raycast(this.transform.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
+        isWallDetected= Physics2D.Raycast(this.transform.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
     }
 
     private void DoubleJump()=> rb.velocity = new Vector2(rb.velocity.x, doubleJump);
@@ -110,18 +121,20 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Xvelocity", rb.velocity.x);
         anim.SetFloat("Yvelocity", rb.velocity.y);
         anim.SetBool("IsGrounded", isGrounded);
+        anim.SetBool("IswallDetected", isWallDetected);
     }
 
 
     private void HandleFlip()
     {
-        if(isFacingRight && rb.velocity.x < 0 || !isFacingRight && rb.velocity.x > 0)
+        if(Xinput<0 && isFacingRight  || !isFacingRight && Xinput > 0)
         {
             FlipPlayer();
         }
     }
    private void FlipPlayer()
     {
+        facingDirection = facingDirection * -1;
        this.transform.Rotate(0, 180, 0);
         isFacingRight = !isFacingRight;
     }
