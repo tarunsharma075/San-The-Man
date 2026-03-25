@@ -39,8 +39,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isWallJumping;
 
 
+    //knocking
 
 
+    [SerializeField] private bool isknocked;
+    [SerializeField] private bool canKnocked;
+    [SerializeField] private Vector2 knockedDistance;
+    [SerializeField] private float knockedDuration;
 
     private void Awake()
     {
@@ -55,6 +60,14 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            PlayerKnockBack();
+        }
+
+        if (isknocked)
+            return;
         CheckCollision();
         Inputhandling();
         HandleWallSlide();
@@ -94,7 +107,7 @@ public class PlayerController : MonoBehaviour
         {
             PlayerJump();
         }
-        else if (isWallDetected) {
+        else if (isWallDetected&& !isGrounded) {
 
             WallJump();
         
@@ -153,6 +166,7 @@ public class PlayerController : MonoBehaviour
         canDoubleJump = true;
         rb.velocity = new Vector2(walljumpForce.x*-facingDirection, walljumpForce.y);
         FlipPlayer();
+        StopAllCoroutines();
         StartCoroutine(wallJumpRoutine());
 
     }
@@ -194,6 +208,24 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawRay(this.transform.position, Vector2.down * groundCheckDistance);
         Gizmos.DrawRay(this.transform.position, Vector2.right * facingDirection * wallCheckDistance);
 
+    }
+
+
+    public  void PlayerKnockBack()
+    {
+        StartCoroutine(KnockBackRoutine());
+        anim.SetTrigger("Knocked");
+        rb.velocity = new Vector2(knockedDistance.x * -facingDirection, knockedDistance.y);
+
+    }
+
+    private IEnumerator KnockBackRoutine()
+    {
+        isknocked = true;
+        canKnocked = false;
+        yield return new WaitForSeconds(knockedDuration);
+        isknocked = false;
+        canKnocked = true;
     }
 
 }
