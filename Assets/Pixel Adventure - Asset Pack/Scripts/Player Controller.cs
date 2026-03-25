@@ -47,6 +47,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 knockedDistance;
     [SerializeField] private float knockedDuration;
 
+    //cyotejumping
+
+    [SerializeField] private float CyotejumpWindow = 0.5f;
+    private float cyoteJumpActivated = -1;
+
+
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody2D>();
@@ -60,14 +66,10 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            PlayerKnockBack();
-        }
-
-        if (isknocked)
+ if (isknocked)
             return;
+
+
         CheckCollision();
         Inputhandling();
         HandleWallSlide();
@@ -102,9 +104,16 @@ public class PlayerController : MonoBehaviour
     }
 
     private  void  JumpButton()
+
     {
-        if (isGrounded)
+        bool cyotejumpAvliable = Time.time <cyoteJumpActivated + CyotejumpWindow; 
+
+        if (isGrounded || cyotejumpAvliable)
         {
+            if (cyotejumpAvliable)
+            {
+                Debug.Log("cyote jump is used");
+            }
             PlayerJump();
         }
         else if (isWallDetected&& !isGrounded) {
@@ -132,6 +141,14 @@ public class PlayerController : MonoBehaviour
         else if(!isGrounded && !isAirBorne)
         {
             isAirBorne = true;
+
+
+            if (rb.velocity.y <= 0)
+            {
+                Debug.Log("cyote jump activated");
+                ActivateCyoteJump();
+                
+            }
         }
     }
 
@@ -170,6 +187,10 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(wallJumpRoutine());
 
     }
+
+    private void ActivateCyoteJump()=> cyoteJumpActivated = Time.time;
+    private void CancelCyoyeJump() => cyoteJumpActivated = Time.time - 1;
+
 
 
     private IEnumerator wallJumpRoutine()

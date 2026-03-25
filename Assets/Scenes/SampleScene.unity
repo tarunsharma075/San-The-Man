@@ -484,7 +484,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 1.6
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -540,7 +540,7 @@ Transform:
   m_GameObject: {fileID: 1196014333}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.095, y: -0.58, z: 0}
+  m_LocalPosition: {x: -4.151, y: 4.394, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -560,8 +560,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  jumpForce: 10
-  doubleJump: 16
+  jumpForce: 7
+  doubleJump: 10
   isFacingRight: 1
   isAirBorne: 0
   canDoubleJump: 1
@@ -573,12 +573,13 @@ MonoBehaviour:
   isGrounded: 0
   isWallDetected: 0
   walljumpduration: 0.8
-  walljumpForce: {x: 10, y: 15}
+  walljumpForce: {x: 5, y: 10}
   isWallJumping: 0
   isknocked: 0
   canKnocked: 0
   knockedDistance: {x: 6, y: 8}
   knockedDuration: 0.8
+  CyotejumpWindow: 0.5
 --- !u!1 &1403144576
 GameObject:
   m_ObjectHideFlags: 0
