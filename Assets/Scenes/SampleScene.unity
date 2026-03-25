@@ -690,18 +690,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  jumpForce: 10
-  doubleJump: 14
+  jumpForce: 8
+  doubleJump: 16
   isFacingRight: 1
   isAirBorne: 0
   canDoubleJump: 1
-  groundCheckDistance: 0.9
-  wallCheckDistance: 0.57
+  groundCheckDistance: 0.86
+  wallCheckDistance: 0.69
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   isGrounded: 0
   isWallDetected: 0
+  walljumpduration: 0.8
+  walljumpForce: {x: 7, y: 15}
+  isWallJumping: 0
 --- !u!1 &1403144576
 GameObject:
   m_ObjectHideFlags: 0

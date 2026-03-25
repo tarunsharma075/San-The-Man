@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -28,6 +29,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private bool isGrounded;
     [SerializeField] private bool isWallDetected;
+
+
+
+    // Wall Interaction
+
+    [SerializeField] private float walljumpduration = 0.6f;
+    [SerializeField] private Vector2 walljumpForce;
+    [SerializeField] private bool isWallJumping;
+
+
+
+
+
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody2D>();
@@ -79,7 +93,16 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             PlayerJump();
-        }else if (canDoubleJump)
+        }
+        else if (isWallDetected) {
+
+            WallJump();
+        
+        }
+
+
+
+        else if (canDoubleJump)
         {
             DoubleJump();
             canDoubleJump = false;
@@ -102,7 +125,11 @@ public class PlayerController : MonoBehaviour
     private void PlayerMovement(float xinput)
     {
         if (isWallDetected)
-            return; 
+            return;
+
+        if (isWallJumping)
+
+            return;
         rb.velocity = new Vector2(xinput * speed, rb.velocity.y);
     }
 
@@ -114,7 +141,29 @@ public class PlayerController : MonoBehaviour
         isWallDetected= Physics2D.Raycast(this.transform.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
     }
 
-    private void DoubleJump()=> rb.velocity = new Vector2(rb.velocity.x, doubleJump);
+    private void DoubleJump()
+    {
+        isWallJumping = false;
+        canDoubleJump = false;
+        rb.velocity = new Vector2(rb.velocity.x, doubleJump);
+    }
+
+    private void WallJump()
+    {
+        canDoubleJump = true;
+        rb.velocity = new Vector2(walljumpForce.x*-facingDirection, walljumpForce.y);
+        FlipPlayer();
+        StartCoroutine(wallJumpRoutine());
+
+    }
+
+
+    private IEnumerator wallJumpRoutine()
+    {
+        isWallJumping = true;
+        yield  return new WaitForSeconds(walljumpduration);
+        isWallJumping = false;
+    }
     private void PlayerAnimation()
     {
 
