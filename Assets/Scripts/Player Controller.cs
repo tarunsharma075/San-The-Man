@@ -215,9 +215,11 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color= playermodel.IsGrounded ? Color.green : Color.red;
-        Gizmos.color= playermodel.IsWallDetected ? Color.green: Color.red;
-        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y - playermodel.GroundCheckDist));
-        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + (playermodel.WallCheckDist * playermodel.FacingDirection), transform.position.y));
+        
+        Gizmos.DrawLine(transform.position, new Vector2(this.transform.position.x, this.transform.position.y - playermodel.GroundCheckDist));
+
+        Gizmos.color = playermodel.IsWallDetected ? Color.green : Color.red;
+        Gizmos.DrawLine(transform.position, new Vector2(this.transform.position.x + (playermodel.WallCheckDist * playermodel.FacingDirection), this.transform.position.y));
 
 
     }
