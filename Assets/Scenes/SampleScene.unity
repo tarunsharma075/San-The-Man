@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 40692217}
   - component: {fileID: 40692219}
   - component: {fileID: 40692218}
+  - component: {fileID: 40692220}
   m_Layer: 0
   m_Name: Animation
   m_TagString: Untagged
@@ -228,6 +229,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &40692220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40692216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c6af7f9b1a33c248a6d1d0b3f08f5dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -13416,27 +13429,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03d4d8f8989c75949822336d3d987bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
-  jumpForce: 7
-  doubleJump: 10
-  isFacingRight: 1
-  isAirBorne: 0
-  canDoubleJump: 1
-  groundCheckDistance: 0.86
-  wallCheckDistance: 0.7
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  isGrounded: 0
-  isWallDetected: 0
-  walljumpduration: 0.8
-  walljumpForce: {x: 5, y: 10}
-  isWallJumping: 0
-  isknocked: 0
-  canKnocked: 0
-  knockedDistance: {x: 6, y: 8}
-  knockedDuration: 0.8
-  CyotejumpWindow: 0.5
+  playermodel:
+    Speed: 5
+    JumpForce: 8
+    DoubleJumpForce: 10
+    WallJumpDuration: 0.6
+    WallJumpForce: {x: 7, y: 14}
+    GroundCheckDist: 0.84
+    WallCheckDist: 0.68
+    KnockbackDistance: {x: 7, y: 5}
+    KnockbackDuration: 0.4
 --- !u!1 &1502797621
 GameObject:
   m_ObjectHideFlags: 0
