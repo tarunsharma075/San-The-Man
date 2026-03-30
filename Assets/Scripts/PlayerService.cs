@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager 
+public class PlayerService 
 {
-
-    public GameManager()
+    public PlayerService()
     {
 
     }
-    
 }
