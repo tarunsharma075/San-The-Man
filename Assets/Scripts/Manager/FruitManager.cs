@@ -6,7 +6,8 @@ public class FruitManager : MonoBehaviour
 {
 
    [SerializeField]private FruitType fruitType;
-   [SerializeField] private Animator anim;
+    private Animator anim;
+    [SerializeField] private GameObject vfxGameObject;
    
 
     private void Awake()
@@ -25,7 +26,11 @@ public class FruitManager : MonoBehaviour
         if (collision.GetComponent<PlayerController>() != null)
         {
             Debug.Log("player collieded with fruit");
-            Destroy(this.gameObject);        }
+            Destroy(this.gameObject);  
+            
+            GameObject vfx=  Instantiate(vfxGameObject, this.transform.position,Quaternion.identity);
+            Destroy(vfx,.5f);
+        }
     }
 
 
