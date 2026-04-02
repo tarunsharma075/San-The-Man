@@ -40,4 +40,7 @@ public class FruitManager : MonoBehaviour
         anim.SetFloat("RandomFruit", randomindex);
         fruitType = (FruitType)randomindex;
     }
+
+
+    public void Destroyme()=> Destroy(this.gameObject);
 }

@@ -30,6 +30,10 @@ public class PlayerView : MonoBehaviour
         anim.SetTrigger("Knocked");
     }
 
+    public void PlayerDeath()
+    {
+        anim.SetTrigger("Death");
+    }
 
 
 }

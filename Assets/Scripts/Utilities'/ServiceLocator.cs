@@ -5,26 +5,28 @@ using UnityEditor;
 using UnityEngine;
 
 
-    public class ServiceLocator : GenericMonoSingleton<ServiceLocator>
-    {
+public class ServiceLocator : GenericMonoSingleton<ServiceLocator>
+{
 
 
-    private GameManagerService gameManagerService;
-    private PlayerService playerService;
+    public  GameManagerService gameManagerService { get; private set; }
+    public PlayerService playerService { get; private set; }
 
+
+    //Dependencies
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject checkpointPrefab;
     private void Awake()
     {
+        base.Awake();
         playerService = new PlayerService();
-        gameManagerService = new GameManagerService();
-    }
-    private void Start()
-    {
-        
-
+        gameManagerService = new GameManagerService(playerPrefab, checkpointPrefab);
     }
 
 
-    
+
+   
+
 
 
 }

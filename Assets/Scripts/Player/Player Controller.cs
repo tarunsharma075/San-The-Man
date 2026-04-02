@@ -3,52 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     
     private Rigidbody2D rb;
-
-
-    ////PlayerMovement
-    //[SerializeField] private float speed;
-    //[SerializeField] private float jumpForce;
-    //[SerializeField] private float doubleJump;
-    //float Xinput = 0;
-    //float Yinput = 0;
-
-    ////PlayerStates
-
-    //private float facingDirection = 1f;
-
-    ////CheckCollision
-    //[SerializeField]private float groundCheckDistance;
-    //[SerializeField]private float wallCheckDistance;
-    //[SerializeField] private LayerMask groundLayer;
-    //[SerializeField] private bool isGrounded;
-    //[SerializeField] private bool isWallDetected;
-
-
-
-    //// Wall Interaction
-
-    //[SerializeField] private float walljumpduration = 0.6f;
-    //[SerializeField] private Vector2 walljumpForce;
-    //[SerializeField] private bool isWallJumping;
-
-
-    ////knocking
-
-
-    //[SerializeField] private bool isknocked;
-    //[SerializeField] private bool canKnocked;
-    //[SerializeField] private Vector2 knockedDistance;
-    //[SerializeField] private float knockedDuration;
-
-    ////cyotejumping
-
-    //[SerializeField] private float CyotejumpWindow = 0.5f;
-    //private float cyoteJumpActivated = -1;
+    private bool isdead= false;
 
 
     [SerializeField] private LayerMask groundLayer;
@@ -64,7 +25,10 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
-        
+        if(isdead)
+        {
+            isdead = false;
+        }
     }
 
     
@@ -73,7 +37,7 @@ public class PlayerController : MonoBehaviour
  if (playermodel.IsKnocked)
             return;
     
-
+ if(isdead )return;
         Inputhandling();
         CheckCollision();
         HandleWallSlide();
@@ -244,5 +208,38 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Player collided with " + collision.name);
+        if (collision.CompareTag("DeathZone"))
+        {
+           StartCoroutine(PlayreDie());
+        }
+    }
+
+    IEnumerator  PlayreDie()
+    {
+        isdead= true;
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.gravityScale = 0;
+        
+        playerView.PlayerDeath();
+        yield return new WaitForSeconds(0.5f);
+        
+        if (ServiceLocator.Instance == null)
+        {
+            Debug.LogError("ServiceLocator null hai!");
+            yield break;
+        }
+        if (ServiceLocator.Instance.gameManagerService == null)
+        {
+            Debug.LogError("GameManager Service null hai!");
+            yield break;
+        }
+
+        ServiceLocator.Instance.gameManagerService.RespawnPlayer();
+
+    }
 }
 

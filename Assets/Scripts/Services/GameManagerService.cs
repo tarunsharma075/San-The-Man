@@ -5,9 +5,18 @@ using UnityEngine;
 public class GameManagerService 
 {
     private GameManager gameManager;
-    public GameManagerService()
+    private GameObject playerprefab;
+    private GameObject checkpoint;
+    public GameManagerService(GameObject playerprefab, GameObject checkpoint)
     {
-        gameManager = new GameManager();
+        this.playerprefab = playerprefab;
+            this.checkpoint = checkpoint;
+        gameManager = new GameManager(playerprefab,checkpoint);
+        
     }
 
+    public void RespawnPlayer()
+    {
+        gameManager.RespawnPlayer();
+    }
 }
