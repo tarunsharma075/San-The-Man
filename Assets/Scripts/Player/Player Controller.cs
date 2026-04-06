@@ -226,20 +226,11 @@ public class PlayerController : MonoBehaviour
         
         playerView.PlayerDeath();
         yield return new WaitForSeconds(0.5f);
-        
-        if (ServiceLocator.Instance == null)
-        {
-            Debug.LogError("ServiceLocator null hai!");
-            yield break;
-        }
-        if (ServiceLocator.Instance.gameManagerService == null)
-        {
-            Debug.LogError("GameManager Service null hai!");
-            yield break;
-        }
 
         ServiceLocator.Instance.gameManagerService.RespawnPlayer();
 
     }
+
+   
 }
 

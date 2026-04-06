@@ -35,5 +35,7 @@ public class PlayerView : MonoBehaviour
         anim.SetTrigger("Death");
     }
 
+   
+
 
 }

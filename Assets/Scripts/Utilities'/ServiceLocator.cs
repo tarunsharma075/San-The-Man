@@ -16,17 +16,13 @@ public class ServiceLocator : GenericMonoSingleton<ServiceLocator>
     //Dependencies
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject checkpointPrefab;
-    private void Awake()
+ 
+
+    private void Start()
     {
-        base.Awake();
         playerService = new PlayerService();
         gameManagerService = new GameManagerService(playerPrefab, checkpointPrefab);
     }
-
-
-
-   
-
 
 
 }
