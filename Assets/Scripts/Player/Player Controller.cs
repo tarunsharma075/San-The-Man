@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
             return;
     
  if(isdead )return;
+
         Inputhandling();
         CheckCollision();
         HandleWallSlide();
@@ -192,7 +193,7 @@ public class PlayerController : MonoBehaviour
     public  void PlayerKnockBack()
     {
         StartCoroutine(KnockBackRoutine());
-        playerView.PlayKnockedAnimation();
+        ;
         rb.velocity = new Vector2(playermodel.KnockbackDistance.x * -playermodel.FacingDirection, playermodel.KnockbackDistance.y);
 
     }
@@ -201,19 +202,26 @@ public class PlayerController : MonoBehaviour
     {
         playermodel.IsKnocked = true;
         playermodel.CanBeKnocked = false;
-        
+        playerView.PlayKnockedAnimation(playermodel);
+        Debug.Log("Status of "+playermodel.IsKnocked);
         yield return new WaitForSeconds(playermodel.KnockbackDuration);
         playermodel.IsKnocked = false;
         playermodel.CanBeKnocked = true;
-        
+        playerView.PlayKnockedAnimation(playermodel);
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Player collided with " + collision.name);
+        //Debug.Log("Player collided with " + collision.name);
         if (collision.CompareTag("DeathZone"))
         {
            StartCoroutine(PlayreDie());
+        }
+
+        if (collision.CompareTag("Traps")){
+            PlayerKnockBack();
+
         }
     }
 

@@ -25,9 +25,9 @@ public class PlayerView : MonoBehaviour
     }
 
 
-    public void PlayKnockedAnimation()
+    public void PlayKnockedAnimation(PlayerModel playermodel)
     {
-        anim.SetTrigger("Knocked");
+        anim.SetBool("Knocked", playermodel.IsKnocked==true);
     }
 
     public void PlayerDeath()

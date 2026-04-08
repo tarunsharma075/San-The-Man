@@ -67,8 +67,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06690979, y: -0.10371363}
-  m_Size: {x: 1.0798359, y: 1.1297743}
+  m_Offset: {x: 0.06690979, y: -0.1973896}
+  m_Size: {x: 1.0798359, y: 1.3171263}
   m_Direction: 0
 --- !u!50 &5178929415340799997
 Rigidbody2D:
@@ -118,7 +118,7 @@ MonoBehaviour:
     DoubleJumpForce: 10
     WallJumpDuration: 0.6
     WallJumpForce: {x: 7, y: 14}
-    GroundCheckDist: 0.84
+    GroundCheckDist: 1.13
     WallCheckDist: 0.89
     KnockbackDistance: {x: 7, y: 5}
     KnockbackDuration: 0.4
@@ -216,7 +216,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1244159889
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -2023329209, guid: a20a546b163d92b4fbf0f84df467ba48, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
