@@ -193,7 +193,7 @@ public class PlayerController : MonoBehaviour
     public  void PlayerKnockBack()
     {
         StartCoroutine(KnockBackRoutine());
-        ;
+        
         rb.velocity = new Vector2(playermodel.KnockbackDistance.x * -playermodel.FacingDirection, playermodel.KnockbackDistance.y);
 
     }
@@ -238,6 +238,15 @@ public class PlayerController : MonoBehaviour
         ServiceLocator.Instance.gameManagerService.RespawnPlayer();
 
     }
+
+
+
+public void TakeDamage(float Damage)
+    {
+        PlayerKnockBack();
+    }
+
+
 
    
 }

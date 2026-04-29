@@ -16,11 +16,11 @@ public class ServiceLocator : GenericMonoSingleton<ServiceLocator>
     //Dependencies
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject checkpointPrefab;
- 
+    [SerializeField] private PlayerController playerController;
 
     private void Start()
     {
-        playerService = new PlayerService();
+        playerService = new PlayerService(playerController);
         gameManagerService = new GameManagerService(playerPrefab, checkpointPrefab);
     }
 

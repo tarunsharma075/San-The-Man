@@ -1,17 +1,28 @@
 
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 
 public class PlayerService 
 {
 
 
     private PlayerController playerController;
-    public PlayerService()
+    public PlayerService(PlayerController playerController)
     {
-        playerController = new PlayerController();
-        
+        this.playerController= playerController;
+
+
 
     }
 
-    
+
+
+    public void TakeDamage(float damage)
+    {
+        playerController.TakeDamage(damage);
+    }
+
+
+   
+
 }
