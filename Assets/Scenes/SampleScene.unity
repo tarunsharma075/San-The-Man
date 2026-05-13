@@ -20992,7 +20992,7 @@ GameObject:
   - component: {fileID: 1096177614}
   - component: {fileID: 1096177615}
   - component: {fileID: 1096177616}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mushroomEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21039,7 +21039,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 977043475
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1440570835, guid: 3e143943662837d4bb12ccb8687718a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -21096,7 +21096,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.043566465, y: -0.21672809}
@@ -21131,7 +21131,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096177610}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -21416,7 +21416,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1806143748}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}

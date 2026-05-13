@@ -44,7 +44,10 @@ protected virtual void Update()
 
 
 
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("The collision"+" "+collision.gameObject.layer);
+    }
 
 
 
