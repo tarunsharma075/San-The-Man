@@ -59,6 +59,16 @@ protected virtual void Update()
             idleTimer = idleDuration;
         }
     }
+
+    protected virtual void HandleMovement()
+    {
+        if (idleTimer > 0) return;
+
+        if (IsGrounded)
+        {
+            rb.velocity = new Vector2(movementSpeed * facingDirection, rb.velocity.y);
+        }
+    }
     protected void FlipPlayer()
     {
         facingDirection = facingDirection * -1;
@@ -75,6 +85,18 @@ protected virtual void Update()
         Gizmos.color = IsWallDetected ? Color.green : Color.red;
         Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.transform.position.x + (wallDistance * facingDirection), groundCheck.transform.position.y));
 
+
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        PlayerController player = collision.GetComponent<PlayerController>();
+
+        if (player == null) return;
+
+
+        ServiceLocator.Instance.playerService.TakeDamage(1);
 
     }
 }

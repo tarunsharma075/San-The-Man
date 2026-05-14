@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
         
         playerView = playerView = GetComponentInChildren<PlayerView>();
         rb = this.GetComponent<Rigidbody2D>();
+        ServiceLocator.Instance.playerService.SetPlayer(this);
 
     }
     void Start()

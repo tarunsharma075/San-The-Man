@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMushroom :Enemy
+public class EnemyBehaviour :Enemy
 {
    
    protected override void Awake()
@@ -27,14 +27,10 @@ public class EnemyMushroom :Enemy
     }
 
 
-    private void HandleMovement()
-    {
-        if (idleTimer > 0) return;
+  
+    
+     
+    
 
-        if (IsGrounded)
-        {
-            rb.velocity = new Vector2(movementSpeed * facingDirection, rb.velocity.y);
-        }
-    }
 
 }
