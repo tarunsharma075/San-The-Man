@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - DeathZone
+  - Traps
   layers:
   - Default
   - TransparentFX
@@ -11,10 +13,10 @@ TagManager:
   - 
   - Water
   - UI
+  - Ground
   - 
-  - 
-  - 
-  - 
+  - Enemy
+  - Player
   - 
   - 
   - 
@@ -40,4 +42,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackGround
+    uniqueID: 2947612181
+    locked: 0
+  - name: Traps
+    uniqueID: 1765744255
+    locked: 0
+  - name: Ground
+    uniqueID: 3817402419
+    locked: 0
+  - name: Enemy
+    uniqueID: 977043475
+    locked: 0
+  - name: Items
+    uniqueID: 1056261307
+    locked: 0
+  - name: Player
+    uniqueID: 3050807407
     locked: 0
