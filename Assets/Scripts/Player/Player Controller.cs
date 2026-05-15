@@ -248,6 +248,10 @@ public void TakeDamage(float Damage)
     }
 
 
+    public GameObject GetPlayerObject()
+    {
+        return this.gameObject;
+    }
 
    
 }

@@ -16,8 +16,9 @@ public class Enemy : MonoBehaviour
     [Header("Collision")]
     [SerializeField] protected float groundDistance;
     [SerializeField] protected float wallDistance;
-    [SerializeField] protected LayerMask groundLayer;
     [SerializeField] protected Transform groundCheck;
+    [SerializeField] protected LayerMask groundLayer;
+    
     protected bool IsGrounded;
     protected bool IsWallDetected;
 
@@ -76,16 +77,27 @@ protected virtual void Update()
         isFacingRight = !isFacingRight;
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.color = IsGrounded ? Color.green : Color.red;
 
-        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x, groundCheck.transform.position.y - groundDistance));
+        Gizmos.DrawLine(
+            groundCheck.transform.position,
+            new Vector2(
+                groundCheck.transform.position.x,
+                groundCheck.transform.position.y - groundDistance
+            )
+        );
 
         Gizmos.color = IsWallDetected ? Color.green : Color.red;
-        Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.transform.position.x + (wallDistance * facingDirection), groundCheck.transform.position.y));
 
-
+        Gizmos.DrawLine(
+            groundCheck.position,
+            new Vector2(
+                groundCheck.transform.position.x + (wallDistance * facingDirection),
+                groundCheck.transform.position.y
+            )
+        );
     }
 
 

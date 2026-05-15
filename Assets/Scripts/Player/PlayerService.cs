@@ -1,6 +1,7 @@
 
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+using UnityEngine;
 
 public class PlayerService
 {
@@ -16,5 +17,10 @@ public class PlayerService
         if (playerController == null) return;
 
         playerController.TakeDamage(damage);
+    }
+
+    public GameObject GetPlayer()
+    {
+        return playerController.GetPlayerObject();
     }
 }
