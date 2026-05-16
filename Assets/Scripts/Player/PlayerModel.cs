@@ -22,7 +22,7 @@ public class PlayerModel
 
     [Header("Knockback Settings")]
     public Vector2 KnockbackDistance = new Vector2(7f, 5f);
-    public float KnockbackDuration = 0.4f;
+    public float KnockbackDuration = 0.1f;
 
 
 
