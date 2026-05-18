@@ -56,7 +56,7 @@ public class FallingPlatform : TrapBase
         }
     }
 
-     private void  OnTriggerEnter2D(Collider2D collision)
+     protected   override void  OnTriggerEnter2D(Collider2D collision)
     {
 
 
@@ -72,7 +72,7 @@ public class FallingPlatform : TrapBase
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void  OnTriggerExit2D(Collider2D collision)
     {
         PlayerController player = collision.GetComponent<PlayerController>();
         if (player != null)
