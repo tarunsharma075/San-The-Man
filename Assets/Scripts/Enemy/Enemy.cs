@@ -5,11 +5,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] protected float movementSpeed;
-    private bool isFacingRight = false;
+    [SerializeField] private bool isFacingRight = false;
 
     protected Animator anim;
     protected Rigidbody2D rb;
-    protected int facingDirection = -1;
+    [SerializeField] protected int facingDirection = -1;
     [SerializeField]protected float idleDuration;
     protected float idleTimer;
 

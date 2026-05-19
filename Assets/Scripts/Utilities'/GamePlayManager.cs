@@ -13,14 +13,16 @@ public class GamePlayManager : MonoBehaviour
 
  private void spawnEnemies()
  {
-        Vector3 spawnOffset = new Vector3(0, 0.72f, 0);
+        Vector3 spawnOffset = new Vector3(0, 1f, 0);
 
         for (int i = 0; i < spawnPoints.Length; i++) { 
   int randomEnemey = Random.Range(0, prefabs.Length);
-   Instantiate(prefabs[randomEnemey], 
-   spawnPoints[i].position+spawnOffset,
+   GameObject currentSpawnEnemy=  Instantiate(prefabs[randomEnemey], 
+   spawnPoints[i].position,
    Quaternion.identity);
 
+
+            currentSpawnEnemy.transform.position += spawnOffset;
       }
 }
 }

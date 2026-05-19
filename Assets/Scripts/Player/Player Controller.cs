@@ -19,15 +19,24 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        
+
         playerView = playerView = GetComponentInChildren<PlayerView>();
         rb = this.GetComponent<Rigidbody2D>();
-        ServiceLocator.Instance.playerService.SetPlayer(this);
+
+
+
+
 
     }
+
+
+    
     void Start()
     {
-        if(isdead)
+
+
+        ServiceLocator.Instance.playerService.SetPlayer(this);
+        if (isdead)
         {
             isdead = false;
         }
@@ -237,7 +246,7 @@ public class PlayerController : MonoBehaviour
         playerView.PlayerDeath();
         yield return new WaitForSeconds(0.5f);
 
-        ServiceLocator.Instance.gameManagerService.RespawnPlayer();
+        ServiceLocator.Instance.gameManager.RespawnPlayer();
 
     }
 

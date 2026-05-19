@@ -19,9 +19,12 @@ public class EnemyBehaviour :Enemy
         CheckCollision();
         if (!IsGrounded || IsWallDetected)
         {
-            FlipPlayer();
-            idleTimer = idleDuration;
-            rb.velocity = Vector2.zero;
+            if (idleTimer <= 0) // Only flip if not already in idle
+            {
+                FlipPlayer();
+                idleTimer = idleDuration;
+                rb.velocity = Vector2.zero;
+            }
         }
        
     }

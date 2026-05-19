@@ -9,7 +9,7 @@ public class ServiceLocator : GenericMonoSingleton<ServiceLocator>
 {
 
 
-    public  GameManagerService gameManagerService { get; private set; }
+   public  GameManager  gameManager { get; private set; }
     public PlayerService playerService { get; private set; }
 
 
@@ -21,7 +21,7 @@ public class ServiceLocator : GenericMonoSingleton<ServiceLocator>
     private void Start()
     {
         playerService = new PlayerService();
-        gameManagerService = new GameManagerService(playerPrefab, checkpointPrefab);
+       gameManager= new GameManager();
     }
 
 

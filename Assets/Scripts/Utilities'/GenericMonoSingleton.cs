@@ -9,11 +9,12 @@ public class GenericMonoSingleton<T> : MonoBehaviour where T :GenericMonoSinglet
     public static T Instance {  get { return instance; } }
 
 
-    public void Awake()
+    protected virtual void Awake()
     {
         if(instance== null)
         {
             instance = (T) this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
