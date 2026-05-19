@@ -61,8 +61,8 @@ Transform:
   m_GameObject: {fileID: 8954774230813957949}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.1766, y: -6.6427, z: 0}
-  m_LocalScale: {x: 1.2818816, y: 1.3873333, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2078182104501670246}
@@ -152,9 +152,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.043566465, y: -0.21672809}
+  m_Offset: {x: -0.043566465, y: -0.27244568}
   serializedVersion: 2
-  m_Radius: 0.70251095
+  m_Radius: 0.7582286
 --- !u!95 &939167127609616426
 Animator:
   serializedVersion: 5
@@ -219,7 +219,7 @@ MonoBehaviour:
   idleDuration: 2
   groundDistance: 1.37
   wallDistance: 0.77
+  groundCheck: {fileID: 2078182104501670246}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  groundCheck: {fileID: 2078182104501670246}

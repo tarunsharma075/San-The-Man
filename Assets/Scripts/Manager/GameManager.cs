@@ -10,6 +10,7 @@ public class GameManager
     private GameObject player;
     private GameObject Checkpoint;
     private GameObject currentPlayer;
+    
     public GameManager(GameObject player, GameObject checkpoint)
     {
 
