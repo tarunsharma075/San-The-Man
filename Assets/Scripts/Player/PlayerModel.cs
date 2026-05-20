@@ -25,6 +25,9 @@ public class PlayerModel
     public float KnockbackDuration = 0.1f;
 
 
+   
+
+
 
 
 
@@ -46,6 +49,8 @@ public class PlayerModel
     public bool CanBeKnocked { get; set; } = true;
 
     public Vector2 Velocity { get; set; }
+
+   
 
 
 }

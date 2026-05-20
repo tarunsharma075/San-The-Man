@@ -3,27 +3,44 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class ServiceLocator : GenericMonoSingleton<ServiceLocator>
 {
 
 
-   public  GameManager  gameManager { get; private set; }
+   
     public PlayerService playerService { get; private set; }
+    public GamePlayManagerService gamePlayservice { get; private set; }
 
 
-    //Dependencies
-    [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private GameObject checkpointPrefab;
-    
 
-    private void Start()
+    [SerializeField] private GamePlayManager gamePlayManager;
+
+
+    private void Awake()
     {
+        base.Awake();
         playerService = new PlayerService();
-       gameManager= new GameManager();
+        
+
+    }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        gamePlayManager = FindObjectOfType<GamePlayManager>();
+
+        gamePlayservice = new GamePlayManagerService(gamePlayManager);
+    }
 
 }
 

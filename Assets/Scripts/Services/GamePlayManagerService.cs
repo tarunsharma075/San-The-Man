@@ -1,0 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GamePlayManagerService 
+{
+   private GamePlayManager gamePlayManager;
+
+public GamePlayManagerService(GamePlayManager gamePlayManager)
+{
+        this.gamePlayManager = gamePlayManager;
+}
+
+public void SetNumberofFruits(int currentNumberOffruits) { 
+    
+   gamePlayManager.SetFruits(currentNumberOffruits);
+
+
+    }
+public void IncreaseScore(FruitType fruitType)
+    {
+        gamePlayManager.IncreaseScore(fruitType);
+    }
+
+public void DecreaseHealth()
+    {
+        gamePlayManager.DecreaseHealth();
+    }
+
+}

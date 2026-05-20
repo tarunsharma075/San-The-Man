@@ -8,10 +8,10 @@ using UnityEngine.SceneManagement;
 public class GameManager:GenericMonoSingleton<GameManager>
 {
 
-   [SerializeField] private GameObject player;
-   [SerializeField] private GameObject Checkpoint;
+    [SerializeField]  private GameObject player;
+    private GameObject Checkpoint;
    [SerializeField] private Button newGameButton;
-   
+    private float currentHealth;
      private GameObject currentPlayer;
 
    protected override void Awake()
@@ -23,8 +23,12 @@ public class GameManager:GenericMonoSingleton<GameManager>
     private void Start()
     {
         newGameButton.onClick.AddListener(OnClickNewGameButton);
+
+       
     }
 
+
+  
 
     private void OnEnable()
     {
@@ -38,30 +42,39 @@ public class GameManager:GenericMonoSingleton<GameManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("Scene Loaded");
+        
         if (scene.buildIndex != 0)
         {
             RespawnPlayer();
         }
+
+        
     }
 
     public void RespawnPlayer()
     {
-        Debug.Log("Respawn called");
+        // Guard: catch missing prefab reference early
+        if (player == null)
+        {
+            Debug.LogError("Player prefab is null! Assign a PREFAB (not a scene object) to the 'player' field in GameManager.");
+            return;
+        }
+
         if (currentPlayer != null)
-         {
-                Object.Destroy(currentPlayer);
-                currentPlayer = null;
-         }
+        {
+            Destroy(currentPlayer);
+            currentPlayer = null;
+        }
 
-            
-         currentPlayer = Instantiate(
-                player,
-                Checkpoint.transform.position,
-                Quaternion.identity
-          );
-        
+        Checkpoint = GameObject.FindGameObjectWithTag("Checkpoint");
 
+        if (Checkpoint == null)
+        {
+            Debug.LogError("Checkpoint not found in the scene.");
+            return;
+        }
+
+        currentPlayer = Instantiate(player, Checkpoint.transform.position, Quaternion.identity);
     }
 
     public void OnClickNewGameButton()

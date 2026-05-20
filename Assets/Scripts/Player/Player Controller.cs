@@ -22,10 +22,7 @@ public class PlayerController : MonoBehaviour
 
         playerView = playerView = GetComponentInChildren<PlayerView>();
         rb = this.GetComponent<Rigidbody2D>();
-
-
-
-
+       
 
     }
 
@@ -33,13 +30,11 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
-
-
-        ServiceLocator.Instance.playerService.SetPlayer(this);
-        if (isdead)
+     if (isdead)
         {
             isdead = false;
         }
+        ServiceLocator.Instance.playerService.SetPlayer(this);
     }
 
     
@@ -161,9 +156,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //private void ActivateCyoteJump()=> cyoteJumpActivated = Time.time;
-    //private void CancelCyoyeJump() => cyoteJumpActivated = Time.time - 1;
-
+    
 
 
     private IEnumerator wallJumpRoutine()
@@ -215,6 +208,7 @@ public class PlayerController : MonoBehaviour
         playermodel.CanBeKnocked = false;
         playerView.PlayKnockedAnimation(playermodel);
         Debug.Log("Status of "+playermodel.IsKnocked);
+        ServiceLocator.Instance.gamePlayservice.DecreaseHealth();
         yield return new WaitForSeconds(playermodel.KnockbackDuration);
         playermodel.IsKnocked = false;
         playermodel.CanBeKnocked = true;
@@ -244,9 +238,11 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = 0;
         
         playerView.PlayerDeath();
+      ServiceLocator.Instance.gamePlayservice.DecreaseHealth();
+
         yield return new WaitForSeconds(0.5f);
 
-        ServiceLocator.Instance.gameManager.RespawnPlayer();
+        GameManager.Instance.RespawnPlayer();
 
     }
 
@@ -263,9 +259,9 @@ public void TakeDamage(float Damage)
         return this.gameObject;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log(collision.gameObject, collision.gameObject);
-    }
+    
+
+
+    
 }
 

@@ -1,23 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class FruitManager : MonoBehaviour
+public class FruitController : MonoBehaviour
 {
 
    [SerializeField]private FruitType fruitType;
     private Animator anim;
     [SerializeField] private GameObject vfxGameObject;
-   
+    private static int fruitCount = 0;
+
 
     private void Awake()
     {
         anim=  gameObject.GetComponentInChildren<Animator>();
+
+        fruitCount = 0;
+
+
     }
 
     private void Start()
     {
         SetRandomFruit();
+        fruitCount++;
+        ServiceLocator.Instance.gamePlayservice.SetNumberofFruits(fruitCount);
     }
 
 
@@ -26,10 +34,13 @@ public class FruitManager : MonoBehaviour
         if (collision.GetComponent<PlayerController>() != null)
         {
             Debug.Log("player collieded with fruit");
+            ServiceLocator.Instance.gamePlayservice.IncreaseScore(fruitType);
+            fruitCount--;
+            ServiceLocator.Instance.gamePlayservice.SetNumberofFruits(fruitCount);
             Destroy(this.gameObject);  
             
-            GameObject vfx=  Instantiate(vfxGameObject, this.transform.position,Quaternion.identity);
-            Destroy(vfx,.5f);
+            //GameObject vfx=  Instantiate(vfxGameObject, this.transform.position,Quaternion.identity);
+            //Destroy(vfx,.5f);
         }
     }
 
@@ -39,8 +50,12 @@ public class FruitManager : MonoBehaviour
         int randomindex = Random.Range(0, System.Enum.GetValues(typeof(FruitType)).Length);
         anim.SetFloat("RandomFruit", randomindex);
         fruitType = (FruitType)randomindex;
+        
     }
 
 
     public void Destroyme()=> Destroy(this.gameObject);
+
+
+    
 }

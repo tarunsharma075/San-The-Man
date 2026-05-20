@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1053962785994903679}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.176, y: -0.056, z: 0}
+  m_LocalPosition: {x: -1.176, y: -0.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -226,8 +226,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 4
+  isFacingRight: 0
+  facingDirection: -1
   idleDuration: 0.6
-  groundDistance: 0.75
+  groundDistance: 0.89
   wallDistance: 0.9
   groundCheck: {fileID: 8090872036852779738}
   groundLayer:
