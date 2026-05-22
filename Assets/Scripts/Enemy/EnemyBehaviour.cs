@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBehaviour :Enemy
 {
-   
+    
    protected override void Awake()
     {
         base.Awake();
@@ -28,13 +28,5 @@ public class EnemyBehaviour :Enemy
         }
        
     }
-
-    // just for test this comment is useless
-    // just another comment
-
-
-
-
-
 
 }

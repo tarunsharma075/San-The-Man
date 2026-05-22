@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float movementSpeed;
     [SerializeField] private bool isFacingRight = false;
 
-    protected Animator anim;
-    protected Rigidbody2D rb;
+    [NonSerialized]protected Animator anim;
+    [NonSerialized] protected Rigidbody2D rb;
     [SerializeField] protected int facingDirection = -1;
     [SerializeField]protected float idleDuration;
     protected float idleTimer;

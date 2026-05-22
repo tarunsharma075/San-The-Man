@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2078182104501670246}
-  m_Layer: 8
+  m_Layer: 16
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 939167127609616426}
   - component: {fileID: 574779991401670907}
   - component: {fileID: 1333822735031103159}
-  m_Layer: 8
+  m_Layer: 16
   m_Name: mushroomEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 977043475
-  m_SortingLayer: 4
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_Sprite: {fileID: 1440570835, guid: 3e143943662837d4bb12ccb8687718a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -216,10 +216,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 2
+  isFacingRight: 0
+  facingDirection: -1
   idleDuration: 2
   groundDistance: 1.37
   wallDistance: 0.77
   groundCheck: {fileID: 2078182104501670246}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0

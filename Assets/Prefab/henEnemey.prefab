@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6995972454796226579}
   - component: {fileID: 5236662892539270799}
   - component: {fileID: 754356242420232501}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: henEnemey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 977043475
-  m_SortingLayer: 4
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_Sprite: {fileID: -1425913085, guid: 9cfa459cef82ecd4ea9065c5f1f19be1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -102,13 +102,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 4
+  isFacingRight: 0
+  facingDirection: -1
   idleDuration: 0.2
   groundDistance: 2.4
   wallDistance: 0.4
   groundCheck: {fileID: 7478919520913569720}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!50 &6995972454796226579
 Rigidbody2D:
   serializedVersion: 4
@@ -211,7 +213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7478919520913569720}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}

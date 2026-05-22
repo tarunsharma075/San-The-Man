@@ -14,18 +14,18 @@ TagManager:
   - 
   - Water
   - UI
-  - Ground
   - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - Ground
   - Enemy
   - Player
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   - 
   - 
   - 
@@ -43,6 +43,15 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: sky
+    uniqueID: 865827787
+    locked: 0
+  - name: ShadowTree
+    uniqueID: 3867225893
+    locked: 0
+  - name: Tree
+    uniqueID: 3444307853
     locked: 0
   - name: BackGround
     uniqueID: 2947612181

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7958081231542998321}
   - component: {fileID: 5178929415340799997}
   - component: {fileID: 6838985398059190605}
-  m_Layer: 9
+  m_Layer: 17
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 32768
   playermodel:
     Speed: 5
     JumpForce: 8
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 729543003647722048}
   - component: {fileID: 2427659438124998692}
   - component: {fileID: 8728071573216412412}
-  m_Layer: 9
+  m_Layer: 17
   m_Name: Animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1244159889
-  m_SortingLayer: 6
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: -2023329209, guid: a20a546b163d92b4fbf0f84df467ba48, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

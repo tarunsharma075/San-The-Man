@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3923150053038778691}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 3072588763742303679}
   - component: {fileID: 8588317280050675971}
   - component: {fileID: 4454628855025010143}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: snail_enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 977043475
-  m_SortingLayer: 4
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_Sprite: {fileID: 280593212, guid: df5559ebebc60724fa623b8af8a0eb27, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -205,13 +205,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 0.5
+  isFacingRight: 0
+  facingDirection: -1
   idleDuration: 6
   groundDistance: 2
   wallDistance: 0.68
   groundCheck: {fileID: 3923150053038778691}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!95 &4454628855025010143
 Animator:
   serializedVersion: 5

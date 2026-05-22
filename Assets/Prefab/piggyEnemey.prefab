@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5087378677296680207}
   - component: {fileID: 629566858843016338}
   - component: {fileID: 6590369583519274772}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: piggyEnemey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 977043475
-  m_SortingLayer: 4
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_Sprite: {fileID: -379631352, guid: 051635cd03488ee4694739daff3a695b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -129,13 +129,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 1
+  isFacingRight: 0
+  facingDirection: -1
   idleDuration: 2.5
   groundDistance: 1.4
   wallDistance: 0.37
   groundCheck: {fileID: 3689497053982926381}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!95 &629566858843016338
 Animator:
   serializedVersion: 5
@@ -211,7 +213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3689497053982926381}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}

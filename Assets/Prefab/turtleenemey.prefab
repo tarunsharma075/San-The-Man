@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3522991992989714655}
   - component: {fileID: 6366796125931437928}
   - component: {fileID: 1330859647485656876}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: turtleenemey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 977043475
-  m_SortingLayer: 4
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_Sprite: {fileID: 490477661, guid: 8275627fa677db7439cf5ec400d41b43, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -128,6 +128,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 0
+  isFacingRight: 0
+  facingDirection: -1
   idleDuration: 0
   groundDistance: 0.4
   wallDistance: 0
@@ -137,7 +139,7 @@ MonoBehaviour:
     m_Bits: 0
   playerLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   playerdistance: 1.12
 --- !u!95 &6366796125931437928
 Animator:
