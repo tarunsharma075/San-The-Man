@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 3694429394439687833}
   m_Layer: 16
   m_Name: rabbitEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -224,4 +224,4 @@ MonoBehaviour:
   groundCheck: {fileID: 3282402570840985233}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32768

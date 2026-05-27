@@ -23,12 +23,18 @@ public class Enemy : MonoBehaviour
     protected bool IsGrounded;
     protected bool IsWallDetected;
 
+    protected float enemyhealth = 3;
+    protected float currentHealth;
+
+    
+
 
 
     protected virtual void Awake()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        currentHealth = enemyhealth;
     }
 
 
@@ -102,14 +108,38 @@ protected virtual void Update()
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerController player = collision.GetComponent<PlayerController>();
+        if (collision.CompareTag("Player"))
+        {
+            ServiceLocator.Instance.playerService.TakeDamage();
+            ServiceLocator.Instance.gamePlayservice.DecreaseHealth();
+        }
 
-        if (player == null) return;
+        if (collision.CompareTag("PlayerBullet")){
+            
 
-
-        ServiceLocator.Instance.playerService.TakeDamage(1);
-
+            TakeDamage();
+        }
     }
+
+    protected virtual void SetHealth(float newHealth) { 
+    
+      enemyhealth = newHealth;
+
+        
+    }
+
+
+    private void TakeDamage()
+    {
+        currentHealth--;
+        if (currentHealth <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+
+
 }

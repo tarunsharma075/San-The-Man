@@ -1,10 +1,11 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneTemplate;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.IO.LowLevel.Unsafe;
+using Cinemachine;
 public class GameManager:GenericMonoSingleton<GameManager>
 {
 
@@ -14,7 +15,9 @@ public class GameManager:GenericMonoSingleton<GameManager>
     private float currentHealth;
      private GameObject currentPlayer;
 
-   protected override void Awake()
+    private CinemachineVirtualCamera virtualCamera;
+
+    protected override void Awake()
     {
         base.Awake();
         
@@ -45,6 +48,7 @@ public class GameManager:GenericMonoSingleton<GameManager>
         
         if (scene.buildIndex != 0)
         {
+            SetVirtualCamera();
             RespawnPlayer();
         }
 
@@ -75,10 +79,51 @@ public class GameManager:GenericMonoSingleton<GameManager>
         }
 
         currentPlayer = Instantiate(player, Checkpoint.transform.position, Quaternion.identity);
+        SetCameraFollow();
+        
     }
 
     public void OnClickNewGameButton()
     {
         SceneManager.LoadScene(1);
     }
+
+    private void SetVirtualCamera()
+    {
+        GameObject vcamObject = GameObject.FindGameObjectWithTag("virtualCamera");
+
+        if (vcamObject == null)
+        {
+            Debug.LogError("Virtual Camera not found.");
+            return;
+        }
+
+        virtualCamera = vcamObject.GetComponent<CinemachineVirtualCamera>();
+
+        if (virtualCamera == null)
+        {
+            Debug.LogError("CinemachineVirtualCamera component not found.");
+        }
+    }
+
+    private void SetCameraFollow()
+    {
+        if (virtualCamera == null)
+        {
+            SetVirtualCamera();
+        }
+
+        if (virtualCamera == null || currentPlayer == null)
+        {
+            return;
+        }
+
+        virtualCamera.Follow = currentPlayer.transform;
+        virtualCamera.LookAt = null;
+        virtualCamera.PreviousStateIsValid = false;
+
+        Debug.Log("Camera now following: " + virtualCamera.Follow.name);
+    }
+
+
 }

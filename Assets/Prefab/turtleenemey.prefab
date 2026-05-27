@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1330859647485656876}
   m_Layer: 16
   m_Name: turtleenemey
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,10 +136,10 @@ MonoBehaviour:
   groundCheck: {fileID: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32768
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 131072
   playerdistance: 1.12
 --- !u!95 &6366796125931437928
 Animator:

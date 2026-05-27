@@ -501,6 +501,10 @@ PrefabInstance:
       propertyPath: facingDirection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2127540000869729853, guid: 83a70599595f4974e9949c9ec135b186, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 32768
+      objectReference: {fileID: 0}
     - target: {fileID: 4909496157403477834, guid: 83a70599595f4974e9949c9ec135b186, type: 3}
       propertyPath: m_Name
       value: rinoEnemy
@@ -1051,7 +1055,7 @@ GameObject:
   - component: {fileID: 1152414543}
   - component: {fileID: 1152414542}
   - component: {fileID: 1152414544}
-  m_Layer: 6
+  m_Layer: 15
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}

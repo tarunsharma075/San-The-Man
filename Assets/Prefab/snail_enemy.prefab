@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 4454628855025010143}
   m_Layer: 16
   m_Name: snail_enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   groundCheck: {fileID: 3923150053038778691}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32768
 --- !u!95 &4454628855025010143
 Animator:
   serializedVersion: 5

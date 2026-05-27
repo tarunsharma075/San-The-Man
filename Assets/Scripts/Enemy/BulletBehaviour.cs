@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
@@ -26,8 +27,16 @@ public class BulletBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")){
+        if (this.gameObject.CompareTag("EnemyBullet")&&collision.CompareTag("Player")){
+            Destroy(this.gameObject);
+            ServiceLocator.Instance.playerService.TakeDamage();
+            ServiceLocator.Instance.gamePlayservice.DecreaseHealth();
+        }
+
+        if (this.gameObject.CompareTag("PlayerBullet") && collision.CompareTag("Enemy"))
+        {
             Destroy(this.gameObject);
         }
+        
     }
 }

@@ -7,6 +7,10 @@ TagManager:
   - DeathZone
   - Traps
   - Checkpoint
+  - EnemyBullet
+  - PlayerBullet
+  - Enemy
+  - virtualCamera
   layers:
   - Default
   - TransparentFX
@@ -26,7 +30,7 @@ TagManager:
   - Ground
   - Enemy
   - Player
-  - 
+  - AttackingEnemy
   - 
   - 
   - 

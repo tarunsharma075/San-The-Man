@@ -12,11 +12,11 @@ public class PlayerService
         playerController = player;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage()
     {
         if (playerController == null) return;
 
-        playerController.TakeDamage(damage);
+        playerController.TakeDamage();
     }
 
     public GameObject GetPlayer()

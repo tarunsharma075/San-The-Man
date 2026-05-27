@@ -8,7 +8,7 @@ public class FruitController : MonoBehaviour
 
    [SerializeField]private FruitType fruitType;
     private Animator anim;
-    [SerializeField] private GameObject vfxGameObject;
+    //[SerializeField] private GameObject vfxGameObject;
     private static int fruitCount = 0;
 
 

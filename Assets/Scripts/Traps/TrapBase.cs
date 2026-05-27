@@ -23,7 +23,7 @@ public class TrapBase : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            ServiceLocator.Instance.playerService.TakeDamage(damage);
+            ServiceLocator.Instance.playerService.TakeDamage();
 
             Debug.Log(
                 "Player took damage from: " + gameObject.name

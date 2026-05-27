@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6590369583519274772}
   m_Layer: 16
   m_Name: piggyEnemey
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
   groundCheck: {fileID: 3689497053982926381}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32768
 --- !u!95 &629566858843016338
 Animator:
   serializedVersion: 5

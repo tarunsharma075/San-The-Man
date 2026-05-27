@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallingPlatform : TrapBase
+public class FallingPlatform:MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float travelDistance;
@@ -12,17 +12,17 @@ public class FallingPlatform : TrapBase
     private int index;
     private bool isPlayerOnPlatform;
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
+        
         SetUpWaypoints();
     }
 
-    protected override void Update()
+    private  void Update()
     {
         if (isPlayerOnPlatform)
         {
-            transform.position = new Vector2(
+            this.transform.position = new Vector2(
                 transform.position.x,
                 transform.position.y - fallSpeed * Time.deltaTime
             );
@@ -56,12 +56,9 @@ public class FallingPlatform : TrapBase
         }
     }
 
-     protected   override void  OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
-
-
-        PlayerController player = collision.GetComponent<PlayerController>();
-
+        PlayerController player = collision.gameObject.GetComponent<PlayerController>();
 
         if (player == null) return;
         {
@@ -72,9 +69,9 @@ public class FallingPlatform : TrapBase
         }
     }
 
-    private void  OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        PlayerController player = collision.GetComponent<PlayerController>();
+        PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (player != null)
         {
             isPlayerOnPlatform = false;

@@ -7,11 +7,12 @@ public class PlayerView : MonoBehaviour
 {
 
     private Animator anim;
-
+    private PlayerController playerController;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
+        playerController = GetComponentInParent<PlayerController>();
     }
 
 
@@ -35,7 +36,13 @@ public class PlayerView : MonoBehaviour
         anim.SetTrigger("Death");
     }
 
-   
-
+   public void Attack()
+    {
+        anim.SetTrigger("Attack");  
+    }
+    public void SpawnBullet()
+    {
+        playerController.FireBullet();
+    }
 
 }

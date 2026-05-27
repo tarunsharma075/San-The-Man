@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
    [SerializeField] private PlayerModel playermodel;
     private PlayerView playerView;
+    [SerializeField] private GameObject bulletInstance;
+    [SerializeField] private  Transform spwanPoint;
+    [SerializeField] private float cooldown;
+    private float time;
 
     private void Awake()
     {
@@ -35,24 +39,26 @@ public class PlayerController : MonoBehaviour
             isdead = false;
         }
         ServiceLocator.Instance.playerService.SetPlayer(this);
+        
     }
 
     
     void Update()
     {
- if (playermodel.IsKnocked)
-            return;
-    
- if(isdead )return;
+        if (playermodel.IsKnocked) return;
+        if (isdead) return;
 
-        Inputhandling();
         CheckCollision();
+        Inputhandling();
         HandleWallSlide();
         HandleAirborne();
         HandleFlip();
-        playermodel.Velocity= rb.velocity;
+
+        playermodel.Velocity = rb.velocity;
         playerView.UpdateAnimation(playermodel);
-        
+
+
+
     }
 
     private void HandleWallSlide()
@@ -68,15 +74,27 @@ public class PlayerController : MonoBehaviour
 
     private void Inputhandling()
     {
-         playermodel.XInput = Input.GetAxisRaw("Horizontal");
+        playermodel.XInput = Input.GetAxisRaw("Horizontal");
         playermodel.YInput = Input.GetAxisRaw("Vertical");
         PlayerMovement(playermodel.XInput);
         if (Input.GetKeyDown(KeyCode.Space))
         {
-           JumpButton();
+            JumpButton();
 
         }
-       
+        //HandleAttack();
+
+    }
+
+    private void HandleAttack()
+    {
+        time -= Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Mouse0) && time <= 0)
+        {
+            playerView.Attack();
+            time = cooldown;
+
+        }
     }
 
     private  void  JumpButton()
@@ -121,13 +139,19 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerMovement(float xinput)
     {
-        if (playermodel.IsWallDetected)
-            return;
+        //if (playermodel.IsWallDetected)
+        //    return;
+
+        //if (playermodel.IsWallJumping)
+
+        //    return;
+        //rb.velocity = new Vector2(xinput * playermodel.Speed ,rb.velocity.y);
+        //Debug.Log(rb.velocity.x);
 
         if (playermodel.IsWallJumping)
-
             return;
-        rb.velocity = new Vector2(xinput * playermodel.Speed ,rb.velocity.y);
+
+        rb.velocity = new Vector2(xinput * playermodel.Speed, rb.velocity.y);
     }
 
     private void PlayerJump() => rb.velocity = new Vector2(rb.velocity.x, playermodel.JumpForce);
@@ -228,6 +252,8 @@ public class PlayerController : MonoBehaviour
             PlayerKnockBack();
 
         }
+
+       
     }
 
     IEnumerator  PlayreDie()
@@ -248,7 +274,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-public void TakeDamage(float Damage)
+public void TakeDamage()
     {
         PlayerKnockBack();
     }
@@ -259,9 +285,21 @@ public void TakeDamage(float Damage)
         return this.gameObject;
     }
 
-    
 
+  public void  FireBullet()
+    {
+        GameObject PeaBullet = Instantiate(bulletInstance, spwanPoint.transform.position, Quaternion.identity);
+    }
 
-    
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        Debug.Log("Touching: " + collision.gameObject.name);
+
+        foreach (ContactPoint2D point in collision.contacts)
+        {
+            Debug.Log("Normal: " + point.normal);
+        }
+    }
+
 }
 
