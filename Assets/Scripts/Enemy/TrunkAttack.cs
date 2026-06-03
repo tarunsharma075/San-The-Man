@@ -14,6 +14,7 @@ public class TrunkAttack : EnemyBehaviour
     private bool canattack = false;
 
     private bool isplayerdetected = false;
+    [SerializeField] private float startingtime;
 
     protected override void Awake()
     {
@@ -22,14 +23,17 @@ public class TrunkAttack : EnemyBehaviour
 
     protected override void Update()
     {
-        base.Update();
-        isplayerdetected = Physics2D.Raycast(this.transform.position,
-            Vector2.right * facingDirection, playerdistance
-            , playerLayer);
+        startingtime -= Time.deltaTime;
+        if (startingtime < 0)
+        {
+            base.Update();
+            isplayerdetected = Physics2D.Raycast(this.transform.position,
+                Vector2.right * facingDirection, playerdistance
+                , playerLayer);
 
-        if (isplayerdetected)
-            Attack();
-        
+            if (isplayerdetected)
+                Attack();
+        }
 
     }
 

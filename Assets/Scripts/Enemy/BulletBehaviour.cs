@@ -30,7 +30,7 @@ public class BulletBehaviour : MonoBehaviour
         if (this.gameObject.CompareTag("EnemyBullet")&&collision.CompareTag("Player")){
             Destroy(this.gameObject);
             ServiceLocator.Instance.playerService.TakeDamage();
-            ServiceLocator.Instance.gamePlayservice.DecreaseHealth();
+           
         }
 
         if (this.gameObject.CompareTag("PlayerBullet") && collision.CompareTag("Enemy"))

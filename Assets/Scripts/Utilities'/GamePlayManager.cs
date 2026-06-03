@@ -13,7 +13,8 @@ public class GamePlayManager : MonoBehaviour
     private int currentScore;
     [SerializeField]private int currentNumberFruits;
  [SerializeField]   private float  currentHealth=3;
-   void Start()
+    [SerializeField]Vector3 spawnOffset = new Vector3(0, 1f, 0);
+    void Start()
     {
         spawnEnemies();
         
@@ -29,7 +30,7 @@ public class GamePlayManager : MonoBehaviour
 
     private void spawnEnemies()
     {
-        Vector3 spawnOffset = new Vector3(0, 1f, 0);
+        
 
         for (int i = 0; i < spawnPoints.Length; i++)
         {
@@ -39,7 +40,7 @@ public class GamePlayManager : MonoBehaviour
             Quaternion.identity);
 
 
-            //currentSpawnEnemy.transform.position += spawnOffset;
+            currentSpawnEnemy.transform.position += spawnOffset;
         }
     }
 

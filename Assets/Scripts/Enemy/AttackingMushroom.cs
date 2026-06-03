@@ -11,7 +11,7 @@ public class AttackingMushroom : EnemyBehaviour
     private float timer = 0;
     [SerializeField] protected float cooldownTime;
     [SerializeField] private Collider2D attackHitbox;
-
+    
 
     protected override void Awake()
     {
@@ -19,14 +19,18 @@ public class AttackingMushroom : EnemyBehaviour
         base.Awake();
         timer = cooldownTime;
         attackHitbox.enabled = false;
+        
     }
 
   
    protected override void Update()
     {
-       base.Update();
-        CheckPlayerCollision();
-        Attack();
+        
+        
+            base.Update();
+            CheckPlayerCollision();
+            Attack();
+        
     }
 
 

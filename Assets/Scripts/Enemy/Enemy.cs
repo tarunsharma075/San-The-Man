@@ -123,6 +123,15 @@ protected virtual void Update()
         }
     }
 
+    protected  virtual  void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            ServiceLocator.Instance.playerService.TakeDamage();
+            
+        }
+    }
+
     protected virtual void SetHealth(float newHealth) { 
     
       enemyhealth = newHealth;
