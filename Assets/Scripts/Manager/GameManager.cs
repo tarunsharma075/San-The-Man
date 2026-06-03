@@ -12,7 +12,7 @@ public class GameManager:GenericMonoSingleton<GameManager>
     [SerializeField]  private GameObject player;
     private GameObject Checkpoint;
    [SerializeField] private Button newGameButton;
-    private float currentHealth;
+    
      private GameObject currentPlayer;
 
     private CinemachineVirtualCamera virtualCamera;
@@ -122,7 +122,7 @@ public class GameManager:GenericMonoSingleton<GameManager>
         virtualCamera.LookAt = null;
         virtualCamera.PreviousStateIsValid = false;
 
-        Debug.Log("Camera now following: " + virtualCamera.Follow.name);
+        //Debug.Log("Camera now following: " + virtualCamera.Follow.name);
     }
 
 

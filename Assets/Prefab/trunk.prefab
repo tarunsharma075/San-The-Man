@@ -262,5 +262,5 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 131072
-  playerdistance: 3.56
-  cooldownTime: 1.5
+  playerdistance: 3.96
+  cooldownTime: 0.5

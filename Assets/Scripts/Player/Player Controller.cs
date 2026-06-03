@@ -139,17 +139,16 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerMovement(float xinput)
     {
-        //if (playermodel.IsWallDetected)
-        //    return;
-
-        //if (playermodel.IsWallJumping)
-
-        //    return;
-        //rb.velocity = new Vector2(xinput * playermodel.Speed ,rb.velocity.y);
-        //Debug.Log(rb.velocity.x);
+        if (playermodel.IsWallDetected)
+            return;
 
         if (playermodel.IsWallJumping)
+
             return;
+        rb.velocity = new Vector2(xinput * playermodel.Speed, rb.velocity.y);
+       
+
+       
 
         rb.velocity = new Vector2(xinput * playermodel.Speed, rb.velocity.y);
     }
@@ -293,11 +292,11 @@ public void TakeDamage()
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        Debug.Log("Touching: " + collision.gameObject.name);
+       
 
         foreach (ContactPoint2D point in collision.contacts)
         {
-            Debug.Log("Normal: " + point.normal);
+            //Debug.Log("Normal: " + point.normal);
         }
     }
 

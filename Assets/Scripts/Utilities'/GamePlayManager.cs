@@ -12,13 +12,19 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI health;
     private int currentScore;
     [SerializeField]private int currentNumberFruits;
-    private int currentHealth;
-    void Start()
+ [SerializeField]   private float  currentHealth=3;
+   void Start()
     {
         spawnEnemies();
-        currentHealth = 3;
-        health.text = "HEALTH: " + currentHealth;
+        
+        UpdateHealthUI();
+        Debug.Log(currentHealth);
 
+    }
+
+    private void UpdateHealthUI()
+    {
+        health.text = "HEALTH: " + currentHealth.ToString();
     }
 
     private void spawnEnemies()
@@ -33,7 +39,7 @@ public class GamePlayManager : MonoBehaviour
             Quaternion.identity);
 
 
-            currentSpawnEnemy.transform.position += spawnOffset;
+            //currentSpawnEnemy.transform.position += spawnOffset;
         }
     }
 
@@ -88,6 +94,8 @@ public class GamePlayManager : MonoBehaviour
     private void Update()
     {
         WinCondition();
+        
+       
 
     }
 
