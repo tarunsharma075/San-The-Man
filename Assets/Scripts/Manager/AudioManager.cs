@@ -5,8 +5,8 @@ using UnityEngine;
 public class AudioManager : GenericMonoSingleton<AudioManager>
 {
 
-    private AudioSource backgroundScore;
-    private AudioSource gameSFXSounds;
+    [SerializeField] private AudioSource backgroundScore;
+    [SerializeField] private AudioSource gameSFXSounds;
 
     [SerializeField] private AudioClip backgroundTheme;
     [SerializeField] private AudioClip playerJump;
@@ -15,31 +15,39 @@ public class AudioManager : GenericMonoSingleton<AudioManager>
     [SerializeField] private AudioClip playerDeath;
     [SerializeField] private AudioClip ButtonClicked;
 
-    private void Awake()
+    protected override void Awake()
     {
-        backgroundScore = GetComponent<AudioSource>();
-        gameSFXSounds = GetComponent<AudioSource>();
+        base.Awake();
+        AssignClip();
     }
 
-    private void Start()
+   
+ 
+
+        private void Start()
+        {
+            if (Instance != this) return;
+
+            Debug.Log($"clip={backgroundScore.clip}, volume={backgroundScore.volume}, mute={backgroundScore.mute}, isPlaying={backgroundScore.isPlaying}");
+
+            if (backgroundScore != null && backgroundScore.clip != null)
+            {
+                backgroundScore.Play();
+                Debug.Log("isPlaying after Play(): " + backgroundScore.isPlaying);
+            }
+        }
+
+
+    
+
+    private void AssignClip()
     {
-        if (backgroundScore != null && backgroundTheme != null)
+        if (backgroundScore == null || backgroundTheme == null)
         {
-            backgroundScore.Play();
+            Debug.LogError("backgroundScore or backgroundTheme is not assigned in the Inspector!");
+            return;
         }
-        else
-        {
-            if (backgroundScore == null)
-            {
-                Debug.Log("backgroubd Audio Source is null");
-            }
-            else if (backgroundTheme == null)
-            {
-                Debug.Log("background theme is null");
-            }
-        }
-
-
+        backgroundScore.clip = backgroundTheme;
     }
 
     public void PlaySFXSounds(SoundTypes soundToUsed)
@@ -68,7 +76,7 @@ public class AudioManager : GenericMonoSingleton<AudioManager>
                         Debug.Log("Player Hit sound is null");
                         return;
                     }
-                    gameSFXSounds.PlayOneShot(playerHit);
+                    gameSFXSounds.PlayOneShot(playerDeath);
                     break;
                 }
 

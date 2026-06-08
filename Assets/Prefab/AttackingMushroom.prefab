@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e379a3a0e2f0d814e9f603c95610a56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 2
+  movementSpeed: 3.5
   isFacingRight: 0
   facingDirection: -1
   idleDuration: 0
@@ -168,7 +168,6 @@ MonoBehaviour:
   center: {fileID: 878655699070717264}
   cooldownTime: 1
   attackHitbox: {fileID: 4242450299022088405}
-  startingTime: 0.7
 --- !u!70 &3404455072095205542
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -12,11 +12,11 @@ public class ServiceLocator : GenericMonoSingleton<ServiceLocator>
    
     public PlayerService playerService { get; private set; }
     public GamePlayManagerService gamePlayservice { get; private set; }
-
+    public AudioService audioService { get; private set; }  
 
 
     private GamePlayManager gamePlayManager;
-
+    private AudioManager audioManager;
 
     private void Awake()
     {
@@ -38,8 +38,10 @@ public class ServiceLocator : GenericMonoSingleton<ServiceLocator>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         gamePlayManager = FindObjectOfType<GamePlayManager>();
+        audioManager = FindObjectOfType<AudioManager>();
 
         gamePlayservice = new GamePlayManagerService(gamePlayManager);
+        audioService = new AudioService(audioManager);
     }
 
 }

@@ -35,6 +35,7 @@ public class FruitController : MonoBehaviour
         {
             Debug.Log("player collieded with fruit");
             ServiceLocator.Instance.gamePlayservice.IncreaseScore(fruitType);
+            ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.FruitCollect);
             fruitCount--;
             ServiceLocator.Instance.gamePlayservice.SetNumberofFruits(fruitCount);
             Destroy(this.gameObject);  

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6366796125931437928}
   - component: {fileID: 1330859647485656876}
   - component: {fileID: 1884381291200815760}
+  - component: {fileID: 3378369985740212733}
   m_Layer: 16
   m_Name: turtleenemey
   m_TagString: Enemy
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 5654708229541811153}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.71, y: -7.25, z: 0}
+  m_LocalPosition: {x: -10.732, y: -7.233, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -170,7 +171,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5654708229541811153}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -195,9 +196,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0069854856, y: 0.31}
+  m_Offset: {x: -0.0069851875, y: 0.24523616}
   serializedVersion: 2
-  m_Radius: 0.764414
+  m_Radius: 0.9673705
 --- !u!61 &1884381291200815760
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -230,7 +231,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00000047683716, y: -0.6522944}
+  m_Offset: {x: 0.010872364, y: -0.78136134}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -241,5 +242,61 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.0835981, y: 0.24732351}
+  m_Size: {x: 1.7429209, y: 0.082493305}
   m_EdgeRadius: 0
+--- !u!60 &3378369985740212733
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5654708229541811153}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.75, y: 1.625}
+    newSize: {x: 2.75, y: 1.625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.5875206, y: 0.39731598}
+      - {x: -0.94513226, y: -0.07988739}
+      - {x: -0.96251965, y: -0.71686697}
+      - {x: -0.8196564, y: -0.72009563}
+      - {x: -0.5810118, y: -0.71706295}
+      - {x: 0.035565376, y: -0.7027354}
+      - {x: 1.0380611, y: -0.6994786}
+      - {x: 1.0377579, y: -0.28899145}
+      - {x: 0.8511419, y: 0.1706934}
+      - {x: 0.62382984, y: 0.3773861}
+      - {x: 0.60925484, y: 0.46686697}
+  m_UseDelaunayMesh: 0

@@ -145,15 +145,23 @@ public class PlayerController : MonoBehaviour
         if (playermodel.IsWallJumping)
 
             return;
+
+        
+
         rb.velocity = new Vector2(xinput * playermodel.Speed, rb.velocity.y);
        
 
        
 
-        rb.velocity = new Vector2(xinput * playermodel.Speed, rb.velocity.y);
+       
     }
 
-    private void PlayerJump() => rb.velocity = new Vector2(rb.velocity.x, playermodel.JumpForce);
+    private void PlayerJump()
+    { rb.velocity = new Vector2(rb.velocity.x, playermodel.JumpForce);
+    
+    ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerJump);
+
+    }
 
     private void CheckCollision()
     {
@@ -166,6 +174,7 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(wallJumpRoutine());
         playermodel.IsWallJumping= false;
         playermodel.CanDoubleJump = false;
+        ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerJump);
         rb.velocity = new Vector2(rb.velocity.x, playermodel.DoubleJumpForce);
     }
 
@@ -173,6 +182,7 @@ public class PlayerController : MonoBehaviour
     {
         playermodel.CanDoubleJump = true;
         rb.velocity = new Vector2(playermodel.WallJumpForce.x*-playermodel.FacingDirection, playermodel.WallJumpForce.y);
+        ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerJump);
         FlipPlayer();
         StopAllCoroutines();
         StartCoroutine(wallJumpRoutine());
@@ -229,6 +239,7 @@ public class PlayerController : MonoBehaviour
     {
         playermodel.IsKnocked = true;
         playermodel.CanBeKnocked = false;
+        ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerHit);
         playerView.PlayKnockedAnimation(playermodel);
         Debug.Log("Status of "+playermodel.IsKnocked);
         ServiceLocator.Instance.gamePlayservice.DecreaseHealth();

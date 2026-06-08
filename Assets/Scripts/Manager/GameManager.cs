@@ -85,6 +85,7 @@ public class GameManager:GenericMonoSingleton<GameManager>
 
     public void OnClickNewGameButton()
     {
+        ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.ButtonClicked);
         SceneManager.LoadScene(1);
     }
 
