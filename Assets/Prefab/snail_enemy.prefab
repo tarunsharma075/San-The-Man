@@ -42,10 +42,10 @@ GameObject:
   - component: {fileID: 4886776487693635484}
   - component: {fileID: 4813023312695147917}
   - component: {fileID: 1859059810191687814}
-  - component: {fileID: 3072588763742303679}
   - component: {fileID: 8588317280050675971}
   - component: {fileID: 4454628855025010143}
   - component: {fileID: 4632714990005440860}
+  - component: {fileID: 285341851819691429}
   m_Layer: 16
   m_Name: snail_enemy
   m_TagString: Enemy
@@ -148,51 +148,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &3072588763742303679
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5138639216540588430}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.12663376, y: -0.68050396}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.375, y: 1.5}
-    newSize: {x: 2.375, y: 1.5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.923259, y: 0.08652258}
-  m_EdgeRadius: 0
 --- !u!114 &8588317280050675971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,7 +163,7 @@ MonoBehaviour:
   movementSpeed: 0.5
   isFacingRight: 0
   facingDirection: -1
-  idleDuration: 6
+  idleDuration: 0
   groundDistance: 2
   wallDistance: 0.68
   groundCheck: {fileID: 3923150053038778691}
@@ -281,3 +236,38 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6461569, y: 0.63072187}
   m_EdgeRadius: 0
+--- !u!70 &285341851819691429
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5138639216540588430}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.11205935, y: -0.6913584}
+  m_Size: {x: 1.9908723, y: 0.09773721}
+  m_Direction: 1

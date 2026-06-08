@@ -11,7 +11,7 @@ public class AttackingMushroom : EnemyBehaviour
     private float timer = 0;
     [SerializeField] protected float cooldownTime;
     [SerializeField] private Collider2D attackHitbox;
-    
+    private bool shouldcchasePlayer = false;
 
     protected override void Awake()
     {
@@ -22,17 +22,20 @@ public class AttackingMushroom : EnemyBehaviour
         
     }
 
-  
-   protected override void Update()
-    {
-        
-        
-            base.Update();
-            CheckPlayerCollision();
-            Attack();
-        
-    }
 
+    protected override void Update()
+    {
+      
+
+
+        base.Update();
+        CheckPlayerCollision();
+        Attack();
+        chasePlayer();
+
+
+    }
+   
 
     public  void CheckPlayerCollision()
     {
@@ -72,19 +75,13 @@ public class AttackingMushroom : EnemyBehaviour
 
             if (distanceToPlayer > 2f)
             {
-                Vector2 targetPosition = new Vector2(
-                    player.position.x,
-                    rb.position.y
-                );
-
-                rb.MovePosition(Vector2.MoveTowards(
-                    rb.position,
-                    targetPosition,
-                    movementSpeed * Time.deltaTime*2
-                ));
+                shouldcchasePlayer = true;
+               
             }
             else
             {
+                shouldcchasePlayer = false;
+
                 this.rb.velocity= Vector2.zero;
                 anim.SetFloat("Xvelocity", 0);
 
@@ -98,8 +95,7 @@ public class AttackingMushroom : EnemyBehaviour
                 }
             }
             
-            //Debug.Log("X Velocity: " + rb.velocity.x);
-            //Debug.Log("Distance to Player: " + distanceToPlayer);
+          ;
         }
      
     }
@@ -123,6 +119,21 @@ public class AttackingMushroom : EnemyBehaviour
         
 
         base.OnTriggerEnter2D(collision);
+    }
+
+
+    private void chasePlayer()
+    {
+        if (!shouldcchasePlayer || ServiceLocator.Instance==null|| IsGrounded) return;
+
+        Vector2 targetPosition = new Vector2(ServiceLocator.Instance.playerService.GetPlayer().transform.position.x
+            , rb.position.y);
+
+        rb.MovePosition(Vector2.MoveTowards(
+            rb.position,
+            targetPosition,
+            movementSpeed * Time.fixedDeltaTime
+        ));
     }
 
 }

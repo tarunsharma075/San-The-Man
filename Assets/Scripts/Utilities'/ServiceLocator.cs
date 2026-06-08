@@ -15,7 +15,7 @@ public class ServiceLocator : GenericMonoSingleton<ServiceLocator>
 
 
 
-    [SerializeField] private GamePlayManager gamePlayManager;
+    private GamePlayManager gamePlayManager;
 
 
     private void Awake()

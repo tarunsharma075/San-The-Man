@@ -72,10 +72,19 @@ protected virtual void Update()
     {
         if (idleTimer > 0) return;
 
+       
+
         if (IsGrounded)
         {
             rb.velocity = new Vector2(movementSpeed * facingDirection, rb.velocity.y);
         }
+        else if (IsWallDetected)
+        {
+            FlipPlayer();
+            idleTimer = idleDuration;
+
+        }
+
     }
     protected void FlipPlayer()
     {
@@ -113,7 +122,7 @@ protected virtual void Update()
         if (collision.CompareTag("Player"))
         {
             ServiceLocator.Instance.playerService.TakeDamage();
-            ServiceLocator.Instance.gamePlayservice.DecreaseHealth();
+            
         }
 
         if (collision.CompareTag("PlayerBullet")){

@@ -40,7 +40,7 @@ public class GamePlayManager : MonoBehaviour
             Quaternion.identity);
 
 
-            currentSpawnEnemy.transform.position += spawnOffset;
+            
         }
     }
 

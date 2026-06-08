@@ -121,7 +121,7 @@ MonoBehaviour:
     WallJumpForce: {x: 7, y: 7}
     GroundCheckDist: 1.13
     WallCheckDist: 0.71
-    KnockbackDistance: {x: 8, y: 5}
+    KnockbackDistance: {x: 11, y: 5}
     KnockbackDuration: 0.4
   bulletInstance: {fileID: 7756620446673075455, guid: c55ddb7d163a44449bcd382bbf8bd778, type: 3}
   spwanPoint: {fileID: 8293018108622957553}
