@@ -14,6 +14,7 @@ public class PlayerService
 
     public void TakeDamage()
     {
+        Debug.Log("PlayerDamage is called");
         if (playerController == null) return;
 
         playerController.TakeDamage();

@@ -51,25 +51,32 @@ public class PlayerController : MonoBehaviour
         CheckCollision();
         Inputhandling();
         HandleWallSlide();
-        HandleAirborne();
         HandleFlip();
 
         playermodel.Velocity = rb.velocity;
         playerView.UpdateAnimation(playermodel);
 
-
+        Debug.Log("Wall Jump Velocity = " +
+    new Vector2(
+        playermodel.WallJumpForce.x * -playermodel.FacingDirection,
+        playermodel.WallJumpForce.y));
 
     }
 
     private void HandleWallSlide()
     {
-        bool canWeSlide = playermodel.IsWallDetected&& rb.velocity.y < 0;
-        if (!canWeSlide)
+
+        if (!CanWallSlide())
+        {
             return;
 
-        float yModifer= playermodel.YInput < 0 ? 0.5f :1 ;
+        }
+        else if (CanWallSlide())
+        {
+            float yModifer = playermodel.YInput < 0 ? 0.5f : 1;
 
-        rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * yModifer);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * yModifer);
+        }
     }
 
     private void Inputhandling()
@@ -101,78 +108,118 @@ public class PlayerController : MonoBehaviour
 
     {
         
-        if (playermodel.IsGrounded)
+        if (playermodel.CurrentPlayerState==PlayerState.PlayerGrounded)
         {
             
             PlayerJump();
         }
-        else if (playermodel.IsWallDetected&& !playermodel.IsGrounded) {
+        else if (
+            playermodel.IsWallDetected&&playermodel.CurrentPlayerState==PlayerState.WallSliding) {
 
             WallJump();
-        
+            
+
         }
 
 
 
-        else if (playermodel.CanDoubleJump)
+        else if (playermodel.CurrentPlayerState == PlayerState.PlayerAirborne && playermodel.CanDoubleJump)
         {
             DoubleJump();
             playermodel.CanDoubleJump= false;
         }
     }
 
-    private void HandleAirborne()
-    {
-        if (playermodel.IsGrounded && playermodel.IsAirborne)
-        {
-            playermodel.IsAirborne = false;
-            playermodel.CanDoubleJump= true;
-        }
-        else if(!playermodel.IsGrounded && !playermodel.IsAirborne)
-        {
-            playermodel.IsAirborne = true;
 
-
-            
-        }
-    }
 
     private void PlayerMovement(float xinput)
     {
-        if (playermodel.IsWallDetected)
+        if (playermodel.CurrentPlayerState == PlayerState.PlayerKnocked ||
+        playermodel.CurrentPlayerState == PlayerState.PlayerDead ||
+        playermodel.CurrentPlayerState == PlayerState.WallSliding||
+        playermodel.IsWallDetected||playermodel.CurrentPlayerState==PlayerState.WallJumping
+       )
+        {
             return;
-
-        if (playermodel.IsWallJumping)
-
-            return;
-
-        
+        }
 
         rb.velocity = new Vector2(xinput * playermodel.Speed, rb.velocity.y);
-       
 
-       
 
-       
+
+
     }
 
     private void PlayerJump()
-    { rb.velocity = new Vector2(rb.velocity.x, playermodel.JumpForce);
+
+    {
+       Debug.Log("first jump "+ playermodel.CurrentPlayerState);
+
+        
+        
+        rb.velocity = new Vector2(rb.velocity.x, playermodel.JumpForce);
+       
     
     ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerJump);
+  
 
     }
 
     private void CheckCollision()
     {
-        playermodel.IsGrounded = Physics2D.Raycast(this.transform.position, Vector2.down, playermodel.GroundCheckDist, groundLayer);
-        playermodel.IsWallDetected= Physics2D.Raycast(this.transform.position, Vector2.right * playermodel.FacingDirection, playermodel.WallCheckDist,groundLayer);
+
+        if (playermodel.CurrentPlayerState == PlayerState.WallJumping)
+            return;
+        playermodel.IsWallDetected = Physics2D.Raycast(
+            transform.position,
+            Vector2.right * playermodel.FacingDirection,
+            playermodel.WallCheckDist,
+            groundLayer
+        );
+
+
+        if (Physics2D.Raycast(
+       transform.position,
+       Vector2.down,
+       playermodel.GroundCheckDist,
+       groundLayer))
+
+
+        {
+
+            playermodel.CurrentPlayerState = PlayerState.PlayerGrounded;
+            playermodel.CanDoubleJump = true;
+
+        } else if (playermodel.IsWallDetected )
+        {
+            if (CanWallSlide()){
+                playermodel.CurrentPlayerState = PlayerState.WallSliding;
+            }
+
+
+        }
+        else
+        {
+            playermodel.CurrentPlayerState = PlayerState.PlayerAirborne;
+        }
+       
+        
+
+
+
+
+        }
+
+    private bool CanWallSlide()
+    {
+        return playermodel.IsWallDetected && rb.velocity.y < 0;
+        
     }
 
     private void DoubleJump()
     {
-        StopCoroutine(wallJumpRoutine());
-        playermodel.IsWallJumping= false;
+
+        Debug.Log("double jump " + playermodel.CurrentPlayerState);
         playermodel.CanDoubleJump = false;
         ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerJump);
         rb.velocity = new Vector2(rb.velocity.x, playermodel.DoubleJumpForce);
@@ -180,12 +227,13 @@ public class PlayerController : MonoBehaviour
 
     private void WallJump()
     {
+        playermodel.CurrentPlayerState = PlayerState.WallJumping;
         playermodel.CanDoubleJump = true;
         rb.velocity = new Vector2(playermodel.WallJumpForce.x*-playermodel.FacingDirection, playermodel.WallJumpForce.y);
         ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerJump);
         FlipPlayer();
-        StopAllCoroutines();
-        StartCoroutine(wallJumpRoutine());
+       StopAllCoroutines();
+       StartCoroutine(wallJumpRoutine());
 
     }
 
@@ -194,9 +242,10 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator wallJumpRoutine()
     {
-        playermodel.IsWallJumping = true;
+        
         yield  return new WaitForSeconds(playermodel.WallJumpDuration);
-        playermodel.IsWallJumping = false;
+        playermodel.CurrentPlayerState = PlayerState.PlayerAirborne;
+
     }
 
 
@@ -216,7 +265,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color= playermodel.IsGrounded ? Color.green : Color.red;
+        Gizmos.color= playermodel.CurrentPlayerState==PlayerState.PlayerGrounded ? Color.green : Color.red;
         
         Gizmos.DrawLine(transform.position, new Vector2(this.transform.position.x, this.transform.position.y - playermodel.GroundCheckDist));
 
@@ -229,7 +278,9 @@ public class PlayerController : MonoBehaviour
 
     public  void PlayerKnockBack()
     {
+        playermodel.CurrentPlayerState = PlayerState.PlayerKnocked;
         StartCoroutine(KnockBackRoutine());
+
         
         rb.velocity = new Vector2(playermodel.KnockbackDistance.x * -playermodel.FacingDirection, playermodel.KnockbackDistance.y);
 
@@ -237,16 +288,16 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator KnockBackRoutine()
     {
-        playermodel.IsKnocked = true;
-        playermodel.CanBeKnocked = false;
+
+       
         ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerHit);
-        playerView.PlayKnockedAnimation(playermodel);
+        playerView.PlayKnockedAnimation(playermodel.CurrentPlayerState);
         Debug.Log("Status of "+playermodel.IsKnocked);
         ServiceLocator.Instance.gamePlayservice.DecreaseHealth();
         yield return new WaitForSeconds(playermodel.KnockbackDuration);
-        playermodel.IsKnocked = false;
-        playermodel.CanBeKnocked = true;
-        playerView.PlayKnockedAnimation(playermodel);
+        playermodel.CurrentPlayerState = PlayerState.PlayerGrounded;
+        playermodel.CurrentPlayerState = PlayerState.PlayerGrounded;
+        playerView.PlayKnockedAnimation(playermodel.CurrentPlayerState);
 
     }
 
@@ -286,6 +337,7 @@ public class PlayerController : MonoBehaviour
 
 public void TakeDamage()
     {
+        
         PlayerKnockBack();
     }
 
@@ -301,15 +353,7 @@ public void TakeDamage()
         GameObject PeaBullet = Instantiate(bulletInstance, spwanPoint.transform.position, Quaternion.identity);
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-       
-
-        foreach (ContactPoint2D point in collision.contacts)
-        {
-            //Debug.Log("Normal: " + point.normal);
-        }
-    }
+   
 
 }
 

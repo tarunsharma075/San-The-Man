@@ -28,13 +28,9 @@ public class AudioManager : GenericMonoSingleton<AudioManager>
         {
             if (Instance != this) return;
 
-            Debug.Log($"clip={backgroundScore.clip}, volume={backgroundScore.volume}, mute={backgroundScore.mute}, isPlaying={backgroundScore.isPlaying}");
+        backgroundScore.Play();
 
-            if (backgroundScore != null && backgroundScore.clip != null)
-            {
-                backgroundScore.Play();
-                Debug.Log("isPlaying after Play(): " + backgroundScore.isPlaying);
-            }
+          
         }
 
 

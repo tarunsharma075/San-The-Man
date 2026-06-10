@@ -19,16 +19,20 @@ public class PlayerView : MonoBehaviour
 
     public  void UpdateAnimation(PlayerModel playermodel)
     {
-        anim.SetFloat("Xvelocity", playermodel.Velocity.x);
+        anim.SetFloat("Xvelocity",
+        playermodel.CurrentPlayerState == PlayerState.PlayerGrounded ? playermodel.Velocity.x : 0
+ );
         anim.SetFloat("Yvelocity", playermodel.Velocity.y);
-        anim.SetBool("IsGrounded", playermodel.IsGrounded);
-        anim.SetBool("IswallDetected", playermodel.IsWallDetected);
+        anim.SetBool("IsGrounded", playermodel.CurrentPlayerState == PlayerState.PlayerGrounded);
+       
+        anim.SetBool("IswallDetected", playermodel.CurrentPlayerState==PlayerState.WallSliding);
+        
     }
 
 
-    public void PlayKnockedAnimation(PlayerModel playermodel)
+    public void PlayKnockedAnimation(PlayerState currentplayerstate)
     {
-        anim.SetBool("Knocked", playermodel.IsKnocked==true);
+        anim.SetBool("Knocked", currentplayerstate==PlayerState.PlayerKnocked);
     }
 
     public void PlayerDeath()

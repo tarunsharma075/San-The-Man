@@ -19,7 +19,7 @@ public class GamePlayManager : MonoBehaviour
         spawnEnemies();
         
         UpdateHealthUI();
-        Debug.Log(currentHealth);
+        
 
     }
 

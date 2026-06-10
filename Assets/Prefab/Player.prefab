@@ -117,8 +117,8 @@ MonoBehaviour:
     Speed: 5
     JumpForce: 6
     DoubleJumpForce: 6.5
-    WallJumpDuration: 0.6
-    WallJumpForce: {x: 7, y: 7}
+    WallJumpDuration: 0.3
+    WallJumpForce: {x: 6, y: 8}
     GroundCheckDist: 1.13
     WallCheckDist: 0.71
     KnockbackDistance: {x: 11, y: 5}

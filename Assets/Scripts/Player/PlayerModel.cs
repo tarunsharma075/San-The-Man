@@ -25,32 +25,40 @@ public class PlayerModel
     public float KnockbackDuration = 0.1f;
 
 
-   
+    PlayerState currentPlayerState;
 
 
-
-
-
-     public bool IsGrounded { get; set; }
      public bool IsWallDetected { get; set; }
-    public bool IsAirborne { get; set; }
+   
 
      public bool IsFacingRight { get; set; } = true;
      public float FacingDirection { get; set; } = 1f;
 
     public bool CanDoubleJump { get; set; } = true;
-    public bool IsWallJumping { get; set; }
+    
     public float XInput { get; set; }   
     public float YInput { get; set; }
 
     
 
     public bool IsKnocked { get; set; }
-    public bool CanBeKnocked { get; set; } = true;
+    
 
     public Vector2 Velocity { get; set; }
 
-   
+    
+
+    public PlayerState CurrentPlayerState
+    {
+        get
+        {
+            return currentPlayerState;
+        }
+        set
+        {
+            currentPlayerState = value;
+        }
+    }
 
 
 }
