@@ -292,7 +292,6 @@ public class PlayerController : MonoBehaviour
        
         ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerHit);
         playerView.PlayKnockedAnimation(playermodel.CurrentPlayerState);
-        Debug.Log("Status of "+playermodel.IsKnocked);
         ServiceLocator.Instance.gamePlayservice.DecreaseHealth();
         yield return new WaitForSeconds(playermodel.KnockbackDuration);
         playermodel.CurrentPlayerState = PlayerState.PlayerGrounded;
@@ -353,7 +352,9 @@ public void TakeDamage()
         GameObject PeaBullet = Instantiate(bulletInstance, spwanPoint.transform.position, Quaternion.identity);
     }
 
-   
+
+    //add comment for tetsing of the branch
+    //add other comment for testing of the branch
 
 }
 
