@@ -14,7 +14,7 @@ public class PlayerService
 
     public void TakeDamage()
     {
-        Debug.Log("PlayerDamage is called");
+        
         if (playerController == null) return;
 
         playerController.TakeDamage();
@@ -25,6 +25,9 @@ public class PlayerService
         return playerController.GetPlayerObject();
     }
 
+    public void EnemyOverStunJump()
+    {
+        playerController.StunJump();
+    }
 
-    
 }

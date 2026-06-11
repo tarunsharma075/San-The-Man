@@ -236,6 +236,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 32768
+  decreaseHealthSign: {fileID: 7339442932577695289, guid: 17b7b351c7c13824f8ba4f1686f81631, type: 3}
 --- !u!61 &8636402255093637881
 BoxCollider2D:
   m_ObjectHideFlags: 0

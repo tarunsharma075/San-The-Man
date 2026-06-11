@@ -258,6 +258,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 32768
+  decreaseHealthSign: {fileID: 7339442932577695289, guid: 17b7b351c7c13824f8ba4f1686f81631, type: 3}
   bullet: {fileID: 4853813384720113902, guid: ed850ed6fb6dde24f83ac27b24b7ad81, type: 3}
   firePoint: {fileID: 2517260950379966100}
   playerLayer:

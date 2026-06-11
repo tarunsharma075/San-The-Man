@@ -56,10 +56,7 @@ public class PlayerController : MonoBehaviour
         playermodel.Velocity = rb.velocity;
         playerView.UpdateAnimation(playermodel);
 
-        Debug.Log("Wall Jump Velocity = " +
-    new Vector2(
-        playermodel.WallJumpForce.x * -playermodel.FacingDirection,
-        playermodel.WallJumpForce.y));
+ 
 
     }
 
@@ -153,8 +150,6 @@ public class PlayerController : MonoBehaviour
     private void PlayerJump()
 
     {
-       Debug.Log("first jump "+ playermodel.CurrentPlayerState);
-
         
         
         rb.velocity = new Vector2(rb.velocity.x, playermodel.JumpForce);
@@ -219,7 +214,6 @@ public class PlayerController : MonoBehaviour
     private void DoubleJump()
     {
 
-        Debug.Log("double jump " + playermodel.CurrentPlayerState);
         playermodel.CanDoubleJump = false;
         ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerJump);
         rb.velocity = new Vector2(rb.velocity.x, playermodel.DoubleJumpForce);
@@ -294,8 +288,8 @@ public class PlayerController : MonoBehaviour
         playerView.PlayKnockedAnimation(playermodel.CurrentPlayerState);
         ServiceLocator.Instance.gamePlayservice.DecreaseHealth();
         yield return new WaitForSeconds(playermodel.KnockbackDuration);
-        playermodel.CurrentPlayerState = PlayerState.PlayerGrounded;
-        playermodel.CurrentPlayerState = PlayerState.PlayerGrounded;
+        playermodel.CurrentPlayerState = PlayerState.PlayerAirborne;
+       
         playerView.PlayKnockedAnimation(playermodel.CurrentPlayerState);
 
     }
@@ -352,8 +346,11 @@ public void TakeDamage()
         GameObject PeaBullet = Instantiate(bulletInstance, spwanPoint.transform.position, Quaternion.identity);
     }
 
-
-    //add comment for tetsing of the branch
+    public void StunJump()
+    {
+        this.rb.velocity = new Vector2(playermodel.KnockbackDistance.x*playermodel.FacingDirection,  playermodel.KnockbackDistance.y);
+    }
+   
     
 
 }

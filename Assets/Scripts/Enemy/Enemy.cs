@@ -19,7 +19,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float wallDistance;
     [SerializeField] protected Transform groundCheck;
     [SerializeField] protected LayerMask groundLayer;
-    
+    [SerializeField] protected GameObject decreaseHealthSign;
+
     protected bool IsGrounded;
     protected bool IsWallDetected;
 
@@ -115,25 +116,28 @@ protected virtual void Update()
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            ServiceLocator.Instance.playerService.TakeDamage();
-            
-        }
-
-        if (collision.CompareTag("PlayerBullet")){
-            
-
-            TakeDamage();
-        }
-    }
-
-    protected  virtual  void OnCollisionEnter(Collision collision)
-    {
+        
         if (collision.gameObject.CompareTag("Player"))
         {
             ServiceLocator.Instance.playerService.TakeDamage();
-            
+        }
+
+
+    }
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+     
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            ServiceLocator.Instance.playerService.TakeDamage();
+        }
+
+        if (collision.gameObject.CompareTag("PlayerBullet"))
+        {
+
+            TakeDamage();
         }
     }
 
@@ -144,16 +148,48 @@ protected virtual void Update()
         
     }
 
-
     private void TakeDamage()
     {
-        currentHealth--;
-        if (currentHealth <= 0)
+       
+        StunDamage();
+        if (currentHealth <=0)
         {
-            Destroy(this.gameObject);
+           Destroy(this.gameObject);
         }
+
+    }
+    protected virtual void StunDamage()
+    {
+        ServiceLocator.Instance.playerService.EnemyOverStunJump();
+        currentHealth--;
+        GameObject sign = Instantiate(
+            decreaseHealthSign,
+            transform.position,
+            Quaternion.identity
+        );
+
+        if (sign == null)
+        {
+            Debug.Log("no sign created");
+        }
+        StartCoroutine(DamageSignRoutine(sign));
     }
 
+    private IEnumerator DamageSignRoutine(GameObject sign)
+    {
+        float timer = 0f;
 
+        while (timer < 0.5f)
+        {
+            sign.transform.position += Vector3.up * 2f * Time.deltaTime;
+            this.rb.velocity = Vector2.zero;
+            anim.SetFloat("Xvelocity",0);
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(sign);
+    }
 
 }

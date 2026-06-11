@@ -33,10 +33,16 @@ public class BulletBehaviour : MonoBehaviour
            
         }
 
-        if (this.gameObject.CompareTag("PlayerBullet") && collision.CompareTag("Enemy"))
+        
+        
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (this.gameObject.CompareTag("PlayerBullet")&&collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(this.gameObject);
         }
-        
     }
+
 }

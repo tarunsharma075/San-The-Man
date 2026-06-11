@@ -11,6 +11,7 @@ public class AttackingMushroom : EnemyBehaviour
     private float timer = 0;
     [SerializeField] protected float cooldownTime;
     [SerializeField] private Collider2D attackHitbox;
+    [SerializeField] private Collider2D stunCollider;
     private bool shouldcchasePlayer = false;
 
     protected override void Awake()
@@ -19,7 +20,7 @@ public class AttackingMushroom : EnemyBehaviour
         base.Awake();
         timer = cooldownTime;
         attackHitbox.enabled = false;
-        
+        currentHealth = 3;
     }
 
 
@@ -114,13 +115,45 @@ public class AttackingMushroom : EnemyBehaviour
         attackHitbox.enabled = false;
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    private  void OnTriggerEnter2D(Collider2D collision)
     {
+
+
+        if (stunCollider == null)
+        {
+            Debug.Log("stun collider null"); return;
+        }
+
+        if (collision.GetComponent<PlayerController>() == null)
+        {
+            Debug.Log("Player is null");
+        }
+
+        if (collision.CompareTag("Player") && collision.IsTouching(stunCollider))
+        {
+            if (collision.GetComponent<PlayerController>().transform.position.y > stunCollider.transform.position.y)
+            {
+                Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
+                if (rb.velocity.y<0)
+                {
+                    StunDamage();
+                }
+            }
+        }
+        else
+        {
+            base.OnTriggerEnter2D (collision);
+        }
         
 
-        base.OnTriggerEnter2D(collision);
     }
 
+
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+    }
 
     private void chasePlayer()
     {
@@ -134,6 +167,23 @@ public class AttackingMushroom : EnemyBehaviour
             targetPosition,
             movementSpeed * Time.fixedDeltaTime
         ));
+    }
+    protected override void StunDamage()
+    {
+        base.StunDamage();
+        if (currentHealth <= 0)
+        {
+            Debug.Log("it is called health of enemy become 0");
+            anim.SetTrigger("Stun");
+            this.gameObject.GetComponent<AttackingMushroom>().enabled= false;
+            stunCollider.enabled = false;
+            attackHitbox.enabled = false;
+            this.gameObject.layer = LayerMask.NameToLayer("StunnedEnemy");
+
+
+
+        }
+       
     }
 
 }

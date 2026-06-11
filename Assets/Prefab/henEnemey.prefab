@@ -112,6 +112,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 32768
+  decreaseHealthSign: {fileID: 7339442932577695289, guid: 17b7b351c7c13824f8ba4f1686f81631, type: 3}
 --- !u!50 &6995972454796226579
 Rigidbody2D:
   serializedVersion: 4
