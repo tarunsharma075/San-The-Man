@@ -15,7 +15,7 @@ public class PlayerService
     public void TakeDamage()
     {
         
-        if (playerController == null) return;
+        
 
         playerController.TakeDamage();
     }

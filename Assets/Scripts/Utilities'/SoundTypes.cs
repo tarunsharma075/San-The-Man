@@ -4,7 +4,8 @@
     PlayerDeath,
     FruitCollect,
     ButtonClicked,
-    PlayerHit
-
+    PlayerHit,
+    EnemyOverJump,
+    EnemyStun,
 
 }

@@ -349,6 +349,7 @@ public void TakeDamage()
     public void StunJump()
     {
         this.rb.velocity = new Vector2(playermodel.KnockbackDistance.x*playermodel.FacingDirection,  playermodel.KnockbackDistance.y);
+        
     }
    
     

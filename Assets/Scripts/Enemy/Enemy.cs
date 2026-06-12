@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected Transform groundCheck;
     [SerializeField] protected LayerMask groundLayer;
     [SerializeField] protected GameObject decreaseHealthSign;
+    protected SpriteRenderer sr;
 
     protected bool IsGrounded;
     protected bool IsWallDetected;
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         currentHealth = enemyhealth;
+        sr = GetComponent<SpriteRenderer>();
     }
 
 
@@ -119,6 +121,7 @@ protected virtual void Update()
         
         if (collision.gameObject.CompareTag("Player"))
         {
+            
             ServiceLocator.Instance.playerService.TakeDamage();
         }
 
@@ -161,6 +164,8 @@ protected virtual void Update()
     protected virtual void StunDamage()
     {
         ServiceLocator.Instance.playerService.EnemyOverStunJump();
+       
+        changeColourOnhit();
         currentHealth--;
         GameObject sign = Instantiate(
             decreaseHealthSign,
@@ -168,10 +173,8 @@ protected virtual void Update()
             Quaternion.identity
         );
 
-        if (sign == null)
-        {
-            Debug.Log("no sign created");
-        }
+        
+        
         StartCoroutine(DamageSignRoutine(sign));
     }
 
@@ -190,6 +193,13 @@ protected virtual void Update()
         }
 
         Destroy(sign);
+        sr.color = Color.white;
     }
 
+
+    public void changeColourOnhit()
+    {
+        ColorUtility.TryParseHtmlString("#FF0000", out Color hitcolor);
+        sr.color = hitcolor;
+    }
 }

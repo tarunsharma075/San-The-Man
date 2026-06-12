@@ -13,7 +13,9 @@ public class AudioManager : GenericMonoSingleton<AudioManager>
     [SerializeField] private AudioClip playerHit;
     [SerializeField] private AudioClip FruitCollected;
     [SerializeField] private AudioClip playerDeath;
-    [SerializeField] private AudioClip ButtonClicked;
+    [SerializeField] private AudioClip buttonClicked;
+    [SerializeField] private AudioClip enemyOverJump;
+    [SerializeField] private AudioClip enemystun;
 
     protected override void Awake()
     {
@@ -101,12 +103,34 @@ public class AudioManager : GenericMonoSingleton<AudioManager>
 
                 case SoundTypes.ButtonClicked:
                 {
-                    if (ButtonClicked == null)
+                    if (buttonClicked == null)
                     {
                         Debug.Log("Button clicked sound is null");
                         return;
                     }
-                    gameSFXSounds.PlayOneShot(ButtonClicked);
+                    gameSFXSounds.PlayOneShot(buttonClicked);
+                    break;
+                }
+
+            case SoundTypes.EnemyOverJump:
+                {
+                    if (enemyOverJump== null)
+                    {
+                        Debug.Log("Enemy jump over  sound is null");
+                        return;
+                    }
+                    gameSFXSounds.PlayOneShot(enemyOverJump);
+                    break;
+                }
+
+                case SoundTypes.EnemyStun:
+                {
+                    if (enemystun == null)
+                    {
+                        Debug.Log("Enemy stun sound is null");
+                        return;
+                    }
+                    gameSFXSounds.PlayOneShot(enemystun);
                     break;
                 }
             default: {

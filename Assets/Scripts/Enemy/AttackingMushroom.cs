@@ -105,29 +105,22 @@ public class AttackingMushroom : EnemyBehaviour
 
     public void EnableAttackHitbox()
     {
-        Debug.Log("Attack hitbox enabled");
+       
         attackHitbox.enabled = true;
+        Debug.Log("attack hitbox enabled");
     }
 
     public void DisableAttackHitbox()
     {
-        Debug.Log("Attack hitbox disabled");
+        
         attackHitbox.enabled = false;
+        Debug.Log("attack hitbox disabled");
     }
 
     private  void OnTriggerEnter2D(Collider2D collision)
     {
 
 
-        if (stunCollider == null)
-        {
-            Debug.Log("stun collider null"); return;
-        }
-
-        if (collision.GetComponent<PlayerController>() == null)
-        {
-            Debug.Log("Player is null");
-        }
 
         if (collision.CompareTag("Player") && collision.IsTouching(stunCollider))
         {
@@ -136,6 +129,7 @@ public class AttackingMushroom : EnemyBehaviour
                 Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
                 if (rb.velocity.y<0)
                 {
+                    ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.EnemyOverJump);
                     StunDamage();
                 }
             }
@@ -173,8 +167,10 @@ public class AttackingMushroom : EnemyBehaviour
         base.StunDamage();
         if (currentHealth <= 0)
         {
-            Debug.Log("it is called health of enemy become 0");
+            
             anim.SetTrigger("Stun");
+            changeColourOnhit();
+            ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.EnemyStun);
             this.gameObject.GetComponent<AttackingMushroom>().enabled= false;
             stunCollider.enabled = false;
             attackHitbox.enabled = false;
@@ -185,6 +181,8 @@ public class AttackingMushroom : EnemyBehaviour
         }
        
     }
+
+   
 
 }
 
