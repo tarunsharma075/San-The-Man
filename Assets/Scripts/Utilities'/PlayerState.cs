@@ -6,6 +6,6 @@ WallJumping,
 WallSliding,
 PlayerDead,
 PlayerKnocked,
-
+EnemyOverJumping,
 
 }

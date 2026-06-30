@@ -12,7 +12,7 @@ public class PlayerModel
     public float DoubleJumpForce = 10f;
 
     [Header("Wall Settings")]
-    public float WallJumpDuration = 0.6f;
+    public float WallJumpDuration = 0.2f;
     public Vector2 WallJumpForce = new Vector2(7f, 14f);
 
     [Header("Collision Settings")]
@@ -22,8 +22,8 @@ public class PlayerModel
 
     [Header("Knockback Settings")]
     public Vector2 KnockbackDistance = new Vector2(7f, 5f);
-    public float KnockbackDuration = 0.1f;
-    public bool isknockedback { get; set; }
+    public float KnockbackDuration = 0.6f;
+    public bool StunnedJump { get; set; }
 
     PlayerState currentPlayerState;
 
@@ -41,7 +41,7 @@ public class PlayerModel
 
     
 
-    public bool IsKnocked { get; set; }
+    
     
 
     public Vector2 Velocity { get; set; }

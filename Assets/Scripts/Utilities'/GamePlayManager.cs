@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,8 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField]private int currentNumberFruits;
  [SerializeField]   private float  currentHealth=3;
     [SerializeField]Vector3 spawnOffset = new Vector3(0, 1f, 0);
+    [SerializeField] private TextMeshProUGUI shurikenNumber;
+    private int currentShurikenNumber = 0;
     void Start()
     {
         spawnEnemies();
@@ -94,9 +97,10 @@ public class GamePlayManager : MonoBehaviour
 
     private void Update()
     {
+        NumberOfShurikens();
         WinCondition();
         
-       
+
 
     }
 
@@ -124,10 +128,23 @@ public class GamePlayManager : MonoBehaviour
         }
     }
 
+  private void NumberOfShurikens()
+    {
+        shurikenNumber.text =  currentShurikenNumber.ToString();
+    }
 
 
+    public int  IncreaseNumberofShurikens()
+    {
+        
+        return currentShurikenNumber++;
+        
+    }
 
-
+    public int  DecreaseNumberofShurikens()
+    {
+       return currentShurikenNumber--;
+    }
 }
 
 

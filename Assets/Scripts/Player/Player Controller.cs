@@ -45,8 +45,9 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        if (playermodel.IsKnocked) return;
+        if (playermodel.CurrentPlayerState== PlayerState.PlayerKnocked) return;
         if (isdead) return;
+        if (playermodel.CurrentPlayerState == PlayerState.EnemyOverJumping) return;
 
         CheckCollision();
         Inputhandling();
@@ -55,8 +56,8 @@ public class PlayerController : MonoBehaviour
 
         playermodel.Velocity = rb.velocity;
         playerView.UpdateAnimation(playermodel);
+        Debug.Log(playermodel.CurrentPlayerState);
 
- 
 
     }
 
@@ -173,11 +174,7 @@ public class PlayerController : MonoBehaviour
         );
 
 
-        if (Physics2D.Raycast(
-       transform.position,
-       Vector2.down,
-       playermodel.GroundCheckDist,
-       groundLayer))
+        if (CheckPlayerGrounded())
 
 
         {
@@ -185,9 +182,11 @@ public class PlayerController : MonoBehaviour
             playermodel.CurrentPlayerState = PlayerState.PlayerGrounded;
             playermodel.CanDoubleJump = true;
 
-        } else if (playermodel.IsWallDetected )
+        }
+        else if (playermodel.IsWallDetected)
         {
-            if (CanWallSlide()){
+            if (CanWallSlide())
+            {
                 playermodel.CurrentPlayerState = PlayerState.WallSliding;
             }
 
@@ -197,13 +196,22 @@ public class PlayerController : MonoBehaviour
         {
             playermodel.CurrentPlayerState = PlayerState.PlayerAirborne;
         }
-       
-        
 
 
 
 
-        }
+
+
+    }
+
+    private RaycastHit2D CheckPlayerGrounded()
+    {
+        return Physics2D.Raycast(
+               transform.position,
+               Vector2.down,
+               playermodel.GroundCheckDist,
+               groundLayer);
+    }
 
     private bool CanWallSlide()
     {
@@ -223,6 +231,7 @@ public class PlayerController : MonoBehaviour
     {
         playermodel.CurrentPlayerState = PlayerState.WallJumping;
         playermodel.CanDoubleJump = true;
+
         rb.velocity = new Vector2(playermodel.WallJumpForce.x*-playermodel.FacingDirection, playermodel.WallJumpForce.y);
         ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerJump);
         FlipPlayer();
@@ -239,6 +248,7 @@ public class PlayerController : MonoBehaviour
         
         yield  return new WaitForSeconds(playermodel.WallJumpDuration);
         playermodel.CurrentPlayerState = PlayerState.PlayerAirborne;
+
 
     }
 
@@ -348,11 +358,25 @@ public void TakeDamage()
 
     public void StunJump()
     {
-        this.rb.velocity = new Vector2(playermodel.KnockbackDistance.x*playermodel.FacingDirection,  playermodel.KnockbackDistance.y);
+        
+        
+
+        StartCoroutine(StunJumpRoutine());
+       
         
     }
    
-    
+    private IEnumerator StunJumpRoutine()
+    {
+        this.rb.velocity = new Vector2(5* playermodel.FacingDirection, 3);
+        playermodel.CurrentPlayerState = PlayerState.EnemyOverJumping;
+        yield return new WaitForSeconds(0.8f);
+        
+        
+            playermodel.CurrentPlayerState = PlayerState.PlayerGrounded;
+            Debug.Log(playermodel.CurrentPlayerState);
+        
+    }
 
 }
 

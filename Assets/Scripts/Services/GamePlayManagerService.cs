@@ -27,4 +27,15 @@ public void DecreaseHealth()
         gamePlayManager.DecreaseHealth();
     }
 
+
+
+public int IncreaseNumberOFShurikens()
+    {
+        return gamePlayManager.IncreaseNumberofShurikens();
+    }
+
+    public int ecreaseNumberOFShurikens()
+    {
+        return gamePlayManager.DecreaseNumberofShurikens();
+    }
 }
