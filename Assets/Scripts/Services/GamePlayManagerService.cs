@@ -34,7 +34,7 @@ public int IncreaseNumberOFShurikens()
         return gamePlayManager.IncreaseNumberofShurikens();
     }
 
-    public int ecreaseNumberOFShurikens()
+    public int DecreaseNumberOFShurikens()
     {
         return gamePlayManager.DecreaseNumberofShurikens();
     }
