@@ -23,6 +23,7 @@ public class TrunkAttack : EnemyBehaviour
 
     protected override void Update()
     {
+        if (ServiceLocator.Instance.playerService.GetPlayerState() == PlayerState.Dead) return;
         startingtime -= Time.deltaTime;
         if (startingtime < 0)
         {

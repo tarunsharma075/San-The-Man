@@ -35,10 +35,10 @@ public class PlayerView : MonoBehaviour
         anim.SetBool("Knocked", currentplayerstate==PlayerState.PlayerKnocked);
     }
 
-    public void PlayerDeath()
-    {
-        anim.SetTrigger("Death");
-    }
+    //public void PlayerDeath()
+    //{
+    //    anim.SetTrigger("Death");
+    //}
 
    public void Attack()
     {

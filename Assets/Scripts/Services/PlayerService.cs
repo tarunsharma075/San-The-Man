@@ -30,4 +30,23 @@ public class PlayerService
         playerController.StunJump();
     }
 
+    public void PlayerDie()
+    {
+        playerController.PlayreDie();
+    }
+
+
+    public PlayerState GetPlayerState() {
+
+
+        if (playerController == null)
+            return PlayerState.NotSpwaned;
+
+
+        return playerController.GetPlayerCurrentState();
+
+    }
+
+    
+
 }

@@ -26,6 +26,7 @@ public class TurtleBehaviour : EnemyBehaviour
 
     private void CheckPlayerCollision()
     {
+        if (ServiceLocator.Instance.playerService.GetPlayerState() == PlayerState.Dead) return;
         Collider2D player = Physics2D.OverlapCircle(this.transform.position, playerdistance, playerLayer);
 
         if (player != null) {

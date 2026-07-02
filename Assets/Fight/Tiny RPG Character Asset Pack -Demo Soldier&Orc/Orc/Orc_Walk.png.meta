@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 18072d0e07c2f0548a4952fce87012ed
+guid: 55eabeb3a7a8247448664de51e824850
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_0
+      name: Orc_Walk_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 04df55f56f9f9d94389ae396d6128f4d
-      internalID: 1548160628
+      spriteID: 87b327f2d9e2c4a428b1d1f81860c6f8
+      internalID: 513027814
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_1
+      name: Orc_Walk_1
       rect:
         serializedVersion: 2
-        x: 46
+        x: 100
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5bcb7c5875f107f4b82c26649cd092a8
-      internalID: -582685784
+      spriteID: 9faaa9980312f094aa7b7c9bdcb37bbb
+      internalID: 546734770
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_2
+      name: Orc_Walk_2
       rect:
         serializedVersion: 2
-        x: 92
+        x: 200
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,20 +166,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f74ba590b6ff3f54488c835f94c6c6fa
-      internalID: 1906593605
+      spriteID: 09394db6ecb8cf74ab1fc1a03d8c5e9a
+      internalID: -2048246177
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_3
+      name: Orc_Walk_3
       rect:
         serializedVersion: 2
-        x: 138
+        x: 300
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,20 +187,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc6ba35a8c6d4914fad9ca2e5e6ebefb
-      internalID: 1413704193
+      spriteID: f7a72142e64f67f4d81c165ff04188e7
+      internalID: -2131377557
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_4
+      name: Orc_Walk_4
       rect:
         serializedVersion: 2
-        x: 184
+        x: 400
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,20 +208,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 726c692b5641d8b49b428cdac2514da6
-      internalID: 1441260703
+      spriteID: df7ef2d8472f94f48a44db50955baf14
+      internalID: -939175628
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_5
+      name: Orc_Walk_5
       rect:
         serializedVersion: 2
-        x: 230
+        x: 500
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,20 +229,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39b5a71626d53194890000635d780bed
-      internalID: 228147616
+      spriteID: d0fb52c4f585b394a8c1686be1074ac1
+      internalID: 1567847674
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_6
+      name: Orc_Walk_6
       rect:
         serializedVersion: 2
-        x: 276
+        x: 600
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,8 +250,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f16c9f8c40cfef468212fc44f53a43c
-      internalID: 876940508
+      spriteID: 1c924e9813bdf244bb084be6fede45db
+      internalID: -557940764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Orc_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d4b11242d225dc439483bcff3b7a379
+      internalID: 2146696112
       vertices: []
       indices: 
       edges: []
@@ -267,13 +288,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ceiling Out (46x30)_0: 1548160628
-      Ceiling Out (46x30)_1: -582685784
-      Ceiling Out (46x30)_2: 1906593605
-      Ceiling Out (46x30)_3: 1413704193
-      Ceiling Out (46x30)_4: 1441260703
-      Ceiling Out (46x30)_5: 228147616
-      Ceiling Out (46x30)_6: 876940508
+      Orc_Walk_0: 513027814
+      Orc_Walk_1: 546734770
+      Orc_Walk_2: -2048246177
+      Orc_Walk_3: -2131377557
+      Orc_Walk_4: -939175628
+      Orc_Walk_5: 1567847674
+      Orc_Walk_6: -557940764
+      Orc_Walk_7: 2146696112
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

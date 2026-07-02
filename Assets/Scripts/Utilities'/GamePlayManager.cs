@@ -15,7 +15,7 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField]private int currentNumberFruits;
  [SerializeField]   private float  currentHealth=3;
     [SerializeField]Vector3 spawnOffset = new Vector3(0, 1f, 0);
-    [SerializeField] private TextMeshProUGUI shurikenNumber;
+    //[SerializeField] private TextMeshProUGUI shurikenNumber;
     private int currentShurikenNumber = 0;
     void Start()
     {
@@ -97,7 +97,7 @@ public class GamePlayManager : MonoBehaviour
 
     private void Update()
     {
-        NumberOfShurikens();
+        //NumberOfShurikens();
         WinCondition();
         
 
@@ -128,10 +128,10 @@ public class GamePlayManager : MonoBehaviour
         }
     }
 
-  private void NumberOfShurikens()
-    {
-        shurikenNumber.text =  currentShurikenNumber.ToString();
-    }
+  //private void NumberOfShurikens()
+  //  {
+  //      shurikenNumber.text =  currentShurikenNumber.ToString();
+  //  }
 
 
     public int  IncreaseNumberofShurikens()
@@ -144,6 +144,35 @@ public class GamePlayManager : MonoBehaviour
     public int  DecreaseNumberofShurikens()
     {
        return currentShurikenNumber--;
+    }
+
+    public int GetCurrentShurikenNumber()
+    {
+        return currentShurikenNumber;
+    }
+
+
+   
+    public void LoadCurrentLevel()
+    {
+        SceneManager.LoadScene(
+                SceneManager.GetActiveScene().buildIndex
+            );
+
+    }
+
+
+    public void PlayerDead()
+    {
+        StartCoroutine(PlayerDeathScene());
+    }
+
+    IEnumerator PlayerDeathScene()
+    {
+        ServiceLocator.Instance.playerService.PlayerDie();
+        yield return new WaitForSeconds(1f);
+        LoadCurrentLevel();
+
     }
 }
 

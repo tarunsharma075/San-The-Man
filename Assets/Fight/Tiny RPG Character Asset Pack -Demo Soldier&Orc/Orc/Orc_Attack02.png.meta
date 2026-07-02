@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 18072d0e07c2f0548a4952fce87012ed
+guid: 281cd6675f60a9a48b6ee2cd74dfaea6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_0
+      name: Orc_Attack02_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 04df55f56f9f9d94389ae396d6128f4d
-      internalID: 1548160628
+      spriteID: 1ffdb3c156c40f84ab183989d38be563
+      internalID: 321500519
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_1
+      name: Orc_Attack02_1
       rect:
         serializedVersion: 2
-        x: 46
+        x: 100
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5bcb7c5875f107f4b82c26649cd092a8
-      internalID: -582685784
+      spriteID: 4e54d307edfd6304a862cd7650c1b6bb
+      internalID: 990356653
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_2
+      name: Orc_Attack02_2
       rect:
         serializedVersion: 2
-        x: 92
+        x: 200
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,20 +166,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f74ba590b6ff3f54488c835f94c6c6fa
-      internalID: 1906593605
+      spriteID: ae2ba774e4f0af148b0e333f39a74bbb
+      internalID: 2031804839
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_3
+      name: Orc_Attack02_3
       rect:
         serializedVersion: 2
-        x: 138
+        x: 300
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,20 +187,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc6ba35a8c6d4914fad9ca2e5e6ebefb
-      internalID: 1413704193
+      spriteID: 729d7014d298ee542a240935d6ad7d58
+      internalID: 147682209
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_4
+      name: Orc_Attack02_4
       rect:
         serializedVersion: 2
-        x: 184
+        x: 400
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,20 +208,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 726c692b5641d8b49b428cdac2514da6
-      internalID: 1441260703
+      spriteID: c39b851c3ec76a045b7412ee890e87c2
+      internalID: -701229690
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ceiling Out (46x30)_5
+      name: Orc_Attack02_5
       rect:
         serializedVersion: 2
-        x: 230
+        x: 500
         y: 0
-        width: 46
-        height: 30
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,29 +229,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39b5a71626d53194890000635d780bed
-      internalID: 228147616
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ceiling Out (46x30)_6
-      rect:
-        serializedVersion: 2
-        x: 276
-        y: 0
-        width: 46
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2f16c9f8c40cfef468212fc44f53a43c
-      internalID: 876940508
+      spriteID: acdb09c5bc1f381449b8281e2b6a2c75
+      internalID: 206867039
       vertices: []
       indices: 
       edges: []
@@ -267,13 +246,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ceiling Out (46x30)_0: 1548160628
-      Ceiling Out (46x30)_1: -582685784
-      Ceiling Out (46x30)_2: 1906593605
-      Ceiling Out (46x30)_3: 1413704193
-      Ceiling Out (46x30)_4: 1441260703
-      Ceiling Out (46x30)_5: 228147616
-      Ceiling Out (46x30)_6: 876940508
+      Orc_Attack02_0: 321500519
+      Orc_Attack02_1: 990356653
+      Orc_Attack02_2: 2031804839
+      Orc_Attack02_3: 147682209
+      Orc_Attack02_4: -701229690
+      Orc_Attack02_5: 206867039
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

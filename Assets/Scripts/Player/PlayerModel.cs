@@ -32,7 +32,7 @@ public class PlayerModel
    
 
      public bool IsFacingRight { get; set; } = true;
-     public float FacingDirection { get; set; } = 1f;
+   [SerializeField]  public float FacingDirection { get; set; } = 1f;
 
     public bool CanDoubleJump { get; set; } = true;
     

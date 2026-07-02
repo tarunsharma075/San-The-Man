@@ -13,7 +13,8 @@ public class EnemyBehaviour :Enemy
 
     protected override void Update()
     {
-         base.Update();
+        CheckPlayerState1();
+        base.Update();
         HandleMovement();
         anim.SetFloat("Xvelocity", rb.velocity.x);
         CheckCollision();
@@ -26,7 +27,17 @@ public class EnemyBehaviour :Enemy
                 rb.velocity = Vector2.zero;
             }
         }
-       
+
     }
 
+    private static void CheckPlayerState1()
+    {
+
+        PlayerState state = ServiceLocator.Instance.playerService.GetPlayerState();
+
+        if(state==PlayerState.NotSpwaned|| state == PlayerState.Dead)
+        {
+            return;
+        }
+    }
 }

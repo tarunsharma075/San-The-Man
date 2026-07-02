@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     
     private Rigidbody2D rb;
-    private bool isdead= false;
+    
 
 
     [SerializeField] private LayerMask groundLayer;
@@ -34,10 +33,7 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
-     if (isdead)
-        {
-            isdead = false;
-        }
+     
         ServiceLocator.Instance.playerService.SetPlayer(this);
         
     }
@@ -46,7 +42,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (playermodel.CurrentPlayerState== PlayerState.PlayerKnocked) return;
-        if (isdead) return;
+        if (playermodel.CurrentPlayerState== PlayerState.Dead) return;
         if (playermodel.CurrentPlayerState == PlayerState.EnemyOverJumping) return;
 
         CheckCollision();
@@ -56,7 +52,7 @@ public class PlayerController : MonoBehaviour
 
         playermodel.Velocity = rb.velocity;
         playerView.UpdateAnimation(playermodel);
-        Debug.Log(playermodel.CurrentPlayerState);
+       
 
 
     }
@@ -283,10 +279,13 @@ public class PlayerController : MonoBehaviour
     public  void PlayerKnockBack()
     {
         playermodel.CurrentPlayerState = PlayerState.PlayerKnocked;
+        
+        
         StartCoroutine(KnockBackRoutine());
 
         
         rb.velocity = new Vector2(playermodel.KnockbackDistance.x * -playermodel.FacingDirection, playermodel.KnockbackDistance.y);
+        
 
     }
 
@@ -299,18 +298,16 @@ public class PlayerController : MonoBehaviour
         ServiceLocator.Instance.gamePlayservice.DecreaseHealth();
         yield return new WaitForSeconds(playermodel.KnockbackDuration);
         playermodel.CurrentPlayerState = PlayerState.PlayerAirborne;
-       
+
         playerView.PlayKnockedAnimation(playermodel.CurrentPlayerState);
+
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
        
-        if (collision.CompareTag("DeathZone"))
-        {
-           StartCoroutine(PlayreDie());
-        }
+
 
         if (collision.CompareTag("Traps")){
             PlayerKnockBack();
@@ -320,23 +317,33 @@ public class PlayerController : MonoBehaviour
        
     }
 
-    IEnumerator  PlayreDie()
+    public void   PlayreDie()
     {
-        isdead= true;
-        rb.velocity = Vector2.zero;
-        rb.angularVelocity = 0f;
-        rb.gravityScale = 0;
-        
-        playerView.PlayerDeath();
-      ServiceLocator.Instance.gamePlayservice.DecreaseHealth();
+        playermodel.CurrentPlayerState = PlayerState.Dead;
+        Debug.Log(playermodel.CurrentPlayerState);
+        CapsuleCollider2D bx= this.GetComponent<CapsuleCollider2D>();
+        bx.enabled = false;
+        SpriteRenderer playerSprite = this.GetComponentInChildren<SpriteRenderer>();    
+        ColorUtility.TryParseHtmlString("#FF0000", out Color hitcolor);
+        playerSprite.color = hitcolor;
+        StartCoroutine(PlayerDieSequence() );
+       
 
-        yield return new WaitForSeconds(0.5f);
 
-        GameManager.Instance.RespawnPlayer();
+
 
     }
 
+    IEnumerator PlayerDieSequence()
+    {
+        rb.velocity = Vector2.zero;
+        rb.AddForce(Vector2.up * 5f, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.5f);
 
+        rb.velocity = Vector2.down * 5f;
+
+        yield return new WaitForSeconds(1f);
+    }
 
 public void TakeDamage()
     {
@@ -376,6 +383,21 @@ public void TakeDamage()
             playermodel.CurrentPlayerState = PlayerState.PlayerGrounded;
             Debug.Log(playermodel.CurrentPlayerState);
         
+    }
+
+    private void Respawn()
+    {
+        GameManager.Instance.RespawnPlayer();
+    }
+
+
+    public PlayerState GetPlayerCurrentState() {
+
+
+       
+        return playermodel.CurrentPlayerState;
+    
+    
     }
 
 }

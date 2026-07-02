@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GamePlayManagerService 
 {
@@ -38,4 +39,13 @@ public int IncreaseNumberOFShurikens()
     {
         return gamePlayManager.DecreaseNumberofShurikens();
     }
+
+    public void PlayerDead()
+    {
+        gamePlayManager.PlayerDead();
+    }
+     
+   
+
+
 }
