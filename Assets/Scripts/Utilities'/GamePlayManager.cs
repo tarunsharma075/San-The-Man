@@ -4,32 +4,32 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class GamePlayManager : MonoBehaviour
 {
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private GameObject[] prefabs;
-    [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private TextMeshProUGUI health;
-    private int currentScore;
-    [SerializeField]private int currentNumberFruits;
- [SerializeField]   private float  currentHealth=3;
-    [SerializeField]Vector3 spawnOffset = new Vector3(0, 1f, 0);
-    //[SerializeField] private TextMeshProUGUI shurikenNumber;
+
+    [SerializeField] private int currentNumberFruits;
+    [SerializeField] private float currentHealth = 3;
+    [SerializeField] Vector3 spawnOffset = new Vector3(0, 1f, 0);
+    [SerializeField] private Image greenHealthBar;
+    [SerializeField] private Image redHealthBar;
+    [SerializeField] float maxhealth = 3;
+    [SerializeField] private TextMeshProUGUI shurikenNumber;
     private int currentShurikenNumber = 0;
+   
     void Start()
     {
         spawnEnemies();
+        NumberOfShurikens();
         
-        UpdateHealthUI();
-        
+        currentHealth = maxhealth;
+
 
     }
 
-    private void UpdateHealthUI()
-    {
-        health.text = "HEALTH: " + currentHealth.ToString();
-    }
 
     private void spawnEnemies()
     {
@@ -48,47 +48,6 @@ public class GamePlayManager : MonoBehaviour
     }
 
 
- public void IncreaseScore(FruitType fruitType)
-    {
-        switch (fruitType)
-        {
-            case FruitType.Apple:
-                currentScore += (int)FruitType.Apple;
-                break;
-
-            case FruitType.Banana:
-                currentScore += (int)FruitType.Banana;
-                break;
-
-            case FruitType.Cherry:
-                currentScore += (int)FruitType.Cherry;
-                break;
-
-            case FruitType.Kiwi:
-                currentScore += (int)FruitType.Kiwi;
-                break;
-
-            case FruitType.Melon:
-                currentScore += (int)FruitType.Melon;
-                break;
-
-            case FruitType.Orange:
-                currentScore += (int)FruitType.Orange;
-                break;
-
-            case FruitType.Pineapple:
-                currentScore += (int)FruitType.Pineapple;
-                break;
-
-            case FruitType.Strawberry:
-                currentScore += (int)FruitType.Strawberry;
-                break;
-        }
-
-        score.text = "SCORE: " + currentScore;
-
-    }
-
     
     public void SetFruits(int numberOFFruits)
     {
@@ -97,7 +56,7 @@ public class GamePlayManager : MonoBehaviour
 
     private void Update()
     {
-        //NumberOfShurikens();
+        NumberOfShurikens();   
         WinCondition();
         
 
@@ -116,7 +75,7 @@ public class GamePlayManager : MonoBehaviour
     {
         currentHealth--;
 
-        health.text = "HEALTH: " + currentHealth;
+        HealthUIManagment();
 
         if (currentHealth <= 0)
         {
@@ -128,10 +87,10 @@ public class GamePlayManager : MonoBehaviour
         }
     }
 
-  //private void NumberOfShurikens()
-  //  {
-  //      shurikenNumber.text =  currentShurikenNumber.ToString();
-  //  }
+    private void NumberOfShurikens()
+    {
+        shurikenNumber.text = currentShurikenNumber.ToString();
+    }
 
 
     public int  IncreaseNumberofShurikens()
@@ -169,10 +128,18 @@ public class GamePlayManager : MonoBehaviour
 
     IEnumerator PlayerDeathScene()
     {
+        currentHealth = 0;
+        HealthUIManagment();
         ServiceLocator.Instance.playerService.PlayerDie();
         yield return new WaitForSeconds(1f);
         LoadCurrentLevel();
 
+    }
+
+    private void HealthUIManagment()
+    {
+        greenHealthBar.fillAmount = Mathf.Clamp(currentHealth / maxhealth, 0, 1);
+        redHealthBar.fillAmount= Mathf.Clamp(currentHealth / maxhealth, 0, 1);
     }
 }
 

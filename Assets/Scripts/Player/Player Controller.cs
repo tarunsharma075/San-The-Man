@@ -339,7 +339,6 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.AddForce(Vector2.up * 5f, ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.5f);
-
         rb.velocity = Vector2.down * 5f;
 
         yield return new WaitForSeconds(1f);

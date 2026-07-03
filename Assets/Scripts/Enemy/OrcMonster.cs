@@ -36,9 +36,9 @@ public class OrcMonster : EnemyBehaviour
     {
         if (ServiceLocator.Instance.playerService.GetPlayerState() == PlayerState.Dead)
         {
-            anim.SetBool("FirstAttack", false);
+            anim.SetBool("Attack", false);
             
-            return;
+           
         }
         if (currentState != OrcState.Dead && currentState != OrcState.Attacking)
         {
@@ -67,12 +67,12 @@ public class OrcMonster : EnemyBehaviour
         {
             currentState = OrcState.Attacking;
             rb.velocity = Vector2.zero;
-            anim.SetBool("FirstAttack", true);
+            anim.SetBool("Attack", true);
         }
         else if(!isplayerdetected)
         {
             currentState = OrcState.Alive;
-            anim.SetBool("FirstAttack", false);
+            anim.SetBool("Attack", false);
         }
         
     }

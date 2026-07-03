@@ -18,10 +18,7 @@ public void SetNumberofFruits(int currentNumberOffruits) {
 
 
     }
-public void IncreaseScore(FruitType fruitType)
-    {
-        gamePlayManager.IncreaseScore(fruitType);
-    }
+
 
 public void DecreaseHealth()
     {
