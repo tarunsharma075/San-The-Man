@@ -18,9 +18,9 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] private Image redHealthBar;
     [SerializeField] float maxhealth = 3;
     [SerializeField] private TextMeshProUGUI shurikenNumber;
-    [SerializeField] private SpriteRenderer[] barriers;
+    [SerializeField] private GameObject[] barriers;
     private int currentShurikenNumber = 0;
-    private int blockersHit = 0;
+    private float blockersHit = 0;
 
     void Awake()
     {
@@ -145,28 +145,32 @@ public class GamePlayManager : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void  OnHitShuriken()
     {
-        if (barriers[0].CompareTag("Blockers") && collision.CompareTag("Shuriken"))
-        {
-
+        
+            Debug.Log("ShurikenEnter");
             blockersHit++;
             if (blockersHit < 3)
             {
 
                 for (int i = 0; i < barriers.Length; i++)
                 {
+                    SpriteRenderer[] barriersSprites =
+                    {
+                     barriers[0].GetComponent<SpriteRenderer>(),
+                     barriers[1].GetComponent<SpriteRenderer>(),
+                    };
 
-                    Color c = barriers[i].color;
-                    c.a = blockersHit / 3;
-                    barriers[i].color = c;
+                    Color c = barriersSprites[i].color;
+                    c.a = (3f - blockersHit) / 3f;
+                barriersSprites[i].color = c;
 
                     if (blockersHit >= 3)
                     {
                         foreach (var barrier in barriers)
                         {
-                            barrier.enabled = false;
-                        }
+                            Destroy(barrier);
+                    }
                     }
                 }
 
@@ -177,7 +181,7 @@ public class GamePlayManager : MonoBehaviour
 
         }
     }
-}
+
 
 
 

@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
 
     protected float enemyhealth = 3;
     protected float currentHealth;
-
+    protected EnemyState currentState;
     
 
 
@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         currentHealth = enemyhealth;
         sr = GetComponent<SpriteRenderer>();
+        currentState = EnemyState.Alive;
     }
 
 

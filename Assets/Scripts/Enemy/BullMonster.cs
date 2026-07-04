@@ -7,20 +7,12 @@ using UnityEngine.UI;
 public class BullMonster : EnemyBehaviour
 {
     private bool isplayerdetected;
-    private BullState currentState;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField]private float radius;
     [SerializeField] private BoxCollider2D HitBox;
     
 
-    public enum  BullState
-    {
-        Dead,
-        Alive,
-        Attacking,
-        
-        
-    }
+   
 
     private void Awake()
     {
@@ -28,7 +20,7 @@ public class BullMonster : EnemyBehaviour
         base.Awake();
         anim= GetComponentInChildren<Animator>();
         SetHealth(5);
-        currentState = BullState.Alive;
+        currentState = EnemyState.Alive;
         //greenHealthBar.fillAmount = Mathf.Clamp(currentHealth / enemyhealth, 0, 1);
         //redHealthBar.fillAmount = Mathf.Clamp(currentHealth/enemyhealth,0,1);
     }
@@ -44,7 +36,7 @@ public class BullMonster : EnemyBehaviour
             
            
         }
-        if (currentState != BullState.Dead && currentState != BullState.Attacking)
+        if (currentState != EnemyState.Dead && currentState != EnemyState.Attacking)
         {
             
             base.Update();
@@ -70,13 +62,13 @@ public class BullMonster : EnemyBehaviour
     {
         if (isplayerdetected)
         {
-            currentState = BullState.Attacking;
+            currentState = EnemyState.Attacking;
             rb.velocity = Vector2.zero;
             anim.SetBool("Attack", true);
         }
         else if(!isplayerdetected)
         {
-            currentState = BullState.Alive;
+            currentState = EnemyState.Alive;
             anim.SetBool("Attack", false);
         }
         
@@ -92,7 +84,7 @@ public class BullMonster : EnemyBehaviour
 
     protected override void HandleMovement()
     {
-        if (currentState != BullState.Alive)
+        if (currentState != EnemyState.Alive)
         {
             rb.velocity = Vector2.zero;
             return;

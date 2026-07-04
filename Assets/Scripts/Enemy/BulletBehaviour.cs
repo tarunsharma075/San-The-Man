@@ -7,11 +7,13 @@ public class BulletBehaviour : MonoBehaviour
 
     [SerializeField] private float bulletspeed;
 
+
     private float direction = 1;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        
     }
 
     private void FixedUpdate()
@@ -25,24 +27,33 @@ public class BulletBehaviour : MonoBehaviour
     }
 
 
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (this.gameObject.CompareTag("EnemyBullet")&&collision.CompareTag("Player")){
-            Destroy(this.gameObject);
-            ServiceLocator.Instance.playerService.TakeDamage();
-           
-        }
 
-        
-        
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (this.gameObject.CompareTag("PlayerBullet")&&collision.gameObject.CompareTag("Enemy"))
+        if (this.gameObject.CompareTag("EnemyBullet") && collision.gameObject.CompareTag("Player"))
         {
             Destroy(this.gameObject);
-        }
-    }
+            ServiceLocator.Instance.playerService.TakeDamage();
 
+        }
+
+        if (this.gameObject.CompareTag("Shuriken") && collision.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(this.gameObject);
+
+
+
+
+        }
+
+        if (collision.gameObject.CompareTag("Blocker")&&this.gameObject.CompareTag("Shuriken"))
+        {
+            ServiceLocator.Instance.gamePlayservice.OnHitWithShuriken();
+           
+
+        }
+
+    }
 }

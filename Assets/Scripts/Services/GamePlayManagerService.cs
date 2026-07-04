@@ -42,7 +42,10 @@ public int IncreaseNumberOFShurikens()
         gamePlayManager.PlayerDead();
     }
      
-   
+   public void OnHitWithShuriken()
+    {
+        gamePlayManager.OnHitShuriken();
+    }
 
 
 }
