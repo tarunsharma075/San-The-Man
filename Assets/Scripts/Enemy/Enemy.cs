@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected Transform groundCheck;
     [SerializeField] protected LayerMask groundLayer;
     [SerializeField] protected GameObject decreaseHealthSign;
+    
     protected SpriteRenderer sr;
 
     protected bool IsGrounded;
@@ -147,7 +148,7 @@ protected virtual void Update()
     protected virtual void SetHealth(float newHealth) { 
     
       enemyhealth = newHealth;
-
+        currentHealth = enemyhealth;
         
     }
 

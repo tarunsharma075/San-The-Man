@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class OrcMonster : EnemyBehaviour
+public class BullMonster : EnemyBehaviour
 {
     private bool isplayerdetected;
-    private OrcState currentState;
+    private BullState currentState;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField]private float radius;
     [SerializeField] private BoxCollider2D HitBox;
+    
 
-    public enum  OrcState
+    public enum  BullState
     {
         Dead,
         Alive,
@@ -26,7 +28,9 @@ public class OrcMonster : EnemyBehaviour
         base.Awake();
         anim= GetComponentInChildren<Animator>();
         SetHealth(5);
-        currentState = OrcState.Alive;
+        currentState = BullState.Alive;
+        //greenHealthBar.fillAmount = Mathf.Clamp(currentHealth / enemyhealth, 0, 1);
+        //redHealthBar.fillAmount = Mathf.Clamp(currentHealth/enemyhealth,0,1);
     }
 
  
@@ -40,11 +44,12 @@ public class OrcMonster : EnemyBehaviour
             
            
         }
-        if (currentState != OrcState.Dead && currentState != OrcState.Attacking)
+        if (currentState != BullState.Dead && currentState != BullState.Attacking)
         {
             
             base.Update();
         }
+        
         CheckPlayer();
         Attack();
         
@@ -65,13 +70,13 @@ public class OrcMonster : EnemyBehaviour
     {
         if (isplayerdetected)
         {
-            currentState = OrcState.Attacking;
+            currentState = BullState.Attacking;
             rb.velocity = Vector2.zero;
             anim.SetBool("Attack", true);
         }
         else if(!isplayerdetected)
         {
-            currentState = OrcState.Alive;
+            currentState = BullState.Alive;
             anim.SetBool("Attack", false);
         }
         
@@ -87,7 +92,7 @@ public class OrcMonster : EnemyBehaviour
 
     protected override void HandleMovement()
     {
-        if (currentState != OrcState.Alive)
+        if (currentState != BullState.Alive)
         {
             rb.velocity = Vector2.zero;
             return;
@@ -119,8 +124,13 @@ public class OrcMonster : EnemyBehaviour
         if (collision.CompareTag("Player"))
         {
             ServiceLocator.Instance.gamePlayservice.PlayerDead();
-            //Debug.Log("Player Died");
+            
         }
     }
+
+    //public void ChangeHealthUI()
+    //{
+    //    greenHealthBar.fillAmount = Mathf.Clamp(currentHealth / enemyhealth, 0, 1);
+    //}
 }
 

@@ -18,22 +18,25 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] private Image redHealthBar;
     [SerializeField] float maxhealth = 3;
     [SerializeField] private TextMeshProUGUI shurikenNumber;
+    [SerializeField] private SpriteRenderer[] barriers;
     private int currentShurikenNumber = 0;
-   
-    void Start()
+    private int blockersHit = 0;
+
+    void Awake()
     {
         spawnEnemies();
         NumberOfShurikens();
-        
+
         currentHealth = maxhealth;
 
-
+        greenHealthBar.fillAmount = Mathf.Clamp(currentHealth / maxhealth, 0, 1);
+        redHealthBar.fillAmount = Mathf.Clamp(currentHealth / maxhealth, 0, 1);
     }
 
 
     private void spawnEnemies()
     {
-        
+
 
         for (int i = 0; i < spawnPoints.Length; i++)
         {
@@ -43,12 +46,12 @@ public class GamePlayManager : MonoBehaviour
             Quaternion.identity);
 
 
-            
+
         }
     }
 
 
-    
+
     public void SetFruits(int numberOFFruits)
     {
         currentNumberFruits = numberOFFruits;
@@ -56,16 +59,16 @@ public class GamePlayManager : MonoBehaviour
 
     private void Update()
     {
-        NumberOfShurikens();   
+        NumberOfShurikens();
         WinCondition();
-        
+
 
 
     }
 
     public void WinCondition()
     {
-        if(currentNumberFruits <= 0)
+        if (currentNumberFruits <= 0)
         {
             Debug.Log("You win!");
         }
@@ -83,7 +86,7 @@ public class GamePlayManager : MonoBehaviour
                 SceneManager.GetActiveScene().buildIndex
             );
 
-            
+
         }
     }
 
@@ -93,16 +96,16 @@ public class GamePlayManager : MonoBehaviour
     }
 
 
-    public int  IncreaseNumberofShurikens()
+    public int IncreaseNumberofShurikens()
     {
-        
+
         return currentShurikenNumber++;
-        
+
     }
 
-    public int  DecreaseNumberofShurikens()
+    public int DecreaseNumberofShurikens()
     {
-       return currentShurikenNumber--;
+        return currentShurikenNumber--;
     }
 
     public int GetCurrentShurikenNumber()
@@ -111,7 +114,7 @@ public class GamePlayManager : MonoBehaviour
     }
 
 
-   
+
     public void LoadCurrentLevel()
     {
         SceneManager.LoadScene(
@@ -139,9 +142,44 @@ public class GamePlayManager : MonoBehaviour
     private void HealthUIManagment()
     {
         greenHealthBar.fillAmount = Mathf.Clamp(currentHealth / maxhealth, 0, 1);
-        redHealthBar.fillAmount= Mathf.Clamp(currentHealth / maxhealth, 0, 1);
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (barriers[0].CompareTag("Blockers") && collision.CompareTag("Shuriken"))
+        {
+
+            blockersHit++;
+            if (blockersHit < 3)
+            {
+
+                for (int i = 0; i < barriers.Length; i++)
+                {
+
+                    Color c = barriers[i].color;
+                    c.a = blockersHit / 3;
+                    barriers[i].color = c;
+
+                    if (blockersHit >= 3)
+                    {
+                        foreach (var barrier in barriers)
+                        {
+                            barrier.enabled = false;
+                        }
+                    }
+                }
+
+
+
+            }
+
+
+        }
     }
 }
+
+
 
 
 

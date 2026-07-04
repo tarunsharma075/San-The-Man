@@ -11,6 +11,7 @@ TagManager:
   - PlayerBullet
   - Enemy
   - virtualCamera
+  - Blocker
   layers:
   - Default
   - TransparentFX
