@@ -40,13 +40,6 @@ public class PlayerView : MonoBehaviour
     //    anim.SetTrigger("Death");
     //}
 
-   public void Attack()
-    {
-        anim.SetTrigger("Attack");  
-    }
-    public void SpawnBullet()
-    {
-        playerController.FireBullet();
-    }
-
+   
+  
 }

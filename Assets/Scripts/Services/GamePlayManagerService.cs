@@ -37,6 +37,11 @@ public int IncreaseNumberOFShurikens()
         return gamePlayManager.DecreaseNumberofShurikens();
     }
 
+
+    public float GetNumberOfShurikens()
+    {
+        return gamePlayManager.GetCurrentShurikenNumber();
+    }
     public void PlayerDead()
     {
         gamePlayManager.PlayerDead();
@@ -47,5 +52,14 @@ public int IncreaseNumberOFShurikens()
         gamePlayManager.OnHitShuriken();
     }
 
+    public void ActivateSpikes()
+    {
+        gamePlayManager.SpikeActivated();
 
+    }
+
+
+   
+
+   
 }

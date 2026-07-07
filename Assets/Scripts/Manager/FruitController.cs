@@ -33,8 +33,7 @@ public class FruitController : MonoBehaviour
     {
         if (collision.GetComponent<PlayerController>() != null)
         {
-            Debug.Log("player collieded with fruit");
-           
+            
             ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.FruitCollect);
             fruitCount--;
             ServiceLocator.Instance.gamePlayservice.SetNumberofFruits(fruitCount);

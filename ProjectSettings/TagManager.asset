@@ -12,6 +12,9 @@ TagManager:
   - Enemy
   - virtualCamera
   - Blocker
+  - JungleRelic
+  - Shuriken
+  - Ground
   layers:
   - Default
   - TransparentFX

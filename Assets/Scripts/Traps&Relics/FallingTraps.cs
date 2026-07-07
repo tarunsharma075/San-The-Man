@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class FallingPlatform : MonoBehaviour
+public class FallingPlatform : WorldObject
 {
     [SerializeField] private float speed;
     [SerializeField] private float travelDistance;
@@ -11,9 +11,9 @@ public class FallingPlatform : MonoBehaviour
     private Vector2[] wayPoints;
     [SerializeField]private int index;
     private bool isPlayerOnPlatform;
-    private Animator anim;
+   
 
-    private void Awake()
+    protected override void Awake()
     {
        anim= gameObject.GetComponentInChildren<Animator>();
     }
@@ -61,19 +61,16 @@ public class FallingPlatform : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2d(Collision collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             isPlayerOnPlatform = true;
         }
-
-        
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        isPlayerOnPlatform = false; 
-
+        isPlayerOnPlatform = false;
     }
 }

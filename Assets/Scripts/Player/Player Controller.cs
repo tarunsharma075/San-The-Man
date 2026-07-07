@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
         Inputhandling();
         HandleWallSlide();
         HandleFlip();
+        HandleAttack();
 
         playermodel.Velocity = rb.velocity;
         playerView.UpdateAnimation(playermodel);
@@ -89,10 +90,11 @@ public class PlayerController : MonoBehaviour
 
     private void HandleAttack()
     {
+     
         time -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Mouse0) && time <= 0)
+        if (Input.GetKeyDown(KeyCode.RightAlt) && time <= 0)
         {
-            playerView.Attack();
+           FireBullet();
             time = cooldown;
 
         }
@@ -359,10 +361,15 @@ public void TakeDamage()
 
   public void  FireBullet()
     {
-        GameObject PeaBullet = Instantiate(bulletInstance, spwanPoint.transform.position, Quaternion.identity);
-    }
+        if (ServiceLocator.Instance.gamePlayservice.GetNumberOfShurikens() > 0)
+        {
+            
+            GameObject PeaBullet = Instantiate(bulletInstance, spwanPoint.transform.position, Quaternion.identity);
+            ServiceLocator.Instance.gamePlayservice.DecreaseNumberOFShurikens();
+        }
+        }
 
-    public void StunJump()
+        public void StunJump()
     {
         
         

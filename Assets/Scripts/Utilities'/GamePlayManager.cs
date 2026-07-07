@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,11 +6,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.WSA;
 public class GamePlayManager : MonoBehaviour
 {
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private GameObject[] prefabs;
-    [SerializeField] private TextMeshProUGUI health;
+    
 
     [SerializeField] private int currentNumberFruits;
     [SerializeField] private float currentHealth = 3;
@@ -18,8 +20,12 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] private Image redHealthBar;
     [SerializeField] float maxhealth = 3;
     [SerializeField] private TextMeshProUGUI shurikenNumber;
-    [SerializeField] private GameObject[] barriers;
-    private int currentShurikenNumber = 0;
+    [SerializeField] private GameObject barrierForLevelOne;
+    [SerializeField] private GameObject[] relics;
+    [SerializeField] private spikeController Spike;    
+    [SerializeField] private int currentShurikenNumber = 0;
+   
+
     private float blockersHit = 0;
 
     void Awake()
@@ -28,6 +34,7 @@ public class GamePlayManager : MonoBehaviour
         NumberOfShurikens();
 
         currentHealth = maxhealth;
+        
 
         greenHealthBar.fillAmount = Mathf.Clamp(currentHealth / maxhealth, 0, 1);
         redHealthBar.fillAmount = Mathf.Clamp(currentHealth / maxhealth, 0, 1);
@@ -92,6 +99,12 @@ public class GamePlayManager : MonoBehaviour
 
     private void NumberOfShurikens()
     {
+        if (currentShurikenNumber < 0)
+        {
+            currentShurikenNumber = 0;
+        }
+
+
         shurikenNumber.text = currentShurikenNumber.ToString();
     }
 
@@ -145,42 +158,58 @@ public class GamePlayManager : MonoBehaviour
 
     }
 
-    public void  OnHitShuriken()
+    public void OnHitShuriken()
     {
-        
-            Debug.Log("ShurikenEnter");
-            blockersHit++;
-            if (blockersHit < 3)
-            {
-
-                for (int i = 0; i < barriers.Length; i++)
-                {
-                    SpriteRenderer[] barriersSprites =
-                    {
-                     barriers[0].GetComponent<SpriteRenderer>(),
-                     barriers[1].GetComponent<SpriteRenderer>(),
-                    };
-
-                    Color c = barriersSprites[i].color;
-                    c.a = (3f - blockersHit) / 3f;
-                barriersSprites[i].color = c;
-
-                    if (blockersHit >= 3)
-                    {
-                        foreach (var barrier in barriers)
-                        {
-                            Destroy(barrier);
-                    }
-                    }
-                }
 
 
+        blockersHit++;
+        Debug.Log("BlockersHit: " + blockersHit);
+        if (blockersHit < 3)
+        {
 
-            }
+
+            SpriteRenderer barrierSprite = barrierForLevelOne.GetComponent<SpriteRenderer>();
+
+
+            Color c = barrierSprite.color;
+                c.a = (3f - blockersHit) / 3f;
+                barrierSprite.color = c;
+
+
+            
+
 
 
         }
+
+        if (blockersHit >= 3)
+        {
+            Destroy(barrierForLevelOne);
+
+        }
+
+
     }
+
+
+
+
+
+    public void SpikeActivated()
+    {
+        
+        
+     Spike.ActivateSpike();
+
+    }
+
+    
+
+
+  
+
+  
+}
 
 
 
