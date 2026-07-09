@@ -18001,9 +18001,9 @@ Transform:
   m_LocalScale: {x: 1.571549, y: 1.4424114, z: 1.4424114}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1961814811}
   - {fileID: 2020721611}
   - {fileID: 1537777453}
+  - {fileID: 1961814811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2140065002
@@ -18050,8 +18050,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 32768
   decreaseHealthSign: {fileID: 0}
-  greenhealthbar: {fileID: 0}
-  redHeathbar: {fileID: 0}
+  greenhealthbar: {fileID: 2119969172}
+  redHeathbar: {fileID: 1571520301}
   playerLayer:
     serializedVersion: 2
     m_Bits: 131072
@@ -18083,7 +18083,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 6
+  m_Constraints: 4
 --- !u!212 &2140065005
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -245,23 +245,22 @@ protected virtual void Update()
 
     protected void BossEnd()
     {
-        Debug.Log("BossEndCalled");
-        if (currentHealth == 0)
-        {
-            
-            UpdateGreenHealthbar();
+
+
+        currentState = EnemyState.Dead;
+        UpdateGreenHealthbar();
             StartCoroutine(BossEnemyEnd());
            
 
-        }
+        
     }
 
     private IEnumerator BossEnemyEnd()
     {
         
-        currentState = EnemyState.Dead;
+        
         sr.color= Color.gray;
-        rb.velocity = Vector2.zero;
+        
         rb.velocity = Vector2.up * 2;
         anim.enabled = false;
         yield return new WaitForSeconds(1f);
