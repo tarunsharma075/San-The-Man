@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3640265281613133917}
   - component: {fileID: 518378514513837397}
   - component: {fileID: 6299569877482466001}
+  - component: {fileID: 3517126842874773455}
   m_Layer: 0
   m_Name: ShootingShuriken
   m_TagString: Shuriken
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: -3
   m_Sprite: {fileID: 21300000, guid: c826fc23b2556ce45864ef8562d27d0f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -162,3 +163,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 6
+--- !u!95 &3517126842874773455
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863635670338251742}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aa867d15f6e1d654b826b27f44fe445d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

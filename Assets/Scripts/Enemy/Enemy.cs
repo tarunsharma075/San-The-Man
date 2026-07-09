@@ -131,6 +131,7 @@ protected virtual void Update()
         {
             
             ServiceLocator.Instance.playerService.TakeDamage();
+            Debug.Log(gameObject.name);
         }
 
         if (collision.gameObject.CompareTag("Shuriken"))
@@ -174,6 +175,7 @@ protected virtual void Update()
 
         if (collision.gameObject.CompareTag("Player"))
         {
+            Debug.Log(this.gameObject.name);
             ServiceLocator.Instance.playerService.TakeDamage();
         }
 

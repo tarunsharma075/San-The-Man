@@ -25,7 +25,7 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] private spikeController Spike;    
     [SerializeField] private int currentShurikenNumber = 0;
 
-    
+   
     
     
 

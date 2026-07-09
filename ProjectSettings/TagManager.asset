@@ -15,6 +15,7 @@ TagManager:
   - JungleRelic
   - Shuriken
   - Ground
+  - River
   layers:
   - Default
   - TransparentFX

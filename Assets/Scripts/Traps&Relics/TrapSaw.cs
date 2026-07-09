@@ -59,6 +59,7 @@ public class TrapSaw : WorldObject
     {
         if (collision.CompareTag("Player"))
         {
+            Debug.Log(this.gameObject.name);
             ServiceLocator.Instance.playerService.TakeDamage();
         }
 

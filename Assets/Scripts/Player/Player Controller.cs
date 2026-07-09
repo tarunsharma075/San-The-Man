@@ -25,8 +25,8 @@ public class PlayerController : MonoBehaviour
 
         playerView = playerView = GetComponentInChildren<PlayerView>();
         rb = this.GetComponent<Rigidbody2D>();
-       
 
+        playermodel.canWallJumpd = false;
     }
 
 
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
             PlayerJump();
         }
         else if (
-            playermodel.IsWallDetected&&playermodel.CurrentPlayerState==PlayerState.WallSliding) {
+            playermodel.IsWallDetected&&playermodel.CurrentPlayerState==PlayerState.WallSliding && playermodel.canWallJumpd==true) {
 
             WallJump();
             
@@ -363,8 +363,11 @@ public void TakeDamage()
     {
         if (ServiceLocator.Instance.gamePlayservice.GetNumberOfShurikens() > 0)
         {
+
             
-            GameObject PeaBullet = Instantiate(bulletInstance, spwanPoint.transform.position*playermodel.FacingDirection, Quaternion.identity);
+            GameObject PeaBullet = Instantiate(bulletInstance, spwanPoint.transform.position, Quaternion.identity);
+            BulletBehaviour shuriken = PeaBullet.GetComponent<BulletBehaviour>();
+            shuriken.SetDirection(playermodel.FacingDirection);
             ServiceLocator.Instance.gamePlayservice.DecreaseNumberOFShurikens();
         }
         }
@@ -406,5 +409,20 @@ public void TakeDamage()
     
     }
 
+    public void UnlockWallJump() {
+
+
+        playermodel.canWallJumpd = true;
+
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("DeathZone"))
+        {
+            GameManager.Instance.RespawnPlayer();
+        }
+    }
 }
 

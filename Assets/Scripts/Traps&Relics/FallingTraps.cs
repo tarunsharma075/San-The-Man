@@ -1,76 +1,121 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class FallingPlatform : WorldObject
+
+public enum PlatformState
 {
-    [SerializeField] private float speed;
-    [SerializeField] private float travelDistance;
-    [SerializeField] private float fallSpeed;
+    Still,
+    Falling,
+    Moving,
+    Respawning,
+}
+public class FallingPlatform :MonoBehaviour
+{
 
-   
-    private Vector2[] wayPoints;
-    [SerializeField]private int index;
-    private bool isPlayerOnPlatform;
-   
 
-    protected override void Awake()
+    [SerializeField]private PlatformState currentstate;
+    [SerializeField] private float fallingSpeed;
+    [SerializeField] private float movingSpeed;
+    [SerializeField] private GameObject[] points;
+    [SerializeField] private BoxCollider2D groundCollider;
+    private BoxCollider2D bx;
+    private int movingpoint = 0;
+    private Vector3 currentPosition;
+
+
+    private void Awake()
     {
-       anim= gameObject.GetComponentInChildren<Animator>();
-    }
 
-    private void Start()
-    {
-        SetUpWaypoints();
+        bx = GetComponent<BoxCollider2D>();
+        if (currentstate== PlatformState.Still)
+        {
+            movingSpeed = 0;
+        }
+        currentPosition = this.transform.position;
+        groundCollider.enabled = false;
     }
-
     private void Update()
     {
-        if (isPlayerOnPlatform)
+        switch (currentstate)
         {
-            this.transform.position -= Vector3.down * fallSpeed * Time.deltaTime;
+            case PlatformState.Still:
+                break;
 
-        }
-        else
-        {
-            MovePlatform();
+            case PlatformState.Moving:
+                PlatformMovement();
+                break;
+
+            case PlatformState.Falling:
+                transform.Translate(Vector3.down * fallingSpeed * Time.deltaTime);
+                break;
+
+            case PlatformState.Respawning:
+                break;
         }
     }
 
-    private void SetUpWaypoints()
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        wayPoints = new Vector2[2];
+        if (collision.gameObject.CompareTag("Player") &&
+    currentstate == PlatformState.Still)
+        {
+            currentstate = PlatformState.Falling;
+        }
 
-        float offset = travelDistance / 2f;
-        Vector2 startPosition = this.transform.position;
+        
 
-        wayPoints[0] = startPosition + Vector2.up * offset;
-        wayPoints[1] = startPosition + Vector2.down * offset;
+
+        if (collision.gameObject.CompareTag("Ground") &&
+    currentstate == PlatformState.Falling)
+        {
+            groundCollider.enabled = true;
+            StartCoroutine(OnGroundTouch());
+        }
     }
 
-    private void MovePlatform()
+
+    private void PlatformMovement()
     {
-        transform.position = Vector2.MoveTowards(
+
+        transform.position = Vector3.MoveTowards(
     transform.position,
-    wayPoints[index],
-    speed * Time.deltaTime
+    points[movingpoint].transform.position,
+    movingSpeed * Time.deltaTime
 );
 
-        if (Vector2.Distance(this.transform.position, wayPoints[index]) < 0.1f)
+        ChangeIndex();
+    }
+
+
+    private void ChangeIndex()
+    {
+        if(Vector3.Distance(this.transform.position, points[movingpoint].transform.position) < 0.1)
         {
-            index = (index + 1) % wayPoints.Length;
+            if (movingpoint == 1)
+            {
+                movingpoint = 0;
+            }
+            else
+            {
+                movingpoint = 1;
+            }
         }
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isPlayerOnPlatform = true;
-        }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private IEnumerator OnGroundTouch()
     {
-        isPlayerOnPlatform = false;
+       
+        bx.enabled = false;
+        
+
+        yield return new WaitForSeconds(1f);
+
+        transform.position = currentPosition;
+        currentstate = PlatformState.Still;
+        groundCollider.enabled = false;
+        bx.enabled = true;
     }
 }

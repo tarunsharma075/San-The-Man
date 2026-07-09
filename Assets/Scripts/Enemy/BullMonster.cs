@@ -19,7 +19,7 @@ public class BullMonster : EnemyBehaviour
        
         base.Awake();
         anim= GetComponentInChildren<Animator>();
-        SetHealth(1);
+        SetHealth(5);
         currentState = EnemyState.Alive;
 
         UpdateHealthUI();
@@ -45,6 +45,9 @@ public class BullMonster : EnemyBehaviour
         {
             anim.enabled= true;
         }
+
+        CheckPlayer();
+        Attack();
         if (ServiceLocator.Instance.playerService.GetPlayerState() == PlayerState.Dead)
         {
             anim.SetBool("Attack", false);
@@ -55,14 +58,14 @@ public class BullMonster : EnemyBehaviour
         {
             
             base.Update();
-            CheckPlayer();
-            Attack();
+            
+
         }
-        
-      
-        
+
+
        
-       
+        
+
     }
 
 

@@ -60,10 +60,7 @@ public abstract class WorldObject : GenericMonoSingleton<WorldObject>
         return currentTrapState;
     }
 
-    protected virtual void DamagePlayer()
-    {
-        ServiceLocator.Instance.playerService.TakeDamage();
-    }
+
 
     #endregion
 

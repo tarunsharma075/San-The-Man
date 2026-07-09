@@ -34,9 +34,11 @@ public class BulletBehaviour : MonoBehaviour
 
         if (this.gameObject.CompareTag("EnemyBullet") && collision.gameObject.CompareTag("Player"))
         {
+
+            Debug.Log(this.gameObject.name);
             Destroy(this.gameObject);
             ServiceLocator.Instance.playerService.TakeDamage();
-
+            
         }
 
         if (this.gameObject.CompareTag("Shuriken") && collision.gameObject.CompareTag("Enemy"))

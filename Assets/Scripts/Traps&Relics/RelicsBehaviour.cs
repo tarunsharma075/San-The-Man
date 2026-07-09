@@ -37,8 +37,15 @@ public  class RelicsBehaviour:WorldObject
     {
 
         CameraShakeManager.Instance.CameraShake(impulseSource);
+        StartCoroutine(EndJungleRelic());
+    }
+
+   private IEnumerator EndJungleRelic()
+    {
+        ServiceLocator.Instance.playerService.PlayerWallJumpUnlocked();
+        yield return new WaitForSeconds(1f);
         ServiceLocator.Instance.gamePlayservice.ActivateSpikes();
-      
+
 
 
         if (this.gameObject.CompareTag("JungleRelic"))
@@ -46,8 +53,6 @@ public  class RelicsBehaviour:WorldObject
             this.gameObject.SetActive(false);
         }
     }
-
-   
 
 
 }

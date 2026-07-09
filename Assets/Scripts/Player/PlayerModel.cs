@@ -39,6 +39,7 @@ public class PlayerModel
     public float XInput { get; set; }   
     public float YInput { get; set; }
 
+    public bool canWallJumpd { get; set; }
     
 
     

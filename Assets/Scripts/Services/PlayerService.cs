@@ -47,6 +47,9 @@ public class PlayerService
 
     }
 
-    
+    public void PlayerWallJumpUnlocked()
+    {
+        playerController.UnlockWallJump();
+    }
 
 }
