@@ -4,6 +4,6 @@
     Dead,
     Alive,
     Attacking,
-
+    Stunned,
 
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -26,20 +27,25 @@ public class Enemy : MonoBehaviour
     protected bool IsGrounded;
     protected bool IsWallDetected;
 
-    protected float enemyhealth = 3;
+    protected float enemyMaxhealth = 3;
     protected float currentHealth;
     protected EnemyState currentState;
-    
+    protected SpriteRenderer currentEnemySprite;
 
 
+
+   [SerializeField] protected Image greenhealthbar;
+
+    [SerializeField] protected Image redHeathbar;
 
     protected virtual void Awake()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        currentHealth = enemyhealth;
+        currentHealth = enemyMaxhealth;
         sr = GetComponent<SpriteRenderer>();
         currentState = EnemyState.Alive;
+        currentEnemySprite = this.gameObject.GetComponent<SpriteRenderer>();
     }
 
 
@@ -127,7 +133,39 @@ protected virtual void Update()
             ServiceLocator.Instance.playerService.TakeDamage();
         }
 
+        if (collision.gameObject.CompareTag("Shuriken"))
+        {
+            currentHealth--;
+            UpdateGreenHealthbar();
+            if (collision.CompareTag("Shuriken"))
+            {
+               
+                UpdateGreenHealthbar();
 
+                if (currentHealth <= 0)
+                {
+                    
+                    BossEnd();      
+                }
+                else
+                {
+                    StartCoroutine(BossHitWithShuriken());
+                }
+            }
+        }
+
+    }
+
+
+
+    private IEnumerator BossHitWithShuriken()
+    {
+        sr.color= Color.red;
+        currentState = EnemyState.Stunned;
+        this.rb.velocity= Vector2.zero;
+        yield return new WaitForSeconds(0.5f);
+        sr.color = Color.white;
+        currentState = EnemyState.Alive;
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
@@ -148,8 +186,8 @@ protected virtual void Update()
 
     protected virtual void SetHealth(float newHealth) { 
     
-      enemyhealth = newHealth;
-        currentHealth = enemyhealth;
+      enemyMaxhealth = newHealth;
+        currentHealth = enemyMaxhealth;
         
     }
 
@@ -205,6 +243,41 @@ protected virtual void Update()
         sr.color = hitcolor;
     }
 
+    protected void BossEnd()
+    {
+        Debug.Log("BossEndCalled");
+        if (currentHealth == 0)
+        {
+            
+            UpdateGreenHealthbar();
+            StartCoroutine(BossEnemyEnd());
+           
 
-   
+        }
+    }
+
+    private IEnumerator BossEnemyEnd()
+    {
+        
+        currentState = EnemyState.Dead;
+        sr.color= Color.gray;
+        rb.velocity = Vector2.zero;
+        rb.velocity = Vector2.up * 2;
+        anim.enabled = false;
+        yield return new WaitForSeconds(1f);
+        rb.velocity = Vector2.down * 10;
+        yield return new WaitForSeconds(3f);
+        Destroy(this.gameObject);
+    }
+
+
+    protected void UpdateHealthUI()
+    {
+        greenhealthbar.fillAmount= Mathf.Clamp(currentHealth / enemyMaxhealth, 0, 1);
+        redHeathbar.fillAmount = Mathf.Clamp(currentHealth / enemyMaxhealth, 0, 1);
+    }
+
+    protected void UpdateGreenHealthbar() => greenhealthbar.fillAmount = Mathf.Clamp(currentHealth / enemyMaxhealth, 0, 1);
+
+
 }

@@ -364,7 +364,7 @@ public void TakeDamage()
         if (ServiceLocator.Instance.gamePlayservice.GetNumberOfShurikens() > 0)
         {
             
-            GameObject PeaBullet = Instantiate(bulletInstance, spwanPoint.transform.position, Quaternion.identity);
+            GameObject PeaBullet = Instantiate(bulletInstance, spwanPoint.transform.position*playermodel.FacingDirection, Quaternion.identity);
             ServiceLocator.Instance.gamePlayservice.DecreaseNumberOFShurikens();
         }
         }

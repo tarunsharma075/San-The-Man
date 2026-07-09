@@ -1,8 +1,8 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -24,7 +24,12 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] private GameObject[] relics;
     [SerializeField] private spikeController Spike;    
     [SerializeField] private int currentShurikenNumber = 0;
-   
+
+    
+    
+    
+
+
 
     private float blockersHit = 0;
 
@@ -152,6 +157,7 @@ public class GamePlayManager : MonoBehaviour
 
     }
 
+    // player health UI update
     private void HealthUIManagment()
     {
         greenHealthBar.fillAmount = Mathf.Clamp(currentHealth / maxhealth, 0, 1);
@@ -192,9 +198,6 @@ public class GamePlayManager : MonoBehaviour
     }
 
 
-
-
-
     public void SpikeActivated()
     {
         
@@ -203,9 +206,12 @@ public class GamePlayManager : MonoBehaviour
 
     }
 
-    
+  //enemy health UI pdate  
 
-
+    public void UpdateEnemeyUI(Image enemyGreenHealthBar,int maxhealth,int currenthealth)
+    {
+        enemyGreenHealthBar.fillAmount= Mathf.Clamp(maxhealth/ currenthealth, 0, 1);
+    }
   
 
   

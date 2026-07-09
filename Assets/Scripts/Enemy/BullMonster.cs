@@ -19,10 +19,11 @@ public class BullMonster : EnemyBehaviour
        
         base.Awake();
         anim= GetComponentInChildren<Animator>();
-        SetHealth(5);
+        SetHealth(1);
         currentState = EnemyState.Alive;
-        //greenHealthBar.fillAmount = Mathf.Clamp(currentHealth / enemyhealth, 0, 1);
-        //redHealthBar.fillAmount = Mathf.Clamp(currentHealth/enemyhealth,0,1);
+
+        UpdateHealthUI();
+        Debug.Log(currentHealth);
     }
 
  
@@ -30,6 +31,20 @@ public class BullMonster : EnemyBehaviour
     
     void Update()
     {
+        if(currentState== EnemyState.Dead)
+        {
+            return;
+        }
+       
+        if (currentState == EnemyState.Stunned)
+        {
+            anim.enabled = false;
+            return;
+        }
+        else
+        {
+            anim.enabled= true;
+        }
         if (ServiceLocator.Instance.playerService.GetPlayerState() == PlayerState.Dead)
         {
             anim.SetBool("Attack", false);
@@ -40,10 +55,11 @@ public class BullMonster : EnemyBehaviour
         {
             
             base.Update();
+            CheckPlayer();
+            Attack();
         }
         
-        CheckPlayer();
-        Attack();
+      
         
        
        
@@ -116,7 +132,11 @@ public class BullMonster : EnemyBehaviour
         if (collision.CompareTag("Player"))
         {
             ServiceLocator.Instance.gamePlayservice.PlayerDead();
-            
+
+        }
+        else
+        {
+            base.OnTriggerEnter2D (collision);
         }
     }
 

@@ -13,14 +13,14 @@ public class AttackingMushroom : EnemyBehaviour
     [SerializeField] private Collider2D attackHitbox;
     [SerializeField] private Collider2D stunCollider;
     private bool shouldcchasePlayer = false;
-
+    
     protected override void Awake()
     {
        
         base.Awake();
         timer = cooldownTime;
         attackHitbox.enabled = false;
-        currentHealth = 3;
+       
     }
 
 
