@@ -22,4 +22,13 @@ public class GenericMonoSingleton<T> : MonoBehaviour where T :GenericMonoSinglet
         }
     }
 
+    public static void ResetInstance()
+    {
+        if (instance != null)
+        {
+            Destroy(instance.gameObject);
+            instance = null;
+        }
+    }
+
 }

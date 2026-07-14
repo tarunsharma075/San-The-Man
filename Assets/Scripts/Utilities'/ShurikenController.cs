@@ -21,7 +21,8 @@ public class ShurikenController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             
-            ServiceLocator.Instance.gamePlayservice.IncreaseNumberOFShurikens();
+            ServiceLocator.Instance.gamePlayservice.IncreaseShurikenNumberByValue(1);
+            ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.FruitCollect);
             anim.SetTrigger("Hit");
             bx.enabled = false;
             Debug.Log("Trigger");

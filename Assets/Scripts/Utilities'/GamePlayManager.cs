@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.WSA;
+
 public class GamePlayManager : MonoBehaviour
 {
     [SerializeField] private Transform[] spawnPoints;
@@ -25,11 +26,14 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] private spikeController Spike;    
     [SerializeField] private int currentShurikenNumber = 0;
 
-   
-    
-    
 
+    [SerializeField] private GameObject bull;
+    [SerializeField] private GameObject relic;
+    [SerializeField] private GameObject []blocker;
+    [SerializeField] private ParticleSystem leafburst;
 
+    [SerializeField] private CinemachineVirtualCamera playercamera;
+    [SerializeField] private CinemachineVirtualCamera spikecamera;
 
     private float blockersHit = 0;
 
@@ -45,6 +49,12 @@ public class GamePlayManager : MonoBehaviour
         redHealthBar.fillAmount = Mathf.Clamp(currentHealth / maxhealth, 0, 1);
     }
 
+
+    private void Start()
+    {
+        if (ServiceLocator.Instance != null)
+            ServiceLocator.Instance.RegisterGamePlayManager(this);
+    }
 
     private void spawnEnemies()
     {
@@ -80,9 +90,13 @@ public class GamePlayManager : MonoBehaviour
 
     public void WinCondition()
     {
-        if (currentNumberFruits <= 0)
+        if (bull == null && relic == null)
         {
-            Debug.Log("You win!");
+            
+                for (int i = 0; i < blocker.Length; i++)
+                {
+                    blocker[i].SetActive(false);
+                }
         }
     }
 
@@ -213,8 +227,42 @@ public class GamePlayManager : MonoBehaviour
         enemyGreenHealthBar.fillAmount= Mathf.Clamp(maxhealth/ currenthealth, 0, 1);
     }
   
+    public void IncreasePlayerHealth()
+    {
+        if(currentHealth== maxhealth)
+        {
+            return;
+        }
 
+        currentHealth++;
+        HealthUIManagment();
+    }
+
+
+    public void IncreaseShurikenNumberByValue(int value)
+    {
+        currentShurikenNumber += value;
+    }
   
+
+   public ParticleSystem GetLeafPartcileSystem()
+    {
+        return leafburst;
+    }
+
+
+    public void ActivateSpikeCamera()
+    {
+        playercamera.Priority = 10;
+        spikecamera.Priority = 20;
+    }
+
+    public void ActivatePlayerCamera()
+    {
+        playercamera.Priority = 20;
+        spikecamera.Priority = 10;
+    }
+   
 }
 
 

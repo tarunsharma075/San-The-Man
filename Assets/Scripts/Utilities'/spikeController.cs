@@ -36,6 +36,7 @@ public class spikeController : MonoBehaviour
         {
             currentState = SpikeState.stopped;
             this.rb.velocity = Vector2.zero;
+            StopAllCoroutines();
             StartCoroutine(DestroyPlatform());
             
 
@@ -44,8 +45,13 @@ public class spikeController : MonoBehaviour
 
         IEnumerator DestroyPlatform()
         {
-            Destroy(collision.gameObject);
+            ParticleSystem leaf = Instantiate(ServiceLocator.Instance.gamePlayservice.GetLeafPartcileSystem(),
+                collision.gameObject.transform.position,
+                Quaternion.identity);
+            ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.BlockerHit);
             yield return new WaitForSeconds(1f);
+            Destroy(leaf);
+            Destroy(collision.gameObject);
             currentState = SpikeState.moving;
         }
 

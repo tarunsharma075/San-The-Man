@@ -1,17 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : GenericMonoSingleton<Enemy>
 {
     [SerializeField] protected float movementSpeed;
     [SerializeField] private bool isFacingRight = false;
 
     [NonSerialized]protected Animator anim;
     [NonSerialized] protected Rigidbody2D rb;
-    [SerializeField] protected int facingDirection = -1;
+    [SerializeField] protected int facingDirection;
     [SerializeField]protected float idleDuration;
     protected float idleTimer;
 
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected Transform groundCheck;
     [SerializeField] protected LayerMask groundLayer;
     [SerializeField] protected GameObject decreaseHealthSign;
+   
     
     protected SpriteRenderer sr;
 
@@ -53,6 +55,38 @@ public class Enemy : MonoBehaviour
     {
         IsGrounded = Physics2D.Raycast(groundCheck.transform.position, Vector2.down, groundDistance, groundLayer);
         IsWallDetected = Physics2D.Raycast(groundCheck.transform.position, Vector2.right * facingDirection, wallDistance, groundLayer);
+    }
+
+    protected bool TryGetDetectedPlayer(float detectionRadius, LayerMask playerLayer, out Transform detectedPlayer)
+    {
+        return TryGetDetectedPlayer(transform.position, detectionRadius, playerLayer, out detectedPlayer);
+    }
+
+    protected bool TryGetDetectedPlayer(Vector2 detectionCenter, float detectionRadius, LayerMask playerLayer, out Transform detectedPlayer)
+    {
+        Collider2D detectedCollider = Physics2D.OverlapCircle(detectionCenter, detectionRadius, playerLayer);
+        detectedPlayer = detectedCollider != null ? detectedCollider.transform : null;
+        return detectedPlayer != null;
+    }
+
+    protected void FaceTarget(Transform target)
+    {
+        if (target == null)
+        {
+            return;
+        }
+
+        float directionToTarget = target.position.x - transform.position.x;
+        if (Mathf.Abs(directionToTarget) < 0.05f)
+        {
+            return;
+        }
+
+        bool shouldFaceRight = directionToTarget > 0;
+        if (shouldFaceRight && facingDirection < 0 || !shouldFaceRight && facingDirection > 0)
+        {
+            FlipPlayer();
+        }
     }
 
 
@@ -150,6 +184,7 @@ protected virtual void Update()
                 }
                 else
                 {
+                   
                     StartCoroutine(BossHitWithShuriken());
                 }
             }
@@ -209,28 +244,32 @@ protected virtual void Update()
        
         changeColourOnhit();
         currentHealth--;
+        
         GameObject sign = Instantiate(
             decreaseHealthSign,
             transform.position,
             Quaternion.identity
         );
 
+
         
-        
+
         StartCoroutine(DamageSignRoutine(sign));
     }
 
     private IEnumerator DamageSignRoutine(GameObject sign)
     {
+        Debug.Log("Enter in damage sign routine");
         float timer = 0f;
 
         while (timer < 0.5f)
         {
             sign.transform.position += Vector3.up * 2f * Time.deltaTime;
-            this.rb.velocity = Vector2.zero;
-            anim.SetFloat("Xvelocity",0);
+            rb.velocity = Vector2.zero;
+            anim.SetFloat("Xvelocity", 0);
 
             timer += Time.deltaTime;
+
             yield return null;
         }
 
@@ -251,7 +290,8 @@ protected virtual void Update()
 
         currentState = EnemyState.Dead;
         UpdateGreenHealthbar();
-            StartCoroutine(BossEnemyEnd());
+       
+        StartCoroutine(BossEnemyEnd());
            
 
         
@@ -262,12 +302,15 @@ protected virtual void Update()
         
         
         sr.color= Color.gray;
-        
+        ServiceLocator.Instance.playerService.SetCurrentDirectionSign(PlayerDirection.Right);
+        Debug.Log("called by bossenemyend");
         rb.velocity = Vector2.up * 2;
         anim.enabled = false;
         yield return new WaitForSeconds(1f);
+        ServiceLocator.Instance.playerService.DeactivateCurrentActiveSign();
         rb.velocity = Vector2.down * 10;
         yield return new WaitForSeconds(3f);
+      
         Destroy(this.gameObject);
     }
 
@@ -280,5 +323,6 @@ protected virtual void Update()
 
     protected void UpdateGreenHealthbar() => greenhealthbar.fillAmount = Mathf.Clamp(currentHealth / enemyMaxhealth, 0, 1);
 
+    
 
 }

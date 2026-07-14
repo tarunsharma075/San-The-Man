@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
 using UnityEngine;
 
 public class TrunkAttack : EnemyBehaviour
@@ -11,11 +10,14 @@ public class TrunkAttack : EnemyBehaviour
     [SerializeField] private float playerdistance;
      private float timer;
     [SerializeField] private float cooldownTime;
-    private bool canattack = false;
 
     private bool isplayerdetected = false;
     [SerializeField] private float startingtime;
+    private Transform detectedPlayer;
+    [SerializeField] private BoxCollider2D hitBox;
 
+    
+    
     protected override void Awake()
     {
        base.Awake();
@@ -23,17 +25,20 @@ public class TrunkAttack : EnemyBehaviour
 
     protected override void Update()
     {
+
+        if (currentState == EnemyState.Dead || currentState == EnemyState.Stunned) return;
         if (ServiceLocator.Instance.playerService.GetPlayerState() == PlayerState.Dead) return;
         startingtime -= Time.deltaTime;
         if (startingtime < 0)
         {
             base.Update();
-            isplayerdetected = Physics2D.Raycast(this.transform.position,
-                Vector2.right * facingDirection, playerdistance
-                , playerLayer);
+            isplayerdetected = TryGetDetectedPlayer(playerdistance, playerLayer, out detectedPlayer);
 
             if (isplayerdetected)
+            {
+                FaceTarget(detectedPlayer);
                 Attack();
+            }
         }
 
     }
@@ -53,7 +58,7 @@ public class TrunkAttack : EnemyBehaviour
     {
         base.OnDrawGizmos();
         Gizmos.color = isplayerdetected ? Color.green : Color.red;
-        Gizmos.DrawLine(this.transform.position, new Vector2(this.transform.position.x + (playerdistance * facingDirection), this.transform.position.y));
+        Gizmos.DrawWireSphere(transform.position, playerdistance);
     }
 
      public void Shoot()
@@ -63,5 +68,81 @@ public class TrunkAttack : EnemyBehaviour
         Bullet.GetComponent<BulletBehaviour>().SetDirection(facingDirection);
 
     }
+
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (currentState == EnemyState.Dead || currentState == EnemyState.Stunned) return;
+        
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Rigidbody2D playerRb = collision.GetComponent<Rigidbody2D>();
+
+            if (collision.transform.position.y > transform.position.y &&
+          playerRb.velocity.y < 0)
+            {
+
+                if (currentHealth == 1)
+                {
+                    
+                    TrunkEnd();
+                    return;
+                }
+
+                base.StunDamage();
+                
+                StartCoroutine(StunTrunkBehaviour());
+            }
+            
+           
+        }
+    }
+
+
+    private IEnumerator StunTrunkBehaviour()
+    {
+
+        currentState = EnemyState.Stunned;
+        this.anim.enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        currentState = EnemyState.Alive;
+        this.anim.enabled = true;
+
+
+    }
+
+   private void TrunkEnd()
+    {
+        trunkEndSequence();
+    }
+
+    private void trunkEndSequence()
+    {
+        StartCoroutine(treeend());
+        
+    }
+
+
+    private IEnumerator treeend()
+    {
+        ServiceLocator.Instance.playerService.EnemyOverStunJump();
+        ServiceLocator.Instance.gamePlayservice.IncreaseShurikenNumberByValue(1);
+        
+        this.rb.velocity = Vector2.zero;
+        currentState = EnemyState.Dead;
+        anim.SetTrigger("Die");
+        hitBox.enabled = false;
+        ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.EnemyStun);
+      
+        yield return new WaitForSeconds(1.5f);
+        Destroy(this.gameObject);
+    }
+
+    protected void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D (collision);
+    }
+
+   
 
 }

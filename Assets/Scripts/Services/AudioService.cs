@@ -25,5 +25,10 @@ public class AudioService
         }
         audioManager.PlaySFXSounds(soundToUsed);
     }
+
+    public void Stopbgm()
+    {
+        audioManager.StopBgm();
+    }
 }
 

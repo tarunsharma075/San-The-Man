@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : GenericMonoSingleton<AudioManager>
 {
@@ -16,7 +17,8 @@ public class AudioManager : GenericMonoSingleton<AudioManager>
     [SerializeField] private AudioClip buttonClicked;
     [SerializeField] private AudioClip enemyOverJump;
     [SerializeField] private AudioClip enemystun;
-
+    [SerializeField] private AudioClip playerWins;
+    [SerializeField] private AudioClip blockerHit;
     protected override void Awake()
     {
         base.Awake();
@@ -28,12 +30,13 @@ public class AudioManager : GenericMonoSingleton<AudioManager>
 
         private void Start()
         {
-            if (Instance != this) return;
+        if (Instance != this) return;
 
+        Debug.Log("AudioManager Start called, playing bg music. Clip: " + backgroundScore.clip);
         backgroundScore.Play();
 
-          
-        }
+
+    }
 
 
     
@@ -133,12 +136,67 @@ public class AudioManager : GenericMonoSingleton<AudioManager>
                     gameSFXSounds.PlayOneShot(enemystun);
                     break;
                 }
+
+            case SoundTypes.PlayerWins:
+                {
+
+                    if(playerWins == null)
+                    {
+                        Debug.Log( "sound is null");
+                        return;
+                    }
+                    gameSFXSounds.PlayOneShot(playerWins);
+                    break;
+                }
+
+
+            case SoundTypes.BlockerHit:
+
+                {
+
+                    if (blockerHit == null)
+                    {
+                        Debug.Log("sound is null");
+                        return;
+                    }
+                    gameSFXSounds.PlayOneShot(blockerHit);
+                    break;
+                }
+
             default: {
 
                     Debug.Log("There is no sound assigned to this sound type");
                     break;
                 }
 
+        }
+    }
+
+
+    public void StopBgm()
+    {
+        backgroundScore.Stop();
+    }
+
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (ServiceLocator.Instance != null)
+            ServiceLocator.Instance.RegisterAudioManager(this);
+
+        if (scene.buildIndex == 0)
+        {
+            backgroundScore.Play();
         }
     }
 }

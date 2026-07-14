@@ -44,8 +44,16 @@ public class ServiceLocator : GenericMonoSingleton<ServiceLocator>
         audioService = new AudioService(audioManager);
     }
 
-    
-    
+
+    public void RegisterGamePlayManager(GamePlayManager manager)
+    {
+        gamePlayservice = new GamePlayManagerService(manager);
+    }
+
+    public void RegisterAudioManager(AudioManager manager)
+    {
+        audioService = new AudioService(manager);
+    }
 
 }
 

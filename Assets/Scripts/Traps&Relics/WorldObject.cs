@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public enum RelicState
@@ -81,5 +82,11 @@ public abstract class WorldObject : GenericMonoSingleton<WorldObject>
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
 
+    }
+
+
+    protected virtual RelicState GetCurrentRelicState()
+    {
+        return currentRelicState;
     }
 }

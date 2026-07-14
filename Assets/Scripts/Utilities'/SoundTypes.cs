@@ -7,5 +7,7 @@
     PlayerHit,
     EnemyOverJump,
     EnemyStun,
+    PlayerWins,
+    BlockerHit,
 
 }

@@ -29,11 +29,7 @@ public class GamePlayManagerService
 
 
 
-    public int IncreaseNumberOFShurikens()
-    {
-        return gamePlayManager.IncreaseNumberofShurikens();
-    }
-
+  
     public int DecreaseNumberOFShurikens()
     {
         return gamePlayManager.DecreaseNumberofShurikens();
@@ -68,4 +64,35 @@ public class GamePlayManagerService
 
 
     }
+
+    public void IncreasePlayerHealth()
+    {
+        gamePlayManager.IncreasePlayerHealth();
+    }
+
+    public void IncreaseShurikenNumberByValue(int value)
+    {
+        gamePlayManager.IncreaseShurikenNumberByValue((int)value);
+    }
+
+    public ParticleSystem GetLeafPartcileSystem()
+    {
+        return gamePlayManager.GetLeafPartcileSystem();
+
+
+
+    }
+
+
+    public void ActivatespikeCamera()
+    {
+        gamePlayManager.ActivateSpikeCamera();
+    }
+
+
+    public void ActivatePlayerCamera()
+    {
+        gamePlayManager.ActivatePlayerCamera();
+    }
+
 }

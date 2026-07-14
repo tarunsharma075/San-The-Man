@@ -6,12 +6,13 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.IO.LowLevel.Unsafe;
 using Cinemachine;
+using System.Net.Mail;
 public class GameManager:GenericMonoSingleton<GameManager>
 {
 
     [SerializeField]  private GameObject player;
     private GameObject Checkpoint;
-   [SerializeField] private Button newGameButton;
+    
     
      private GameObject currentPlayer;
 
@@ -25,7 +26,7 @@ public class GameManager:GenericMonoSingleton<GameManager>
 
     private void Start()
     {
-        newGameButton.onClick.AddListener(OnClickNewGameButton);
+        
 
        
     }
@@ -126,5 +127,7 @@ public class GameManager:GenericMonoSingleton<GameManager>
         //Debug.Log("Camera now following: " + virtualCamera.Follow.name);
     }
 
+
+  
 
 }

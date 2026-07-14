@@ -13,11 +13,19 @@ public class PlayerController : MonoBehaviour
 
 
     [SerializeField] private LayerMask groundLayer;
-   [SerializeField] private PlayerModel playermodel;
+    [SerializeField] private PlayerModel playermodel;
     private PlayerView playerView;
     [SerializeField] private GameObject bulletInstance;
     [SerializeField] private  Transform spwanPoint;
     [SerializeField] private float cooldown;
+    [SerializeField] private float jumpcooldown;
+    [SerializeField] private float jumpbuttonclickDuration;
+
+    [SerializeField] private GameObject rightside;
+    [SerializeField] private GameObject lefttside;
+    [SerializeField] private GameObject Upside;
+
+    private GameObject currentActivesign;
     private float time;
 
     private void Awake()
@@ -27,6 +35,7 @@ public class PlayerController : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
 
         playermodel.canWallJumpd = false;
+        
     }
 
 
@@ -41,19 +50,22 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+        if (playermodel.CurrentPlayerState == PlayerState.EnemyOverJumping) return;
+        CheckCollision();
         if (playermodel.CurrentPlayerState== PlayerState.PlayerKnocked) return;
         if (playermodel.CurrentPlayerState== PlayerState.Dead) return;
-        if (playermodel.CurrentPlayerState == PlayerState.EnemyOverJumping) return;
+       
 
-        CheckCollision();
+        
         Inputhandling();
-        HandleWallSlide();
-        HandleFlip();
-        HandleAttack();
-
         playermodel.Velocity = rb.velocity;
         playerView.UpdateAnimation(playermodel);
-       
+        HandleFlip();
+        HandleWallSlide();
+        
+        HandleAttack();
+        
+
 
 
     }
@@ -78,6 +90,7 @@ public class PlayerController : MonoBehaviour
     {
         playermodel.XInput = Input.GetAxisRaw("Horizontal");
         playermodel.YInput = Input.GetAxisRaw("Vertical");
+       
         PlayerMovement(playermodel.XInput);
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -164,6 +177,8 @@ public class PlayerController : MonoBehaviour
 
         if (playermodel.CurrentPlayerState == PlayerState.WallJumping)
             return;
+        if (playermodel.CurrentPlayerState == PlayerState.PlayerKnocked)
+            return;
         playermodel.IsWallDetected = Physics2D.Raycast(
             transform.position,
             Vector2.right * playermodel.FacingDirection,
@@ -228,7 +243,7 @@ public class PlayerController : MonoBehaviour
     private void WallJump()
     {
         playermodel.CurrentPlayerState = PlayerState.WallJumping;
-        playermodel.CanDoubleJump = true;
+        
 
         rb.velocity = new Vector2(playermodel.WallJumpForce.x*-playermodel.FacingDirection, playermodel.WallJumpForce.y);
         ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerJump);
@@ -280,13 +295,13 @@ public class PlayerController : MonoBehaviour
 
     public  void PlayerKnockBack()
     {
-        playermodel.CurrentPlayerState = PlayerState.PlayerKnocked;
-        
-        
+
+
+        StopAllCoroutines();
         StartCoroutine(KnockBackRoutine());
 
         
-        rb.velocity = new Vector2(playermodel.KnockbackDistance.x * -playermodel.FacingDirection, playermodel.KnockbackDistance.y);
+        
         
 
     }
@@ -294,15 +309,30 @@ public class PlayerController : MonoBehaviour
     private IEnumerator KnockBackRoutine()
     {
 
-       
+
+        playermodel.CurrentPlayerState = PlayerState.PlayerKnocked;
+
         ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.PlayerHit);
-        playerView.PlayKnockedAnimation(playermodel.CurrentPlayerState);
+
         ServiceLocator.Instance.gamePlayservice.DecreaseHealth();
-        yield return new WaitForSeconds(playermodel.KnockbackDuration);
-        playermodel.CurrentPlayerState = PlayerState.PlayerAirborne;
 
-        playerView.PlayKnockedAnimation(playermodel.CurrentPlayerState);
+        this.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+        rb.velocity = Vector2.zero;
 
+        rb.AddForce(
+            new Vector2(
+                9 * -playermodel.FacingDirection,
+                playermodel.KnockbackDistance.y),
+            ForceMode2D.Impulse);
+
+       SpriteRenderer playersprite = this.gameObject.GetComponentInChildren<SpriteRenderer>();    
+        playersprite.color = Color.red;
+
+        yield return new WaitForSeconds(0.2f);
+
+        playermodel.CurrentPlayerState = PlayerState.PlayerGrounded;
+        playersprite.color = Color.white;
+        this.gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
 
     }
 
@@ -328,6 +358,7 @@ public class PlayerController : MonoBehaviour
         SpriteRenderer playerSprite = this.GetComponentInChildren<SpriteRenderer>();    
         ColorUtility.TryParseHtmlString("#FF0000", out Color hitcolor);
         playerSprite.color = hitcolor;
+        StopAllCoroutines();
         StartCoroutine(PlayerDieSequence() );
        
 
@@ -374,8 +405,8 @@ public void TakeDamage()
 
         public void StunJump()
     {
-        
-        
+
+        StopAllCoroutines();
 
         StartCoroutine(StunJumpRoutine());
        
@@ -384,9 +415,10 @@ public void TakeDamage()
    
     private IEnumerator StunJumpRoutine()
     {
-        this.rb.velocity = new Vector2(5* playermodel.FacingDirection, 3);
+        
         playermodel.CurrentPlayerState = PlayerState.EnemyOverJumping;
-        yield return new WaitForSeconds(0.8f);
+        this.rb.velocity = new Vector2(5.5f* playermodel.FacingDirection, 5);
+        yield return new WaitForSeconds(0.7f);
         
         
             playermodel.CurrentPlayerState = PlayerState.PlayerGrounded;
@@ -424,5 +456,56 @@ public void TakeDamage()
             GameManager.Instance.RespawnPlayer();
         }
     }
+
+public void ActivateDirectionSign(PlayerDirection direction)
+    {
+        
+       
+        Vector3 spawnpoint;
+        
+
+        switch (direction)
+        {
+            case PlayerDirection.Left:
+                spawnpoint = this.transform.position - Vector3.left*2;
+                currentActivesign = Instantiate(lefttside,spawnpoint,Quaternion.identity);
+                
+
+
+                break;
+            case PlayerDirection.Right:
+                spawnpoint = this.transform.position + Vector3.right * 2;
+                currentActivesign = Instantiate(lefttside, spawnpoint, Quaternion.identity);
+                
+
+                break;
+            case PlayerDirection.Up:
+
+
+                spawnpoint = this.transform.position + Vector3.up * 2;
+                currentActivesign = Instantiate(Upside, spawnpoint, Quaternion.identity);
+                 
+                break;
+        }
+
+       
+    }
+
+
+  public void SetCurrentDirectionaDeactivate()
+    {
+        Destroy(currentActivesign);
+        currentActivesign = null;
+    }
+
+
+    public void CallPlayerEndSequence()
+    {
+        playermodel.CurrentPlayerState = PlayerState.PlayerDead;
+        
+        playerView.CaveEndingSequence();
+    }
+    
+
 }
 

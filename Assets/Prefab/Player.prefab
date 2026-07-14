@@ -68,8 +68,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.050000012, y: -0.19993454}
-  m_Size: {x: 0.6802321, y: 1.4331933}
+  m_Offset: {x: 0.050000012, y: -0.05176449}
+  m_Size: {x: 0.6802321, y: 1.1368532}
   m_Direction: 0
 --- !u!50 &5178929415340799997
 Rigidbody2D:
@@ -114,18 +114,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 32768
   playermodel:
-    Speed: 5
+    Speed: 4
     JumpForce: 6
     DoubleJumpForce: 8
     WallJumpDuration: 0.3
     WallJumpForce: {x: 6, y: 8}
-    GroundCheckDist: 1.13
+    GroundCheckDist: 0.7
     WallCheckDist: 0.6
     KnockbackDistance: {x: 8, y: 5}
     KnockbackDuration: 0.4
   bulletInstance: {fileID: 8863635670338251742, guid: 7ef01d4ba21d745459cb3d7926217d98, type: 3}
   spwanPoint: {fileID: 8837517065772535715}
   cooldown: 1
+  jumpcooldown: 0
+  jumpbuttonclickDuration: 0
+  rightside: {fileID: 3134237097540520834, guid: cfa026e8fc8390c419c388a4892d54e8, type: 3}
+  lefttside: {fileID: 8865747851010015396, guid: 13f98253de70ae64da3cb69be5f19d95, type: 3}
+  Upside: {fileID: 2522263474698554655, guid: 89cb4840dc8eed04f96442ce6232ecbc, type: 3}
 --- !u!1 &1622066986656950822
 GameObject:
   m_ObjectHideFlags: 0

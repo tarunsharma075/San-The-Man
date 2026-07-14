@@ -14,8 +14,8 @@ public class PlayerService
 
     public void TakeDamage()
     {
-        
-        
+
+
 
         playerController.TakeDamage();
     }
@@ -50,6 +50,24 @@ public class PlayerService
     public void PlayerWallJumpUnlocked()
     {
         playerController.UnlockWallJump();
+    }
+
+
+    public void SetCurrentDirectionSign(PlayerDirection direction)
+    {
+        playerController.ActivateDirectionSign(direction);
+
+    }
+
+    public void DeactivateCurrentActiveSign()
+    {
+        playerController.SetCurrentDirectionaDeactivate();
+    }
+
+
+    public void TriggerPlayerEnd()
+    {
+        playerController.CallPlayerEndSequence();
     }
 
 }

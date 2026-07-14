@@ -51,8 +51,12 @@ public class FallingPlatform :MonoBehaviour
                 break;
 
             case PlatformState.Respawning:
+                Respawn();
                 break;
+
+            
         }
+
     }
 
 
@@ -71,7 +75,7 @@ public class FallingPlatform :MonoBehaviour
     currentstate == PlatformState.Falling)
         {
             groundCollider.enabled = true;
-            StartCoroutine(OnGroundTouch());
+            OnGroundTouch();
         }
     }
 
@@ -105,17 +109,31 @@ public class FallingPlatform :MonoBehaviour
     }
 
 
-    private IEnumerator OnGroundTouch()
+    private void  OnGroundTouch()
     {
+        currentstate = PlatformState.Respawning;
        
-        bx.enabled = false;
         
-
-        yield return new WaitForSeconds(1f);
-
-        transform.position = currentPosition;
-        currentstate = PlatformState.Still;
-        groundCollider.enabled = false;
-        bx.enabled = true;
+       
     }
+
+private void Respawn()
+    {
+        bx.enabled = false;
+        groundCollider.enabled = false;
+
+        transform.position = Vector3.MoveTowards(
+        transform.position,
+        currentPosition,
+        fallingSpeed * Time.deltaTime
+    );
+
+        if (Vector3.Distance(transform.position, currentPosition) < 0.05f)
+        {
+            transform.position = currentPosition;
+            currentstate = PlatformState.Still;
+            bx.enabled = true;
+        }
+    }
+
 }

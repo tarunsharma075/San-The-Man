@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerModel 
 {
+     public bool IsFacingRight { get; set; } = true;
+     public float FacingDirection { get; set; } = 1f;
 
     [Header("Movement Settings")]
     public float Speed = 5f;
@@ -25,14 +27,14 @@ public class PlayerModel
     public float KnockbackDuration = 0.6f;
     public bool StunnedJump { get; set; }
 
+
+   
     PlayerState currentPlayerState;
 
 
      public bool IsWallDetected { get; set; }
    
 
-     public bool IsFacingRight { get; set; } = true;
-   [SerializeField]  public float FacingDirection { get; set; } = 1f;
 
     public bool CanDoubleJump { get; set; } = true;
     

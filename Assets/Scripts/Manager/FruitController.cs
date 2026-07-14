@@ -33,17 +33,28 @@ public class FruitController : MonoBehaviour
     {
         if (collision.GetComponent<PlayerController>() != null)
         {
+
+            StartCoroutine(FruitEnd());
             
-            ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.FruitCollect);
-            fruitCount--;
-            ServiceLocator.Instance.gamePlayservice.SetNumberofFruits(fruitCount);
-            Destroy(this.gameObject);  
-            
-            //GameObject vfx=  Instantiate(vfxGameObject, this.transform.position,Quaternion.identity);
-            //Destroy(vfx,.5f);
+           
         }
     }
 
+
+    private IEnumerator FruitEnd() {
+
+
+
+        ServiceLocator.Instance.audioService.PlaySFX(SoundTypes.FruitCollect);
+        ServiceLocator.Instance.gamePlayservice.IncreasePlayerHealth();
+        fruitCount--;
+        ServiceLocator.Instance.gamePlayservice.SetNumberofFruits(fruitCount);
+        anim.SetTrigger("End");
+        yield return new WaitForSeconds(1f);
+        Destroy(this.gameObject);
+
+
+    }
 
     private void SetRandomFruit()
     {

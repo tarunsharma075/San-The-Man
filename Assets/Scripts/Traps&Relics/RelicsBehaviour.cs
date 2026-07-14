@@ -37,20 +37,28 @@ public  class RelicsBehaviour:WorldObject
     {
 
         CameraShakeManager.Instance.CameraShake(impulseSource);
+        StopAllCoroutines();
         StartCoroutine(EndJungleRelic());
     }
 
    private IEnumerator EndJungleRelic()
     {
         ServiceLocator.Instance.playerService.PlayerWallJumpUnlocked();
-        yield return new WaitForSeconds(1f);
+        ServiceLocator.Instance.gamePlayservice.ActivatespikeCamera();
+        ServiceLocator.Instance.gamePlayservice.IncreaseShurikenNumberByValue(4);
+       ServiceLocator.Instance.playerService.SetCurrentDirectionSign(PlayerDirection.Up);
+        Debug.Log("RelicCallled");
+        yield return new WaitForSeconds(3);
+        ServiceLocator.Instance.gamePlayservice.ActivatePlayerCamera();
         ServiceLocator.Instance.gamePlayservice.ActivateSpikes();
+       
+        ServiceLocator.Instance.playerService.DeactivateCurrentActiveSign();
 
 
 
         if (this.gameObject.CompareTag("JungleRelic"))
         {
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
     }
 

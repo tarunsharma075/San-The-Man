@@ -8,7 +8,7 @@ public class BulletBehaviour : MonoBehaviour
     [SerializeField] private float bulletspeed;
 
 
-    private float direction = 1;
+    private float direction ;
 
     private void Awake()
     {
@@ -56,6 +56,15 @@ public class BulletBehaviour : MonoBehaviour
            
 
         }
+        if (this.gameObject.CompareTag("Ground"))
+        {
+            Destroy(this.gameObject);
+
+
+
+
+        }
+
 
 
     }

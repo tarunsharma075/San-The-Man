@@ -10,6 +10,7 @@ public class BullMonster : EnemyBehaviour
     [SerializeField] private LayerMask playerLayer;
     [SerializeField]private float radius;
     [SerializeField] private BoxCollider2D HitBox;
+    private Transform detectedPlayer;
     
 
    
@@ -23,7 +24,7 @@ public class BullMonster : EnemyBehaviour
         currentState = EnemyState.Alive;
 
         UpdateHealthUI();
-        Debug.Log(currentHealth);
+        
     }
 
  
@@ -71,9 +72,12 @@ public class BullMonster : EnemyBehaviour
 
     private void CheckPlayer()
     {
-        isplayerdetected = Physics2D.OverlapCircle(this.transform.position,
-            radius,
-            playerLayer);
+        isplayerdetected = TryGetDetectedPlayer(radius, playerLayer, out detectedPlayer);
+
+        if (isplayerdetected)
+        {
+            FaceTarget(detectedPlayer);
+        }
 
     }
 
