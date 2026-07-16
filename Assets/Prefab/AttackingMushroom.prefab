@@ -238,6 +238,10 @@ MonoBehaviour:
   cooldownTime: 1
   attackHitbox: {fileID: 4242450299022088405}
   stunCollider: {fileID: 5293240628579415461}
+  showInstructionAfterDeath: 1
+  showDeathInstructionOnlyOnce: 1
+  deathInstructionGroupIndex: 0
+  deathInstructionDelay: 3
 --- !u!70 &3404455072095205542
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

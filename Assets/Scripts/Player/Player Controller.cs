@@ -50,8 +50,15 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+        if (playermodel.CurrentPlayerState == PlayerState.Reading)
+        {
+            StopPlayerForReading();
+            return;
+        }
+
         if (playermodel.CurrentPlayerState == PlayerState.EnemyOverJumping) return;
         CheckCollision();
+
         if (playermodel.CurrentPlayerState== PlayerState.PlayerKnocked) return;
         if (playermodel.CurrentPlayerState== PlayerState.Dead) return;
        
@@ -145,6 +152,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playermodel.CurrentPlayerState == PlayerState.PlayerKnocked ||
         playermodel.CurrentPlayerState == PlayerState.PlayerDead ||
+        playermodel.CurrentPlayerState == PlayerState.Reading ||
         playermodel.CurrentPlayerState == PlayerState.WallSliding||
         playermodel.IsWallDetected||playermodel.CurrentPlayerState==PlayerState.WallJumping
        )
@@ -178,6 +186,8 @@ public class PlayerController : MonoBehaviour
         if (playermodel.CurrentPlayerState == PlayerState.WallJumping)
             return;
         if (playermodel.CurrentPlayerState == PlayerState.PlayerKnocked)
+            return;
+        if (playermodel.CurrentPlayerState == PlayerState.Reading)
             return;
         playermodel.IsWallDetected = Physics2D.Raycast(
             transform.position,
@@ -441,6 +451,34 @@ public void TakeDamage()
     
     }
 
+    public void StartReading()
+    {
+        StopAllCoroutines();
+        playermodel.CurrentPlayerState = PlayerState.Reading;
+        StopPlayerForReading();
+    }
+
+    private void StopPlayerForReading()
+    {
+        rb.velocity = Vector2.zero;
+        playermodel.XInput = 0;
+        playermodel.YInput = 0;
+        playermodel.Velocity = Vector2.zero;
+        playerView.UpdateAnimation(playermodel);
+    }
+
+    public void StopReading()
+    {
+        if (playermodel.CurrentPlayerState != PlayerState.Reading)
+        {
+            return;
+        }
+
+        playermodel.CurrentPlayerState = CheckPlayerGrounded()
+            ? PlayerState.PlayerGrounded
+            : PlayerState.PlayerAirborne;
+    }
+
     public void UnlockWallJump() {
 
 
@@ -504,6 +542,51 @@ public void ActivateDirectionSign(PlayerDirection direction)
         playermodel.CurrentPlayerState = PlayerState.PlayerDead;
         
         playerView.CaveEndingSequence();
+    }
+
+    public void FadePlayerSpriteToZero(float duration)
+    {
+        StopCoroutine(nameof(FadePlayerSpriteRoutine));
+        StartCoroutine(FadePlayerSpriteRoutine(duration));
+    }
+
+    public void FadePlayerSpriteToZero()
+    {
+        FadePlayerSpriteToZero(1.5f);
+    }
+
+    private IEnumerator FadePlayerSpriteRoutine(float duration)
+    {
+        SpriteRenderer playerSprite = GetComponentInChildren<SpriteRenderer>();
+        if (playerSprite == null)
+        {
+            yield break;
+        }
+
+        Color startColor = playerSprite.color;
+        float startAlpha = startColor.a;
+        float timer = 0f;
+
+        if (duration <= 0)
+        {
+            startColor.a = 0;
+            playerSprite.color = startColor;
+            yield break;
+        }
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float progress = Mathf.Clamp01(timer / duration);
+            Color currentColor = playerSprite.color;
+            currentColor.a = Mathf.Lerp(startAlpha, 0, progress);
+            playerSprite.color = currentColor;
+            yield return null;
+        }
+
+        Color finalColor = playerSprite.color;
+        finalColor.a = 0;
+        playerSprite.color = finalColor;
     }
     
 

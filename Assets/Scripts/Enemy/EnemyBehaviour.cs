@@ -13,6 +13,12 @@ public class EnemyBehaviour :Enemy
 
     protected override void Update()
     {
+        if (IsGameplayPausedForInstruction())
+        {
+            StopEnemyMovement();
+            return;
+        }
+
         CheckPlayerState1();
         base.Update();
         HandleMovement();

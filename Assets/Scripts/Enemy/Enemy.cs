@@ -92,7 +92,33 @@ public class Enemy : GenericMonoSingleton<Enemy>
 
 protected virtual void Update()
     {
+        if (IsGameplayPausedForInstruction())
+        {
+            StopEnemyMovement();
+            return;
+        }
+
         idleTimer -= Time.deltaTime;
+    }
+
+    protected bool IsGameplayPausedForInstruction()
+    {
+        return ServiceLocator.Instance != null &&
+            ServiceLocator.Instance.gamePlayservice != null &&
+            ServiceLocator.Instance.gamePlayservice.IsInstructionOpen();
+    }
+
+    protected void StopEnemyMovement()
+    {
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+        }
+
+        if (anim != null)
+        {
+            anim.SetFloat("Xvelocity", 0);
+        }
     }
 
 

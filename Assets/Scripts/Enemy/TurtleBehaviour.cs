@@ -20,6 +20,13 @@ public class TurtleBehaviour : EnemyBehaviour
 
     private void Update()
     {
+      if (IsGameplayPausedForInstruction())
+      {
+          StopEnemyMovement();
+          anim.SetBool("IsplayerDetected", false);
+          return;
+      }
+
       CheckPlayerCollision();
 
     }

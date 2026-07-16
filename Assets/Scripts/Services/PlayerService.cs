@@ -70,4 +70,24 @@ public class PlayerService
         playerController.CallPlayerEndSequence();
     }
 
+    public void StartReading()
+    {
+        if (playerController == null)
+        {
+            return;
+        }
+
+        playerController.StartReading();
+    }
+
+    public void StopReading()
+    {
+        if (playerController == null)
+        {
+            return;
+        }
+
+        playerController.StopReading();
+    }
+
 }

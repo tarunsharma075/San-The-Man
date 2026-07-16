@@ -10,6 +10,8 @@ using Cinemachine;
 public  class RelicsBehaviour:WorldObject
 {
   private CinemachineImpulseSource impulseSource;
+    [SerializeField] private float spikeCameraDuration = 0.5f;
+    [SerializeField] private float directionSignDuration = 0.7f;
 
 
     RelicState currentState;
@@ -24,6 +26,7 @@ public  class RelicsBehaviour:WorldObject
         if(this.gameObject.CompareTag("JungleRelic")&& collision.gameObject.CompareTag("Player"))
         {
             currentRelicState= RelicState.Collected;
+            currentState = currentRelicState;
             anim.SetTrigger("End");
             this.gameObject.GetComponent<BoxCollider2D>().enabled = false;  
             if (currentState == RelicState.Collected)
@@ -43,16 +46,24 @@ public  class RelicsBehaviour:WorldObject
 
    private IEnumerator EndJungleRelic()
     {
-        ServiceLocator.Instance.playerService.PlayerWallJumpUnlocked();
+        ServiceLocator.Instance.gamePlayservice.MarkJungleRelicCollected();
         ServiceLocator.Instance.gamePlayservice.ActivatespikeCamera();
         ServiceLocator.Instance.gamePlayservice.IncreaseShurikenNumberByValue(4);
-       ServiceLocator.Instance.playerService.SetCurrentDirectionSign(PlayerDirection.Up);
-        Debug.Log("RelicCallled");
-        yield return new WaitForSeconds(3);
-        ServiceLocator.Instance.gamePlayservice.ActivatePlayerCamera();
+
         ServiceLocator.Instance.gamePlayservice.ActivateSpikes();
-       
+
+        yield return new WaitForSeconds(spikeCameraDuration);
+        
+        ServiceLocator.Instance.gamePlayservice.ActivatePlayerCamera();
+        ServiceLocator.Instance.playerService.PlayerWallJumpUnlocked();
+        ServiceLocator.Instance.playerService.SetCurrentDirectionSign(PlayerDirection.Up);
+
+        yield return new WaitForSeconds(directionSignDuration);
+        
+
         ServiceLocator.Instance.playerService.DeactivateCurrentActiveSign();
+        Destroy(this.gameObject);
+
 
 
 

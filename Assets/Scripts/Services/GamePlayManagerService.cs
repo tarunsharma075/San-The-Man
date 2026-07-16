@@ -95,4 +95,59 @@ public class GamePlayManagerService
         gamePlayManager.ActivatePlayerCamera();
     }
 
+    public void ShowInstruction(int instructionGroupIndex)
+    {
+        if (gamePlayManager == null)
+        {
+            return;
+        }
+
+        gamePlayManager.ShowInstruction(instructionGroupIndex);
+    }
+
+    public void ShowInstructionAfterDelay(int instructionGroupIndex, float delay)
+    {
+        if (gamePlayManager == null)
+        {
+            return;
+        }
+
+        gamePlayManager.ShowInstructionAfterDelay(instructionGroupIndex, delay);
+    }
+
+    public void EndInstruction()
+    {
+        if (gamePlayManager == null)
+        {
+            return;
+        }
+
+        gamePlayManager.EndInstruction();
+    }
+
+    public bool IsInstructionOpen()
+    {
+        return gamePlayManager != null && gamePlayManager.IsInstructionOpen;
+    }
+
+    public void MarkJungleRelicCollected()
+    {
+        if (gamePlayManager == null)
+        {
+            return;
+        }
+
+        gamePlayManager.MarkJungleRelicCollected();
+    }
+
+    public bool IsJungleRelicCollected()
+    {
+        return gamePlayManager != null && gamePlayManager.IsJungleRelicCollected;
+    }
+
+    public bool IsBullDead()
+    {
+        return gamePlayManager != null && gamePlayManager.IsBullDead;
+    }
+
 }

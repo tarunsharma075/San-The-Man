@@ -32,6 +32,13 @@ public class BullMonster : EnemyBehaviour
     
     void Update()
     {
+        if (IsGameplayPausedForInstruction())
+        {
+            StopEnemyMovement();
+            anim.SetBool("Attack", false);
+            return;
+        }
+
         if(currentState== EnemyState.Dead)
         {
             return;

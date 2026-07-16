@@ -12,8 +12,14 @@ public class AttackingMushroom : EnemyBehaviour
     [SerializeField] protected float cooldownTime;
     [SerializeField] private Collider2D attackHitbox;
     [SerializeField] private Collider2D stunCollider;
+    [SerializeField] private bool showInstructionAfterDeath = true;
+    [SerializeField] private bool showDeathInstructionOnlyOnce = true;
+    [SerializeField] private int deathInstructionGroupIndex;
+    [SerializeField] private float deathInstructionDelay = 0.5f;
     private bool shouldcchasePlayer = false;
     private Transform detectedPlayer;
+    private static bool hasShownDeathInstruction;
+    private bool hasStartedDeathSequence;
     
     protected override void Awake()
     {
@@ -27,6 +33,12 @@ public class AttackingMushroom : EnemyBehaviour
 
     protected override void Update()
     {
+
+        if (IsGameplayPausedForInstruction())
+        {
+            StopEnemyMovement();
+            return;
+        }
 
         if (currentState == EnemyState.Dead) return;
 
@@ -173,9 +185,15 @@ public class AttackingMushroom : EnemyBehaviour
     }
     protected override void StunDamage()
     {
+        if (hasStartedDeathSequence)
+        {
+            return;
+        }
+
         base.StunDamage();
         if (currentHealth <= 0)
         {
+            hasStartedDeathSequence = true;
             ServiceLocator.Instance.gamePlayservice.IncreaseShurikenNumberByValue(2);
 
             StartCoroutine(MushroomEnd());
@@ -198,6 +216,19 @@ public class AttackingMushroom : EnemyBehaviour
         stunCollider.enabled = false;
         attackHitbox.enabled = false;
         yield return new WaitForSecondsRealtime(0.5f);
+
+        if (showInstructionAfterDeath &&
+            (!showDeathInstructionOnlyOnce || !hasShownDeathInstruction) &&
+            ServiceLocator.Instance != null &&
+            ServiceLocator.Instance.gamePlayservice != null)
+        {
+            hasShownDeathInstruction = true;
+            Debug.Log("Mushroom death instruction call: " + deathInstructionGroupIndex);
+            ServiceLocator.Instance.gamePlayservice.ShowInstructionAfterDelay(
+                deathInstructionGroupIndex,
+                deathInstructionDelay);
+        }
+
         Destroy(this.gameObject);
         
          

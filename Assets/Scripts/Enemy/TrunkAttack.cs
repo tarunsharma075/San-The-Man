@@ -26,6 +26,12 @@ public class TrunkAttack : EnemyBehaviour
     protected override void Update()
     {
 
+        if (IsGameplayPausedForInstruction())
+        {
+            StopEnemyMovement();
+            return;
+        }
+
         if (currentState == EnemyState.Dead || currentState == EnemyState.Stunned) return;
         if (ServiceLocator.Instance.playerService.GetPlayerState() == PlayerState.Dead) return;
         startingtime -= Time.deltaTime;

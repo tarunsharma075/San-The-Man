@@ -34,8 +34,13 @@ public class GamePlayManager : MonoBehaviour
 
     [SerializeField] private CinemachineVirtualCamera playercamera;
     [SerializeField] private CinemachineVirtualCamera spikecamera;
+    [SerializeField] private DialougeInteraction dialougeInteraction;
 
     private float blockersHit = 0;
+    private Coroutine instructionRoutine;
+    public bool IsInstructionOpen { get; private set; }
+    public bool IsJungleRelicCollected { get; private set; }
+    public bool IsBullDead => bull == null;
 
     void Awake()
     {
@@ -54,6 +59,17 @@ public class GamePlayManager : MonoBehaviour
     {
         if (ServiceLocator.Instance != null)
             ServiceLocator.Instance.RegisterGamePlayManager(this);
+
+        if (dialougeInteraction == null)
+        {
+            dialougeInteraction = FindObjectOfType<DialougeInteraction>();
+        }
+
+        if (dialougeInteraction == null)
+        {
+            GameObject dialogueObject = new GameObject("Runtime Dialogue Interaction");
+            dialougeInteraction = dialogueObject.AddComponent<DialougeInteraction>();
+        }
     }
 
     private void spawnEnemies()
@@ -66,7 +82,6 @@ public class GamePlayManager : MonoBehaviour
             GameObject currentSpawnEnemy = Instantiate(prefabs[randomEnemey],
             spawnPoints[i].position,
             Quaternion.identity);
-
 
 
         }
@@ -261,6 +276,63 @@ public class GamePlayManager : MonoBehaviour
     {
         playercamera.Priority = 20;
         spikecamera.Priority = 10;
+    }
+
+    public void ShowInstruction(int instructionGroupIndex)
+    {
+        ShowInstructionAfterDelay(instructionGroupIndex, 0f);
+    }
+
+    public void ShowInstructionAfterDelay(int instructionGroupIndex, float delay)
+    {
+        if (dialougeInteraction == null)
+        {
+            dialougeInteraction = FindObjectOfType<DialougeInteraction>();
+        }
+
+        if (dialougeInteraction == null)
+        {
+            GameObject dialogueObject = new GameObject("Runtime Dialogue Interaction");
+            dialougeInteraction = dialogueObject.AddComponent<DialougeInteraction>();
+        }
+
+        if (IsInstructionOpen || instructionRoutine != null)
+        {
+            return;
+        }
+
+        instructionRoutine = StartCoroutine(ShowInstructionRoutine(instructionGroupIndex, delay));
+    }
+
+    private IEnumerator ShowInstructionRoutine(int instructionGroupIndex, float delay)
+    {
+        Debug.Log("Instruction requested: " + instructionGroupIndex);
+
+        if (delay > 0)
+        {
+            yield return new WaitForSeconds(delay);
+        }
+
+        Debug.Log("Instruction opening: " + instructionGroupIndex);
+        ServiceLocator.Instance.playerService.StartReading();
+        IsInstructionOpen = true;
+
+        if (!dialougeInteraction.StartInstruction(instructionGroupIndex))
+        {
+            EndInstruction();
+        }
+    }
+
+    public void EndInstruction()
+    {
+        instructionRoutine = null;
+        IsInstructionOpen = false;
+        ServiceLocator.Instance.playerService.StopReading();
+    }
+
+    public void MarkJungleRelicCollected()
+    {
+        IsJungleRelicCollected = true;
     }
    
 }
