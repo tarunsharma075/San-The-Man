@@ -36,6 +36,9 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera spikecamera;
     [SerializeField] private DialougeInteraction dialougeInteraction;
 
+
+    [SerializeField] private TextMeshProUGUI wallJumpUnlocked;
+
     private float blockersHit = 0;
     private Coroutine instructionRoutine;
     public bool IsInstructionOpen { get; private set; }
@@ -334,6 +337,28 @@ public class GamePlayManager : MonoBehaviour
     {
         IsJungleRelicCollected = true;
     }
+
+    public void WallJumpInfo()
+    {
+        if (wallJumpUnlocked == null)
+        {
+            Debug.Log("Wall jump unlocked text is not assigned");
+            return;
+        }
+
+        wallJumpUnlocked.gameObject.SetActive(true);
+        wallJumpUnlocked.enabled = true;
+    }
+
+
+    public void StopWallJumpInfo()
+    {
+        if (wallJumpUnlocked == null) return;
+
+        wallJumpUnlocked.enabled = false;
+        wallJumpUnlocked.gameObject.SetActive(false);
+    }
+
    
 }
 

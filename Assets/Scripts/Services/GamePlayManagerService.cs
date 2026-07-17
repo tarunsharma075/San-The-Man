@@ -29,7 +29,7 @@ public class GamePlayManagerService
 
 
 
-  
+
     public int DecreaseNumberOFShurikens()
     {
         return gamePlayManager.DecreaseNumberofShurikens();
@@ -148,6 +148,17 @@ public class GamePlayManagerService
     public bool IsBullDead()
     {
         return gamePlayManager != null && gamePlayManager.IsBullDead;
+    }
+
+    public void WallJumpUnlock() {
+
+        gamePlayManager.WallJumpInfo();
+
+    }
+
+    public void WallJumpInfoStops()
+    {
+        gamePlayManager.StopWallJumpInfo();
     }
 
 }

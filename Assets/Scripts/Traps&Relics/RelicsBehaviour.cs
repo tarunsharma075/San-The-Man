@@ -7,11 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Cinemachine;
+using TMPro;
 public  class RelicsBehaviour:WorldObject
 {
   private CinemachineImpulseSource impulseSource;
-    [SerializeField] private float spikeCameraDuration = 0.5f;
-    [SerializeField] private float directionSignDuration = 0.7f;
+    [SerializeField] private float spikeCameraDuration = 0.8f;
+    [SerializeField] private float directionSignDuration = 3f;
 
 
     RelicState currentState;
@@ -49,23 +50,26 @@ public  class RelicsBehaviour:WorldObject
         ServiceLocator.Instance.gamePlayservice.MarkJungleRelicCollected();
         ServiceLocator.Instance.gamePlayservice.ActivatespikeCamera();
         ServiceLocator.Instance.gamePlayservice.IncreaseShurikenNumberByValue(4);
-
+        
         ServiceLocator.Instance.gamePlayservice.ActivateSpikes();
 
         yield return new WaitForSeconds(spikeCameraDuration);
-        
         ServiceLocator.Instance.gamePlayservice.ActivatePlayerCamera();
+        
+
+        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = false;
+        }
+
         ServiceLocator.Instance.playerService.PlayerWallJumpUnlocked();
         ServiceLocator.Instance.playerService.SetCurrentDirectionSign(PlayerDirection.Up);
-
+        ServiceLocator.Instance.gamePlayservice.WallJumpUnlock();
         yield return new WaitForSeconds(directionSignDuration);
-        
 
+        ServiceLocator.Instance.gamePlayservice.WallJumpInfoStops();
         ServiceLocator.Instance.playerService.DeactivateCurrentActiveSign();
-        Destroy(this.gameObject);
-
-
-
 
         if (this.gameObject.CompareTag("JungleRelic"))
         {
