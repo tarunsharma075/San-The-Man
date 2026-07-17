@@ -12,7 +12,7 @@ public  class RelicsBehaviour:WorldObject
 {
   private CinemachineImpulseSource impulseSource;
     [SerializeField] private float spikeCameraDuration = 0.8f;
-    [SerializeField] private float directionSignDuration = 3f;
+    [SerializeField] private float directionSignDuration = 5f;
 
 
     RelicState currentState;
